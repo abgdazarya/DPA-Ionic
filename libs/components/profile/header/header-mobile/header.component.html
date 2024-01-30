@@ -1,0 +1,56 @@
+<!-- <section>
+
+  <div class="h-12">
+    
+  </div>
+
+</section> -->
+
+<div [class]="getThemplate().modal">
+  <div
+    class="container md:mx-2 mx-0 sm-max:px-4 flex items-center justify-between w-full"
+  >
+    <div class="flex items-center">
+      <div class="flex items-center justify-between">
+        <span
+          *ngIf="!onBack"
+          (click)="onClickBack()"
+          [class]="getThemplate().leftIcon"
+        >
+          <app-common-icon-component
+            name="arrow-left-large"
+            [nativeClass]="getThemplate().iconColor"
+          />
+        </span>
+        <span
+          *ngIf="onBack"
+          (click)="onClosePopup()"
+          [class]="getThemplate().leftIcon"
+        >
+          <app-common-icon-component
+            name="arrow-left-large"
+            [nativeClass]="getThemplate().iconColor"
+          />
+        </span>
+      </div>
+      <div [class]="getThemplate().text">
+        {{ headerTitle }}
+      </div>
+    </div>
+    <div *ngIf="rightBtn" class="flex items-center justify-end">
+      <ion-button
+        mode="ios"
+        fill="clear"
+        (click)="onRightBtnClick()"
+        class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+      >
+        <span *ngIf="rightBtnText" class="p-0">{{ rightBtnText }}</span>
+        <app-common-icon-component
+          *ngIf="rightIcon"
+          [name]="rightIcon"
+          [class]="getThemplate().rightIcon"
+        />
+      </ion-button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<!-- <ion-header class="ion-background-white ion-no-border">
+  <common-header-component
+    *ngIf="screenSizeService.isDesktopResolution()"
+  ></common-header-component>
+
+  <profile-header-component
+    *ngIf="!screenSizeService.isDesktopResolution()"
+    [headerTitle]="'Detail Pekerjaan'"
+  ></profile-header-component>
+</ion-header> -->
+
+<!-- <ion-content class="ion-background-white-blur relative"> -->
+
+<section>
+  <div class="md:container px-0 md:px-8 z-10 relative pt-0 md:pt-16">
+    <div>
+      <div class="hidden md:block mb-10">
+        <app-common-breadcrumb-component
+          [breadcrumbs]="breadcrumbs"
+          activeClass="text-neutral-800"
+          (onClick)="handleSelectBreadcrumb($event)"
+        >
+        </app-common-breadcrumb-component>
+      </div>
+
+      <div
+        class="grid grid-cols-1 md:grid-cols-5 gap-x-0 md:gap-x-7 gap-y-7 md:gap-y-8"
+      >
+        <div class="col-span-2 order-last md:order-1 hidden md:block">
+          <section>
+            <div class="box-shadow bg-white rounded-4xl">
+              <app-job-recommendation-list-container></app-job-recommendation-list-container>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-span-3 order-1 md:order-last">
+          <div class="box-shadow bg-white p-4 md:p-8 md:rounded-4xl">
+            <app-job-detail-container></app-job-detail-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <wa-floating-button></wa-floating-button> -->
+<!-- </ion-content> -->

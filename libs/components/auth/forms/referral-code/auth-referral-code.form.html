@@ -1,0 +1,42 @@
+<form
+  novalidate
+  *ngIf="formGroup"
+  [formGroup]="formGroup"
+  (ngSubmit)="submit()"
+>
+  <ng-container *ngIf="formGroup.controls['kodeReferal']; let formControl">
+    <div class="form-wrapper">
+      <div class="text-body2 text-neutral-800 mb-1">Kode Referral</div>
+      <div
+        class="form-wrapper-input p-3 rounded-lg border h-11 flex items-center justify-between space-x-3"
+        [class.border-error-400]="isError === true"
+        [class.border-neutral-400]="isError === null || isError === false"
+      >
+        <ion-input
+          formControlName="kodeReferal"
+          placeholder="Masukan kode referral kamu"
+          class="text-body2 text-700 flex-1"
+        ></ion-input>
+
+        <!-- [disabled]="(interactRes$ | async)?.isLoading || !formGroup.valid"
+        [isLoading]="(interactRes$ | async)?.isLoading" -->
+        <app-common-button-component
+          [disabled]="loading || !formControl?.value"
+          color="blank"
+          class="text-heading-7 leading-heading-7 m-0 p-0 font-semibold ion-no-padding"
+          (onClick)="submitCode.emit()"
+        >
+          <span class="text-lazuli-500 p-0 m-0">Pakai</span>
+        </app-common-button-component>
+      </div>
+      <small *ngIf="isError === true" class="text-error-400">
+        Kode Referral tidak sesuai
+      </small>
+      <small *ngIf="isError === false" class="text-success-500">
+        Kode Referral berhasil dipakai
+      </small>
+    </div>
+  </ng-container>
+
+  <input type="submit" class="hidden" />
+</form>

@@ -1,0 +1,14 @@
+<ion-label>{{ label }}</ion-label>
+<ion-item fill="outline">
+  <input
+    [prefix]="prefix"
+    [placeholder]="placeholder"
+    [type]="type"
+    [mask]="mask"
+    [ngStyle]="{'color': class ? '#474d66':'#474d66ad'}"
+    [thousandSeparator]="thousandsSeparator"
+    [formControlName]="controlName"
+    [disabled]="disable"
+  />
+</ion-item>
+<small *ngIf="error" style="color: red;">{{ error }}</small>

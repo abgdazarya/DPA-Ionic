@@ -1,0 +1,192 @@
+<ion-header class="ion-background-white ion-no-border">
+  <common-header-component></common-header-component>
+</ion-header>
+
+<ion-content class="ion-background-white relative">
+  <!-- <div class="flex md:hidden items-center text-center pt-16">
+    <div class="flex-1 py-2 border-b-2 border-lazuli-400">Berita</div>
+    <div class="flex-1 py-2 border-b-2 border-neutral-400">Astramagz</div>
+  </div> -->
+  <div class="md:container md:px-auto z-10 relative md:pt-16">
+    <div>
+      <div class="hidden md:flex justify-between items-center mb-8">
+        <div>
+          <div class="text-h2 text-800 mb-1.5">Ruang Pensiun</div>
+          <div class="text-[24px] text-700">
+            Temukan banyak topik diskusi dan pembahasan yang menarik.
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col md:flex-row md:justify-between md:items-center mb-8 mt-4 md:mt-0 px-6 md:px-0 mb-4"
+      >
+        <div>
+          <ion-searchbar
+            [(ngModel)]="keyword"
+            (ionInput)="fetchPostinganRuangPensiun()"
+            (ionCancel)="fetchPostinganRuangPensiun()"
+            (ionClear)="fetchPostinganRuangPensiun()"
+            [debounce]="500"
+            class="searchbar-input ion-background-white w-full md:w-96 rounded-input ion-no-box-shadow border border-neutral-400 p-0 rounded-xl text-neutral-800"
+            placeholder="Cari topik yang kamu inginkan"
+          ></ion-searchbar>
+        </div>
+
+        <div
+          class="flex items-center rounded-xl shadow-xl overflow-hidden items-stretch"
+        >
+          <div
+            routerLink="/pensiun/room"
+            routerLinkActive="border-b-2 border-lazuli-400"
+            class="cursor-pointer text-900 py-4 px-8"
+            (click)="handleNavigateUrl('/pensiun/room')"
+          >
+            Ruang Untukmu
+          </div>
+          <div class="border-r border-neutral-400 h-auto"></div>
+          <div
+            routerLink="/pensiun/content"
+            routerLinkActive="border-b-2 border-lazuli-400"
+            class="cursor-pointer text-900 py-4 px-8"
+            (click)="handleNavigateUrl('/pensiun/content')"
+          >
+            Konten Saya
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-7 gap-7">
+        <div class="col-span-2">
+          <div class="bg-white shadow rounded-xl py-10 px-8">
+            <div class="flex items-center space-x-3 mb-10">
+              <img src="logos/retired-activity.png" class="w-9 h-9" alt="" />
+              <span
+                class="text-heading-5 leading-heading-5 font-semibold text-900"
+                >Aktivitas Pensiun</span
+              >
+            </div>
+            <div class="flex items-center space-x-3 mb-10">
+              <img src="logos/price-tag.png" class="w-9 h-9" alt="" />
+              <span
+                class="text-heading-5 leading-heading-5 font-semibold text-900"
+                >Jual Beli</span
+              >
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <img src="logos/user-add.png" class="w-9 h-9" alt="" />
+              <span
+                class="text-heading-5 leading-heading-5 font-semibold text-900"
+                >Cari Teman</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-5">
+          <div class="">
+            <div class="mb-8 flex space-x-4 justify-between">
+              <app-common-button-component
+                color="blank"
+                class="rounded-4xl bg-neutral-100 ion-no-padding p-6 w-full text-h3 text-lazuli-300 font-bold"
+              >
+                <div class="flex space-x-1 justify-center items-center">
+                  <app-common-icon-component
+                    nativeClass="w-8 h-8 text-lazuli-300"
+                    name="edit-6"
+                  />
+                  <span>Buat Postingan</span>
+                </div>
+              </app-common-button-component>
+              <app-common-button-component
+                color="blank"
+                class="rounded-4xl bg-neutral-100 ion-no-padding p-6 w-full text-h3 text-lazuli-300 font-bold"
+              >
+                <div class="flex space-x-1 justify-center items-center">
+                  <app-common-icon-component
+                    nativeClass="w-8 h-8 text-lazuli-300"
+                    name="label-tag-1"
+                  />
+                  <span> Jual Barang</span>
+                </div>
+              </app-common-button-component>
+            </div>
+            <div class="text-h3 text-900 mb-8">Konten Saya</div>
+
+            <ng-container
+              *ngFor="let item of postingan$ | async; let last = last"
+            >
+              <div>
+                <div class="flex items-center mb-6">
+                  <div
+                    class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl mr-2"
+                  >
+                    HH
+                  </div>
+                  <span class="flex-1 text-h5 text-900"
+                    >Test Postingan [Dummy]</span
+                  >
+                  <span class="float-right text-h5 text-600"
+                    >Ruang Pensiun</span
+                  >
+                </div>
+                <div class="flex space-x-20">
+                  <div class="flex-1">
+                    <div class="mb-8">
+                      <div class="text-h3 text-900 mb-3">
+                        {{item?.judulThread || 'Tidak ada judul'}}
+                      </div>
+                      <div class="flex space-x-2">
+                        <span class="text-h5 text-500">
+                          {{item.createdOn | date:'dd MMMM YYYY'}}</span
+                        >
+                        <span
+                          class="text-body3 {{item.statusApproval | statusApprovalEnum:'bgColor'}} {{item.statusApproval | statusApprovalEnum:'textColor'}}  p-1 rounded-full"
+                        >
+                          {{item.statusApproval | statusApprovalEnum:'text'}}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="flex item-center">
+                      <div
+                        class="cursor-pointer flex-1 flex space-x-2 items-center"
+                      >
+                        <app-common-icon-component
+                          nativeClass="w-8 h-8 text-lazuli-500"
+                          name="heart-filled"
+                        />
+                        <span class="text-h5 text-700"
+                          >5 Suka [Dummy Data]</span
+                        >
+                      </div>
+
+                      <app-common-button-component
+                        color="blank"
+                        class="float-right ion-no-padding p-0 m-0 text-h5 text-lazuli-500 font-bold"
+                      >
+                        Lihat Detail
+                      </app-common-button-component>
+                    </div>
+                  </div>
+                  <div class="float-right">
+                    <!-- <img
+                      src="banners/dpa-tv-card-1.png"
+                      class="w-[150px] h-[150px]"
+                      alt=""
+                    /> -->
+                  </div>
+                </div>
+              </div>
+
+              <hr *ngIf="!last" class="my-8 border-b border-neutral-200" />
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-10 hidden md:block" />
+    <common-footer-component></common-footer-component>
+  </div>
+</ion-content>

@@ -1,0 +1,59 @@
+<section class="mb-10">
+  <ng-container *ngIf="(job$ | async) as job">
+    <div class="block">
+      <div class="mb-5">
+        <ng-container *ngFor="let item of job | jobFilterTransformer:'AVAILABLE-LOKER'; let last = last;">
+          <app-job-vacancy-list-mobile-item
+            [job]="item"
+            (onClick)="handleNavigateToJobDetail($event)"
+          >
+          </app-job-vacancy-list-mobile-item>
+
+          <hr *ngIf="!last" class="border-b border-neutral-200 my-0" />
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="(job$ | async) as job else noDataTpl"></ng-container>
+    <ng-template #noDataTpl>
+      <div class="block">
+        <div class="mb-5 mt-10">
+          <div class="text-center">
+            <img
+              src="images/news-not-found.png"
+              class="mb-8 w-[180px] h-[152px] mx-auto"
+              alt=""
+            />
+            <div class="text-h5 text-800 font-semibold mb-1.5">
+              Hasil Pencarian Tidak Ditemukan
+            </div>
+            <div class="text-body2 text-700">
+              Silakan coba lagi atau kembali lagi nanti.
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
+
+  <ng-container *ngIf="loading$ | async else dataTpl">
+    <div class="block">
+      <div class="mb-5">
+        <ng-container *ngFor="let item of [].constructor(10); let last = last;">
+          <app-job-vacancy-list-mobile-item [loading]="true">
+          </app-job-vacancy-list-mobile-item>
+
+          <hr *ngIf="!last" class="border-b border-neutral-200 my-6" />
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <div
+    class="target children-scroll"
+    [id]="targetScrollPos"
+    #targetScrollPos
+  ></div>
+</section>

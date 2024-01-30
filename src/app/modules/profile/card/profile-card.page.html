@@ -1,0 +1,94 @@
+<div class="p-8 md-max:px-4 md:pt-8 pt-0 md:shadow-xl bg-bg-0 rounded-xl">
+  <div class="p-8 md:p-0" *ngIf="!screenSizeService.isMobileResolution()">
+    <div class="text-h3 text-800 mb-1.5">Kartu Peserta DPA</div>
+    <div class="text-h5 font-normal text-700 mb-8">
+      Di sini kamu bisa melihat detail kartu peserta.
+    </div>
+  </div>
+
+  <div
+    *ngIf="!(interactionResponse$ | async)?.isLoading && (response$ | async)"
+    class="grid grid-cols-1 md:grid-cols-2 md:gap-9"
+  >
+    <div>
+      <div class="border border-neutral-300 rounded-xl mb-9">
+        <div class="mb-6 pt-2 px-2">
+          <div class="kartu-peserta relative w-[276px] md:w-[330px] mx-auto">
+            <img
+              class="w-[330px] md:w-auto mx-auto rounded-xl"
+              src="images/kartu-peserta.jpg"
+              alt=""
+              srcset=""
+            />
+            <span
+              class="text-lazuli-500 md-max:text-sm absolute md:top-[40px] md:left-14 top-[30px] left-12"
+            >
+              {{renderName((response$ | async)?.namaPeserta)}}
+            </span>
+            <span
+              class="text-lazuli-500 absolute md:top-[75px] md:left-[135px] text-[10px] md:text-xs top-[61px] left-[112px]"
+            >
+              {{decryptNoPes((response$ | async)?.noPeserta)}}
+            </span>
+            <span
+              class="text-lazuli-500 absolute md:top-[90px] md:left-[135px] text-[10px] md:text-xs top-[74px] left-[112px]"
+            >
+              {{(response$ | async)?.tanggalLahir | date:'dd-MMM-YYYY'}}
+            </span>
+            <span
+              class="text-lazuli-500 absolute md:top-[109px] md:left-[135px] text-[10px] md:text-xs top-[89px] left-[112px]"
+            >
+              {{(response$ | async)?.dtMulaiKerja | date:'dd-MMM-YYYY' }}
+            </span>
+            <span
+              class="text-lazuli-500 absolute md:top-[126px] md:left-[135px] text-[10px] md:text-xs top-[104px] left-[112px]"
+            >
+              {{(response$ | async)?.dtPeserta | date:'dd-MMM-YYYY'}}
+            </span>
+            
+            <img
+              [src]="isProduction
+              ? 'images/qrcode-prod.png'
+              : 'images/qrcode-dev.png'"
+              class="w-[76px] md-max:w-[65px] absolute bottom-[40px] md:bottom-[52px] right-2"
+              alt=""
+              srcset=""
+            />
+          </div>
+        </div>
+
+        <div class="px-6 pb-6" *ngIf="!screenSizeService.isMobileResolution()">
+          <ion-button
+            (click)="handleOpenUserCardModal()"
+            mode="ios"
+            color="blank"
+            class="w-full text-h7 text-neutral-0 h-11 rounded-lg bg-lazuli-50"
+          >
+            <span class="px-4 text-lazuli-500">Lihat Kartu</span>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="!(interactionResponse$ | async)?.isLoading && !(response$ | async)"
+    class="w-full"
+  >
+    <div
+      class="w-full flex flex-col items-center justify-center p-10 min-h-[500px]"
+    >
+      <img
+        src="images/retirement-card-not-found.png"
+        alt=""
+        class="w-full max-w-[180px]"
+      />
+      <span class="text-800 text-lg font-semibold mt-4"
+        >Kartu Peserta Tidak Ada</span
+      >
+      <span class="text-800 text-sm font-normal mt-4"
+        >Kamu belum memiliki Kartu Peserta DPA</span
+      >
+    </div>
+  </div>
+</div>

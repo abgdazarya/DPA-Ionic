@@ -1,0 +1,7 @@
+{
+  "name": "myDPA",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

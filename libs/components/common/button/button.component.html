@@ -1,0 +1,19 @@
+<ion-button
+  (click)="onClick.emit()"
+  [color]="color"
+  [disabled]="disabled"
+  mode="ios"
+  [ngClass]="class"
+>
+  <ng-container *ngIf="isLoading; else btnTpl">
+    <span class="animate-spin">
+      <app-common-icon-component
+        name="button-loading"
+        [nativeClass]="loadingClass ? loadingClass : 'w-5 h-5 text-neutral-0'"
+      />
+    </span>
+  </ng-container>
+  <ng-template #btnTpl>
+    <ng-content></ng-content>
+  </ng-template>
+</ion-button>

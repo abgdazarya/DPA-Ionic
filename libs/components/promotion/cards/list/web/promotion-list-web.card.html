@@ -1,0 +1,93 @@
+<div
+  class="overflow-hidden relative box-shadow-card rounded-4xl"
+  [ngClass]="nativeClass"
+>
+  <ng-container *ngIf="loading else dataTpl">
+    <div class="-mt-1">
+      <ion-skeleton-text
+        [animated]="true"
+        class="h-[210px] w-full"
+      ></ion-skeleton-text>
+    </div>
+
+    <div class="py-4 px-6">
+      <div class="mb-3">
+        <ion-skeleton-text
+          [animated]="true"
+          class="h-10 w-full"
+        ></ion-skeleton-text>
+      </div>
+      <div class="mb-3">
+        <ion-skeleton-text
+          [animated]="true"
+          class="h-5 w-1/4"
+        ></ion-skeleton-text>
+      </div>
+      <div class="flex justify-between space-x-3">
+        <ion-skeleton-text
+          [animated]="true"
+          class="h-5 w-1/4 flex-1"
+        ></ion-skeleton-text>
+        <ion-skeleton-text
+          [animated]="true"
+          class="h-5 w-1/4 flex-1"
+        ></ion-skeleton-text>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="promotion">
+      <div class="-mt-1">
+        <ion-skeleton-text
+          *ngIf="imageStatus === 'onload'"
+          [animated]="true"
+          class="h-[210px] w-full"
+        ></ion-skeleton-text>
+
+        <ion-img
+          *ngIf="promotion.banners?.mainImage"
+          [src]="promotion.banners?.mainImage"
+          (ionError)="imageStatus = 'error';"
+          (ionImgDidLoad)="imageStatus = 'succeed';"
+          (ionImgWillLoad)="imageStatus = 'onload';"
+          class="h-[210px] w-full object-fill object-center overflow-hidden"
+          alt="News Image"
+          [class.hidden]="imageStatus === 'error' || imageStatus === 'onload'"
+        ></ion-img>
+
+        <div
+          *ngIf="!promotion.banners?.mainImage || imageStatus === 'error'"
+          class="h-[210px] bg-neutral-800 w-full text-neutral-900 flex items-center justify-center text-h6"
+        >
+          No Thumbnail
+        </div>
+      </div>
+
+      <div class="py-4 px-6">
+        <div
+          class="mb-3 truncated-title text-h5 font-semibold text-800"
+          [innerHTML]="promotion.judul"
+        ></div>
+        <div
+          class="mb-3 text-h7 font-semibold text-600"
+          [innerHTML]="promotion.namaPerusahaan"
+        ></div>
+        <div class="flex justify-between items-center space-x-3">
+          <div class="text-body2 font-normal text-500">
+            {{promotion.tanggalTayangFrom | date:'dd MMMM YYYY'}}
+          </div>
+          <div>
+            <app-common-button-component
+              color="lazuli-50"
+              class="h-7 text-body1 ion-no-margin ion-no-padding text-neutral-0 rounded-[6px] w-auto"
+              (onClick)="onClick.emit(promotion)"
+            >
+              <span class="px-4 text-lazuli-500">Lihat Detail</span>
+            </app-common-button-component>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</div>

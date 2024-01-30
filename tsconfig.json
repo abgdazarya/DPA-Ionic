@@ -1,0 +1,117 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "paths": {
+      // Components path
+      "@components/auth": ["libs/components/auth/index.ts"],
+      "@components/common": ["libs/components/common/index.ts"],
+
+      "@components/news": ["libs/components/news/index.ts"],
+      "@components/astramagazine": ["libs/components/astramagazine/index.ts"],
+      "@components/dpa-tv": ["libs/components/dpa-tv/index.ts"],
+      "@components/job": ["libs/components/job/index.ts"],
+      "@components/promotion": ["libs/components/promotion/index.ts"],
+      "@components/laporan-investasi": [
+        "libs/components/laporan-investasi/index.ts"
+      ],
+
+      "@components/promo": ["libs/components/promo/index.ts"],
+      "@components/profile": ["libs/components/profile/index.ts"],
+      "@components/ruang-pensiun": ["libs/components/ruang-pensiun/index.ts"],
+
+      // Containers path
+      "@containers/auth": ["libs/containers/auth/index.ts"],
+      "@containers/common": ["libs/containers/common/index.ts"],
+      "@containers/news": ["libs/containers/news/index.ts"],
+      "@containers/astramagazine": ["libs/containers/astramagazine/index.ts"],
+      "@containers/dpa-tv": ["libs/containers/dpa-tv/index.ts"],
+      "@containers/job": ["libs/containers/job/index.ts"],
+      "@containers/promotion": ["libs/containers/promotion/index.ts"],
+      "@containers/laporan-investasi": [
+        "libs/containers/laporan-investasi/index.ts"
+      ],
+
+      // "@controllers/profile": ["libs/controllers/profile/index.ts"],
+      // "@controllers/menu": ["libs/controllers/menu/index.ts"],
+      // "@controllers/home": ["libs/controllers/home/index.ts"],
+
+      // Contollers path
+
+      "@controllers/auth": ["libs/controllers/auth/index.ts"],
+      "@controllers/profile": ["libs/controllers/profile/index.ts"],
+      "@controllers/menu": ["libs/controllers/menu/index.ts"],
+      "@controllers/home": ["libs/controllers/home/index.ts"],
+
+      "@controllers/menu-news": ["libs/controllers/news/index.ts"],
+      "@controllers/menu-dpa-tv": ["libs/controllers/dpa-tv/index.ts"],
+      "@controllers/menu-astramagazine": [
+        "libs/controllers/astramagazine/index.ts"
+      ],
+      "@controllers/menu-promotion": ["libs/controllers/promotion/index.ts"],
+      "@controllers/menu-job": ["libs/controllers/job/index.ts"],
+      "@controllers/menu-laporan-investasi": [
+        "libs/controllers/laporan-investasi/index.ts"
+      ],
+      "@controllers/quiz": ["libs/controllers/quiz/index.ts"],
+
+      // Stores path
+      // OLD
+      "@stores/auth": ["libs/stores/auth/index.ts"],
+      // OLD
+
+      "@stores/profile": ["libs/stores/profile/index.ts"],
+      "@stores/menu": ["libs/stores/menu/index.ts"],
+      "@stores/home": ["libs/stores/home/index.ts"],
+
+      "@stores/menu-news": ["libs/stores/news/index.ts"],
+      "@stores/menu-dpa-tv": ["libs/stores/dpa-tv/index.ts"],
+      "@stores/menu-astramagazine": ["libs/stores/astramagazine/index.ts"],
+      "@stores/menu-promotion": ["libs/stores/promotion/index.ts"],
+      "@stores/menu-job": ["libs/stores/job/index.ts"],
+      "@stores/menu-laporan-investasi": [
+        "libs/stores/laporan-investasi/index.ts"
+      ],
+
+      // Env path
+      "@environment/*": ["libs/environments/*"],
+
+      // Client path
+      "@clients": ["libs/clients/index.ts"],
+
+      "@transformer": ["libs/transformers/index.ts"],
+      "@shared": ["libs/shared/index.ts"],
+      "@assets/icons": ["libs/assets/icons/index.ts"],
+
+      "icons/*": ["libs/assets/icons/*"],
+      "images/*": ["libs/assets/images/*"],
+      "logos/*": ["libs/assets/logos/*"],
+      "patterns/*": ["libs/assets/patterns/*"]
+    },
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "es2020",
+    "lib": ["es2018", "es2019", "dom", "dom.iterable"],
+    "useDefineForClassFields": false
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "exclude": ["config"]
+}

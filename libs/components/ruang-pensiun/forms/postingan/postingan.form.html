@@ -1,0 +1,249 @@
+<form
+  novalidate
+  *ngIf="formGroup"
+  [formGroup]="formGroup"
+  (ngSubmit)="submit()"
+>
+  <div class="mb-8 flex items-center space-x-3 bg-neutral-100 p-4 rounded-4xl">
+    <app-common-icon-component name="attention-circle" />
+    <span class="text-800 text-body1"
+      >Tulisan yang kamu terbitkan akan di review dan diawasi oleh Dana Pensiun
+      Astra.</span
+    >
+  </div>
+
+  <ng-container *ngIf="formGroup.controls['judulThread']; let formControl">
+    <div class="mb-4">
+      <ion-input
+        mode="ios"
+        formControlName="judulThread"
+        placeholder="Tulis judul di sini"
+        class="border-neutral-400 p-3 rounded-xl text-h2 text-700"
+        style="--padding-start: 12px; --padding-end: 12px"
+      ></ion-input>
+      <small class="text-error-400" *ngIf="dataError['JUDUL']">
+        <ion-icon name="warning-outline"></ion-icon> {{dataError.JUDUL}}
+      </small>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="formGroup.controls['gambar']; let formControl">
+    <div
+      class="rounded-4xl border border-neutral-400 p-6 justify-center items-center mb-4"
+    >
+      <div class="flex space-x-1 justify-center items-center">
+        <ng-container *ngFor="let image of images; let index = index">
+          <div
+            (click)="handleOpenUploadFotoModal(index)"
+            class="h-[100px] w-[100px] bg-lazuli-50 rounded-4xl overflow-hidden"
+          >
+            <img
+              *ngIf="images[index]"
+              [src]="images[index]"
+              class="h-full w-full object-center object-cover"
+              alt=""
+            />
+
+            <div *ngIf="!images[index]" class="w-full h-full p-7">
+              <app-common-icon-component
+                name="tambah-gambar"
+                *ngIf="!loadingGetImg"
+                nativeClass="text-neutral-500 h-19 w-19 mx-auto"
+              />
+              <ion-spinner
+                style="z-index: 20"
+                *ngIf="loadingGetImg"
+                name="circular"
+              ></ion-spinner>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div
+        class="text-h5 text-600 flex space-x-1 mt-5 justify-center items-center"
+      >
+        Tambahkan Foto
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="formGroup.controls['deskripsi']; let formControl">
+    <!-- <ion-textarea
+      mode="ios"
+      formControlName="deskripsi"
+      placeholder="Mulai menulis cerita....."
+      class="border-neutral-400 p-3 rounded-xl text-h2 text-700 text-h4 mb-6 min-h-[150px] font-normal"
+      style="--padding-end: 12px; height: 150px;"
+      autoGrow="true"
+      #editorContent
+      id="editorContent"
+    ></ion-textarea> -->
+    <!-- <editor
+      class="border-neutral-400 rounded-xl text-h2 text-700 text-h4 mb-2 min-h-[200px] font-normal"
+      formControlName="deskripsi"
+      placeholder="Mulai menulis cerita....."
+      [init]="tinyMCEConfiguration"
+    ></editor> -->
+
+    <quill-editor
+      [style.height]="'200px'"
+      formControlName="deskripsi"
+      class="border-neutral-400 rounded-xl text-h2 text-700 text-h4 mb-2 min-h-[200px] font-normal"
+      placeholder="Mulai menulis cerita....."
+    >
+      <div quill-editor-toolbar>
+        <span class="ql-formats">
+          <select class="ql-align" [title]="'Aligment'">
+            <option selected></option>
+            <option value="center"></option>
+            <option value="right"></option>
+            <option value="justify"></option>
+          </select>
+        </span>
+        <!-- <span class="ql-formats">
+          <select class="ql-header">
+            <option value="1">Heading 1</option>
+            <option value="2">Heading 2</option>
+            <option value="3">Heading 3</option>
+            <option value="4">Heading 4</option>
+            <option value="5">Heading 5</option>
+            <option value="6">Heading 6</option>
+            <option selected>Normal</option>
+          </select>
+        </span> -->
+        <span class="ql-formats">
+          <button class="ql-list" value="ordered"></button>
+          <button class="ql-list" value="bullet"></button>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-bold" [title]="'Bold'"></button>
+          <button class="ql-italic" [title]="'Italic'"></button>
+          <button class="ql-underline" [title]="'Underline'"></button>
+        </span>
+      </div>
+
+      <div class="ql-container" style="border-width: 0">
+        <div class="ql-editor" [innerHTML]="byPassedHTMLString"></div>
+      </div>
+    </quill-editor>
+    <small class="text-error-400" *ngIf="dataError['DESKRIPSI']">
+      <ion-icon name="warning-outline"></ion-icon> {{dataError['DESKRIPSI']}}
+    </small>
+    <!-- <div class="bg-neutral-75 flex items-center p-3 mb-4 space-x-10" *ngIf="!screenSizeService.isDesktopResolution()">
+      <app-common-icon-component
+        (click)="executeCommand('bold')"
+        name="text-area-capitalize"
+        nativeClass="w-6 h-6 text-neutral-500"
+      />
+      <app-common-icon-component
+        (click)="executeCommand('bold')"
+        name="text-area-bold"
+        nativeClass="w-6 h-6 text-neutral-500"
+      />
+      <app-common-icon-component
+        (click)="executeCommand('bold')"
+        name="text-area-string"
+        nativeClass="w-6 h-6 text-neutral-500"
+      />
+      <app-common-icon-component
+        (click)="executeCommand('insertOrderedList')"
+        name="text-area-list-dot"
+        nativeClass="w-6 h-6 text-neutral-500"
+      />
+      <app-common-icon-component
+        (click)="executeCommand('insertUnorderedList')"
+        name="text-area-list-number"
+        nativeClass="w-6 h-6 text-neutral-500"
+      />
+    </div>
+
+    <div class="bg-neutral-75 flex items-center p-6 mb-4 space-x-10" *ngIf="screenSizeService.isDesktopResolution()">
+      <app-common-icon-component
+        (click)="executeCommand('bold')"
+        name="text-area-capitalize"
+        nativeClass="w-10 h-10 text-neutral-500"
+      />
+      <app-common-icon-component
+        (click)="executeCommand('bold')"
+        name="text-area-bold"
+        nativeClass="w-10 h-10 text-neutral-500"
+      />
+      <app-common-icon-component
+        (click)="executeCommand('bold')"
+        name="text-area-string"
+        nativeClass="w-10 h-10 text-neutral-500"
+      />
+      <app-common-icon-component
+        (click)="executeCommand('insertOrderedList')"
+        name="text-area-list-dot"
+        nativeClass="w-10 h-10 text-neutral-500"
+      />
+      <app-common-icon-component
+        (click)="executeCommand('insertUnorderedList')"
+        name="text-area-list-number"
+        nativeClass="w-10 h-10 text-neutral-500"
+      />
+    </div> -->
+  </ng-container>
+
+  <ng-container *ngIf="formGroup.controls['kategori']; let formControl">
+    <ion-item class="form-group hidden opacity-0" lines="none">
+      <div class="form-group-control mb-4">
+        <ion-label class="form-label m-0">
+          <span>Kategori Tulisan</span>
+        </ion-label>
+        <div class="form-control">
+          <app-select
+            controlName="kategori"
+            placeholder="Kategori"
+            disabled="true"
+            class="border-neutral-400 rounded-xl text-body2 text-700"
+            style="--padding-start: 12px; --padding-end: 12px"
+            [options]="generateOptionKategori(kategoriPensiun)"
+          />
+        </div>
+        <small class="text-error-400">
+          <ng-container *ngIf="formControl.errors?.['required']">
+            Kategori wajib diisi.
+          </ng-container>
+        </small>
+      </div>
+    </ion-item>
+  </ng-container>
+
+  <!-- <ng-container *ngIf="formGroup.controls['kategori']; let formControl">
+    <ion-item class="form-group" [counter]="true" lines="none">
+      <div class="form-group-control mb-4">
+        <ion-label class="form-label m-0">
+          <span>Kategori Tulisan</span>
+        </ion-label>
+        <div class="form-control">
+          <ion-input
+            mode="ios"
+            [readonly]="true"
+            formControlName="kategori"
+            placeholder="Kategori"
+            class="text-body2"
+          ></ion-input>
+        </div>
+        <small class="text-error-400">
+          <ng-container *ngIf="formControl.errors?.['required']">
+            wajib diisi.
+          </ng-container>
+        </small>
+      </div>
+    </ion-item>
+  </ng-container> -->
+
+  <input type="submit" class="hidden" />
+</form>
+
+<app-common-alert-component
+  *ngIf="errorFile"
+  [duration]="3000"
+  type="danger"
+  [desc]="errorFile"
+  [isMobile]="isMobile"
+>
+</app-common-alert-component>

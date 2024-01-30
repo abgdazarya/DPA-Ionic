@@ -1,0 +1,11 @@
+<div class="w-vw h-full bg-transparent bottom-0 flex flex-col justify-end">
+  <div
+    class="w-full h-full absolute left-0 top-0 z-1 cursor-pointer"
+    (click)="handleBack()"
+  ></div>
+  <div
+    class="w-full bg-white min-h-[150px] relative z-[2] p-8 px-5 rounded-ss-2xl rounded-tr-2xl"
+  >
+    <share-media-list [contentData]="getContentPromo()"></share-media-list>
+  </div>
+</div>

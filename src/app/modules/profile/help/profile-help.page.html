@@ -1,0 +1,202 @@
+<div
+  class="mb-10 md:shadow-xl md-max:pt-4 bg-bg-0 rounded-xl relative md:bg-[url('/patterns/help.png')] bg-bottom bg-[length:100%_250px] bg-no-repeat"
+>
+  <div class="md:p-8 px-4">
+    <div class="flex justify-between items-center">
+      <div class="hidden md:block">
+        <div class="mb-1.5 text-h3 text-neutral-800">Pusat Bantuan DPA</div>
+        <div class="text-[18px] text-700">
+          Kamu bisa mencari bantuan yang kamu inginkan.
+        </div>
+      </div>
+      <form [formGroup]="faqForm" class="w-full md:w-auto">
+        <div
+          class="relative flex items-center rounded-xl md:w-80 w-full mb-6 h-[44px]"
+        >
+          <app-common-icon-component
+            name="magnifier-search-1"
+            class="absolute left-3 top-[14px]"
+            nativeClass="w-5 h-5 text-neutral-600"
+          ></app-common-icon-component>
+          <ion-input
+            placeholder="Cari yang ingin kamu tanyakan"
+            class="text-body2 ion-no-padding text-800"
+            class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+            style="--padding-start: 40px"
+            controlName="keyword"
+            fill="outline"
+            (input)="onSearchChange($event)"
+          ></ion-input>
+          <!-- <ion-input
+            formControlName="hp"
+            appNumberInput
+            placeholder="Masukkan nomor ponsel barumu"
+            class="border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+            style="--padding-start: 12px; --padding-end: 12px"
+            type="tel"
+            fill="outline"
+            inputmode="numeric"
+            minlength="8"
+          ></ion-input> -->
+        </div>
+        <!-- <app-select
+          label="Pilih Kategori"
+          controlName="category"
+          class="w-full md:hidden rounded-xl custom"
+          [options]="faqOptions"
+          [isCustom]="true"
+          [interfaceOptions]="{ cssClass: 'popper-select-custom' }"
+        ></app-select> -->
+        <select-popup
+          *ngIf="screenSizeService.isMobileResolution()"
+          [onChange]="categoryDropdownChange"
+          controlName="category"
+          [selected]="activeValue"
+          [options]="faqOptions"
+          [label]="'Pilih Kategori'"
+          [title]="'Kategori'"
+          [desc]="'Pilih Kategori yang ingin dilihat'"
+          [className]="'md:hidden border border-neutral-500 p-3 flex space-x-3 items-center rounded-xl w-full mb-3 h-[44px]'"
+        ></select-popup>
+      </form>
+    </div>
+
+    <hr class="border-none my-3" />
+
+    <div class="text-h3 font-bold text-900 text-center hidden md:block">
+      Tanya Jawab
+    </div>
+
+    <hr class="border-none my-3" />
+
+    <div
+      class="bg-bg-0 md:border md:rounded-2xl md:shadow-xl overflow-hidden md:mb-28 mb-20"
+    >
+      <ion-segment
+        [scrollable]="true"
+        [value]="activeValue"
+        (ionChange)="categoryChange($event)"
+        *ngIf="!screenSizeService.isMobileResolution()"
+      >
+        <ion-segment-button
+          class="text-neutral-800 font-semibold text-[18px] capitalize"
+          *ngFor="let option of faqOptions"
+          [value]="option.id"
+          style="--color-hover: #474d66"
+        >
+          {{option.label}}
+        </ion-segment-button>
+      </ion-segment>
+      <div class="md:px-6 px:0">
+        <app-accordion
+          [accordions]="(response$ | async| accordionTitleTransformer:'pertanyaan')"
+          accordionClass="xs:font-normal"
+        >
+          <ng-template #templateRef let-index="index">
+            <ng-container
+              *ngFor="let item of (response$ | async ); let i = index"
+            >
+              <ng-container *ngIf="index === i">
+                <ion-textarea
+                  class="text-neutral-800 custom-detail bg-blank"
+                  [autoGrow]="true"
+                  [readonly]="true"
+                  [value]="item.jawaban"
+                >
+                </ion-textarea>
+              </ng-container>
+            </ng-container>
+          </ng-template>
+        </app-accordion>
+      </div>
+    </div>
+
+    <div
+      class="text-[20px] text-700 font-semibold mb-6 hidden md:block"
+      *ngIf="!screenSizeService.isMobileResolution()"
+    >
+      Halo DPA
+    </div>
+
+    <div class="relative overflow-x-auto h-max">
+      <div
+        class="justify-between flex space-x-10"
+        *ngIf="!screenSizeService.isMobileResolution()"
+      >
+        <div
+          *ngFor="let item of (hubDpa$ | async)"
+          (click)="handleNavigateItem(item)"
+        >
+          <div
+            class="bg-bg-0 rounded-[24px] w-16 h-16 flex justify-center items-center mb-3"
+          >
+            <img [src]="item.icon" class="w-8 h-8" alt="" />
+          </div>
+          <div class="text-body2 text-700 text-center">{{item.channel}}</div>
+        </div>
+      </div>
+
+      <div
+        class="justify-between flex px-4"
+        *ngIf="screenSizeService.isMobileResolution() && !(isWeb$ | async)"
+      >
+        <div
+          *ngFor="let item of (hubDpa$ | async)"
+          (click)="handleNavigateItem(item)"
+        >
+          <div
+            class="cursor-pointer bg-bg-0 rounded-full border border-neutral-200 w-8 h-8 flex justify-center items-center mb-3"
+          >
+            <img [src]="item.icon" class="w-5 h-5" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div *ngIf="screenSizeService.isMobileResolution()" class="w-full">
+      <div class="w-full p-4 flex justify-center items-center flex-col">
+        <img class="max-w-[200px] w-full mb-5" src="logos/logo.png" alt="" />
+        <span class="text-center text-800">
+          Download aplikasi myDPA sekarang!</span
+        >
+      </div>
+
+      <div class="w-full p-4 flex justify-center items-center">
+        <a href="" class="w-28 mr-1">
+          <img class="w-full" src="logos/google-store.png" alt="" />
+        </a>
+        <a href="" class="w-28">
+          <img class="w-full" src="logos/apple-store.png" alt="" />
+        </a>
+      </div>
+      <div class="justify-between flex p-4">
+        <a
+          *ngFor="let item of iconContact"
+          href="item.href"
+          target="item.target"
+        >
+          <div
+            class="bg-bg-0 rounded-[24px] w-8 h-8 flex justify-center items-center mb-3"
+          >
+            <img
+              [src]="item.img"
+              class="w-8 h-8 p-1 border-[1px] border-[#D5EBFF] rounded-[100%]"
+              alt=""
+            />
+          </div>
+        </a>
+      </div>
+      <div class="w-full p-4">
+        <div class="flex justify-center text-heading-6 font-bold text-800 mb-2">
+          <span>DANA PENSIUN ASTRA</span>
+        </div>
+        <div class="flex justify-center text-body-2 text-800">
+          <span class="text-center"
+            >Copyright © 2013 Dana Pensiun Astra. Dana Pensiun Astra Berizin dan
+            Diawasi oleh Otoritas Jasa Keuangan</span
+          >
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

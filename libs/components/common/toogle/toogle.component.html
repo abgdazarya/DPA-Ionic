@@ -1,0 +1,16 @@
+<app-common-icon-component
+  *ngIf="isToggled"
+  name="toggle-on-filled"
+  nativeClass="w-10 h-10 {{
+    disabled ? 'text-lazuli-100' : 'text-lazuli-400'
+  }} transition-all duration-300"
+  (click)="toggleNotif(!isToggled)"
+></app-common-icon-component>
+<app-common-icon-component
+  *ngIf="!isToggled"
+  name="toggle-off-filled"
+  nativeClass="w-10 h-10 {{
+    disabled ? 'text-neutral-100' : 'text-neutral-500'
+  }} transition-all duration-300"
+  (click)="toggleNotif(!isToggled)"
+></app-common-icon-component>

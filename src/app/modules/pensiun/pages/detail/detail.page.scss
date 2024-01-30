@@ -1,0 +1,14 @@
+:host {
+  .overlay {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}
+
+ion-content {
+  --offset-bottom: auto!important;
+  --overflow: hidden;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

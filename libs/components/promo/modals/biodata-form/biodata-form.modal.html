@@ -1,0 +1,169 @@
+<profile-header-component
+  *ngIf="screenSizeService.isMobileNativeResolution()"
+  [headerTitle]="'Promosi'"
+  [onBack]="handleBack"
+  [theme]="theme"
+  [rightBtn]="rightBtn"
+  [rightIcon]="'share-filled'"
+  class="sm-max:absolute z-50 w-full"
+></profile-header-component>
+
+<!-- <ion-header
+  *ngIf="(theme == 'normal' && screenSizeService.isMobileNativeResolution())"
+  class="ion-background-transparent ion-no-border bg-transparent"
+>
+  <profile-header-component
+    [headerTitle]="'Promosi'"
+    [onBack]="handleBack"
+  ></profile-header-component>
+</ion-header> -->
+
+<div
+  (scroll)="onContentScroll($event)"
+  class="p-8 sm-max:p-0 sm-max:pb-8 overflow-y-auto mx-auto md:mx-0 flex-1 h-full flex flex-col justify-between md:w-[29rem]"
+>
+  <div
+    class="flex w-full justify-end z-10 md:mb-5"
+    *ngIf="!screenSizeService.isMobileNativeResolution()"
+  >
+    <ion-button
+      mode="ios"
+      color="blank"
+      size="small"
+      class="shadow-none p-0 m-0"
+      (click)="handleClose()"
+    >
+      <app-common-icon-component name="close" />
+    </ion-button>
+  </div>
+
+  <form
+    novalidate
+    *ngIf="formGroup"
+    [formGroup]="formGroup"
+    class="flex flex-col justify-center"
+  >
+    <img [src]="promoImg" class="md:hidden mb-6 w-full mx-auto" alt="" />
+    <div class="wrapper-forms sm-max:px-4">
+      <div class="md:text-center text-h4 md:text-h3 text-900 mb-1.5">
+        Nikmati Promo yuk!
+        <!-- Pernyataan Ketertarikan -->
+      </div>
+      <div class="md:text-center text-700 text-[18px] mb-8">
+        <!-- Terima kasih atas ketertarikan Anda pada promosi ini. Sebagai tindak
+        lanjut, kami akan mengirimkan data no HP & alamat email Anda kepada mitra
+        penyelenggara promosi. Anda dapat mengubah data di bawah ini sesuai yang
+        Anda kehendaki. -->
+        Isi data dirimu untuk mengikuti promosi
+      </div>
+
+      <div class="mb-4">
+        <div class="text-body2 text-neutral-800 mb-1">Nama Lengkap</div>
+        <ion-input
+          placeholder="Masukkan Nama Lengkap"
+          class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+          style="--padding-start: 12px; --padding-end: 12px"
+          formControlName="namaPeserta"
+          fill="outline"
+        ></ion-input>
+      </div>
+
+      <div class="mb-4">
+        <div class="text-body2 text-neutral-800 mb-1">Email</div>
+        <ion-input
+          placeholder="Masukkan Email"
+          class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+          style="--padding-start: 12px; --padding-end: 12px"
+          formControlName="email"
+          fill="outline"
+        ></ion-input>
+      </div>
+
+      <div class="mb-4">
+        <div class="text-body2 text-neutral-800 mb-1">Nomor Ponsel</div>
+        <ion-input
+          placeholder="Masukkan Nomor Ponsel"
+          class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+          style="--padding-start: 12px; --padding-end: 12px"
+          type="tel"
+          appNumberInput
+          inputmode="numeric"
+          minlength="8"
+          formControlName="noHp"
+          fill="outline"
+        ></ion-input>
+      </div>
+
+      <div class="mb-4">
+        <div class="text-body2 text-neutral-800 mb-1">Mitra</div>
+        <ion-input
+          placeholder="Astra Credit Company"
+          class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700 bg-100"
+          style="--padding-start: 12px; --padding-end: 12px"
+          formControlName="perusahaan"
+          fill="outline"
+          [readonly]="true"
+        ></ion-input>
+      </div>
+
+      <div class="mb-4">
+        <div class="text-body2 text-neutral-800 mb-1">Kode Spesial Promosi</div>
+        <div
+          class="flex items-center justify-between border rounded-xl mb-1"
+          [class.border-neutral-400]="isError == null"
+          [class.border-error-400]="isError"
+          [class.border-success-400]="isSucces"
+        >
+          <app-common-icon-component
+            *ngIf="isSucces"
+            class="text-success-500"
+            nativeClass="h-6 w-6 mr-1 ml-3 text-success-500"
+            name="success"
+          />
+          <ion-input
+            [(ngModel)]="promoCode"
+            placeholder="Kode Spesial Promosi"
+            class="primary-input text-body2 text-neutral-800 !border-none"
+            style="
+              --padding-start: 12px;
+              --padding-end: 12px;
+              --border-width: 0;
+            "
+            formControlName="kodePromosi"
+            fill="outline"
+          ></ion-input>
+
+          <div
+            class="text-body2  bg-50 {{ promoCode && promoCode.length > 0 ? 'text-lazuli-500':'text-600'}}  pr-3"
+            (click)="handleUsePromoCode()"
+          >
+            Pakai
+          </div>
+        </div>
+        <div class="text-body3">
+          <span class="text-error-400" *ngIf="isError"
+            >Kode Spesial Promosi tidak sesuai</span
+          >
+          <span class="text-success-400" *ngIf="isSucces"
+            >Kode Spesial Promosi berhasil dipakai</span
+          >
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="sm-max:px-4">
+    <!-- [disabled]="!(isError == false)" -->
+
+    <ion-button
+      [disabled]="!formGroup.valid"
+      (click)="handleSubmit()"
+      mode="ios"
+      class="w-full h-11 font-bold rounded-lg"
+    >
+      <span class="px-4">
+        <!-- Ya, Saya Tertarik -->
+        Ya, Saya Tertarik
+      </span>
+    </ion-button>
+  </div>
+</div>

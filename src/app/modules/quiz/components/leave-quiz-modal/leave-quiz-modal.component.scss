@@ -1,0 +1,56 @@
+span {
+    --ion-font-family: "BalooCustom";
+    font-family: "BalooCustom";
+    font-weight: 800;
+    line-height: 19px;
+}
+
+.title {
+    color: #633F5C;
+    font-size: 28px;
+    line-height: 30px;
+    margin-top: -80px;
+    text-align: center;
+}
+
+.subtitle {
+    --ion-font-family: "BalooCustom";
+    font-family: "BalooCustom";
+    color: #633F5C;
+    font-size: 15px;
+    text-align: center;
+}
+
+.limit-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+ion-button {
+    width: 100%;
+    min-width: 250px;
+}
+  
+@media screen and (max-width: 990px) {
+    ion-button {
+        min-width: 150px;
+        max-width: 300px;
+        white-space: normal;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        max-height: 3.6em;
+        line-height: 1.8em;
+        text-overflow: ellipsis;
+    }
+}
+
+.pilih-quiz {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

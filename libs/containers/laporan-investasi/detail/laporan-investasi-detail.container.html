@@ -1,0 +1,401 @@
+<section>
+  <ng-container *ngIf="loading$ | async; else dataTpl">
+    <div class="hidden md:block">
+      <div
+        class="grid grid-cols-1 lg:grid-cols-3 md:gap-x-8 gap-y-6 md:gap-y-0"
+      >
+        <div class="col-span-2">
+          <div class="bg-bg-0 rounded-4xl p-8 box-shadow">
+            <div class="relative mb-8">
+              <ion-button
+                (click)="handleSlide('next')"
+                color="none"
+                class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -right-7 z-20"
+              >
+                <img
+                  src="logos/chevron-right-circle.png"
+                  class="w-10 h-10"
+                  alt=""
+                />
+              </ion-button>
+              <ion-button
+                (click)="handleSlide('prev')"
+                color="none"
+                class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -left-7 z-20"
+              >
+                <img
+                  src="logos/chevron-left-circle.png"
+                  class="w-10 h-10"
+                  alt=""
+                />
+              </ion-button>
+
+              <swiper
+                #slides
+                [loop]="true"
+                [initialSlide]="1"
+                [slidesPerView]="1"
+                [spaceBetween]="0"
+              >
+                <ng-container *ngFor="let i of [].constructor(5);">
+                  <ng-template swiperSlide>
+                    <ion-skeleton-text
+                      [animated]="true"
+                      class="h-[351px] w-full rounded-4xl"
+                    ></ion-skeleton-text>
+                  </ng-template>
+                </ng-container>
+              </swiper>
+            </div>
+
+            <div class="mb-3">
+              <ion-skeleton-text
+                [animated]="true"
+                class="h-8 w-1/4"
+              ></ion-skeleton-text>
+            </div>
+            <div class="mb-3">
+              <ion-skeleton-text
+                [animated]="true"
+                class="h-12 w-full"
+              ></ion-skeleton-text>
+            </div>
+            <div class="mb-10">
+              <div class="mb-1.5">
+                <ion-skeleton-text
+                  [animated]="true"
+                  class="h-7 w-1/3"
+                ></ion-skeleton-text>
+              </div>
+              <div class="mb-4">
+                <ion-skeleton-text
+                  [animated]="true"
+                  class="h-20 w-full"
+                ></ion-skeleton-text>
+              </div>
+              <div>
+                <ion-skeleton-text
+                  [animated]="true"
+                  class="h-6 w-1/2"
+                ></ion-skeleton-text>
+              </div>
+            </div>
+
+            <div class="mb-10">
+              <div class="mb-1.5">
+                <ion-skeleton-text
+                  [animated]="true"
+                  class="h-7 w-1/3"
+                ></ion-skeleton-text>
+              </div>
+              <div>
+                <ion-skeleton-text
+                  [animated]="true"
+                  class="h-16 w-full"
+                ></ion-skeleton-text>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-1">
+          <div class="bg-bg-0 rounded-4xl mb-4 box-shadow p-8">
+            <div>
+              <ion-skeleton-text
+                [animated]="true"
+                class="h-8 w-full"
+              ></ion-skeleton-text>
+            </div>
+          </div>
+          <div class="bg-bg-0 rounded-4xl box-shadow px-8 py-6">
+            <div>
+              <ion-skeleton-text
+                [animated]="true"
+                class="h-5 w-full"
+              ></ion-skeleton-text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="md:hidden bg-white py-4">
+      <div class="h-max">
+        <div class="mb-6">
+          <swiper
+            #slides
+            [slidesPerView]="1.1"
+            [spaceBetween]="8"
+            [slidesOffsetAfter]="16"
+            [slidesOffsetBefore]="16"
+          >
+            <ng-container *ngFor="let i of [].constructor(5);">
+              <ng-template swiperSlide>
+                <ion-skeleton-text
+                  [animated]="true"
+                  class="h-[148px] w-full rounded-2xl"
+                ></ion-skeleton-text>
+              </ng-template>
+            </ng-container>
+          </swiper>
+        </div>
+        <div class="px-4">
+          <div class="mb-4">
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-10 w-full rounded-2xl"
+            ></ion-skeleton-text>
+          </div>
+          <div class="mb-3">
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-1/4"
+            ></ion-skeleton-text>
+          </div>
+          <div class="mb-3">
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-12 w-full"
+            ></ion-skeleton-text>
+          </div>
+          <div class="mb-10">
+            <div class="mb-1.5">
+              <ion-skeleton-text
+                [animated]="true"
+                class="h-7 w-1/3"
+              ></ion-skeleton-text>
+            </div>
+            <div class="mb-4">
+              <ion-skeleton-text
+                [animated]="true"
+                class="h-20 w-full"
+              ></ion-skeleton-text>
+            </div>
+            <div>
+              <ion-skeleton-text
+                [animated]="true"
+                class="h-6 w-1/2"
+              ></ion-skeleton-text>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <div class="mb-1.5">
+              <ion-skeleton-text
+                [animated]="true"
+                class="h-7 w-1/3"
+              ></ion-skeleton-text>
+            </div>
+            <div>
+              <ion-skeleton-text
+                [animated]="true"
+                class="h-16 w-full"
+              ></ion-skeleton-text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #dataTpl>
+    <ng-container *ngIf="promotion$ | async as promotion">
+      <div class="hidden md:block">
+        <div
+          class="grid grid-cols-1 lg:grid-cols-3 md:gap-x-8 gap-y-6 md:gap-y-0"
+        >
+          <div class="col-span-1 lg:col-span-2">
+            <div class="bg-bg-0 rounded-4xl p-8 box-shadow">
+              <div class="relative mb-8">
+                <ion-button
+                  (click)="handleSlide('next')"
+                  color="none"
+                  class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -right-7 z-20"
+                >
+                  <img
+                    src="logos/chevron-right-circle.png"
+                    class="w-10 h-10"
+                    alt=""
+                  />
+                </ion-button>
+                <ion-button
+                  (click)="handleSlide('prev')"
+                  color="none"
+                  class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -left-7 z-20"
+                >
+                  <img
+                    src="logos/chevron-left-circle.png"
+                    class="w-10 h-10"
+                    alt=""
+                  />
+                </ion-button>
+
+                <swiper
+                  #slides
+                  [loop]="true"
+                  [initialSlide]="5"
+                  [slidesPerView]="1"
+                  [spaceBetween]="0"
+                >
+                  <ng-container *ngFor="let bannerUri of promotion.bannersUri">
+                    <ng-template swiperSlide>
+                      <app-promotion-banner-web-card
+                        [bannerUri]="bannerUri"
+                      ></app-promotion-banner-web-card>
+                    </ng-template>
+                  </ng-container>
+                </swiper>
+              </div>
+
+              <div
+                class="mb-3 text-h3 font-semibold text-600"
+                [innerHTML]="promotion.namaKategori"
+              ></div>
+              <div
+                class="mb-3 text-h2 font-semibold text-800"
+                [innerHTML]="promotion.judul"
+              ></div>
+              <div class="mb-10">
+                <div class="mb-1.5 text-h4 font-semibold text-800">
+                  Deskripsi
+                </div>
+                <div
+                  class="mb-4 text-body1 font-normal text-800"
+                  [innerHTML]="promotion.detailPromo"
+                ></div>
+
+                <!-- (click)="handleClose()" -->
+  
+                <ion-button
+                  class="m-0 p-0 ion-no-padding ion-no-margin h-7 text-h5"
+                  mode="ios"
+                  fill="clear"
+                  size="small"
+                  (click)="handleOpenPromo(promotion)"
+                >
+                  Klik disini untuk informasi lebih lanjut
+                </ion-button>
+              </div>
+
+              <div class="mb-10">
+                <div class="mb-1.5 text-h4 font-semibold text-800">
+                  Spesifikasi
+                </div>
+                <div
+                  class="text-body1 font-normal text-800"
+                  [innerHTML]="promotion.spesifikasiPromo"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-1">
+            <div class="bg-bg-0 rounded-4xl mb-4 box-shadow p-8" (click)="handleOpenPromoBiodataFormModal(promotion)">
+              <div>
+                <app-common-button-component
+                  color="lazuli-50"
+                  class="m-0 p-0 h-10 text-h7 rounded-2xl w-full"
+                >
+                  <span class="text-lazuli-500">Tertarik</span>
+                </app-common-button-component>
+              </div>
+            </div>
+            <div class="bg-bg-0 rounded-4xl box-shadow px-8 py-6">
+              <div>
+                <div class="flex space-x-2 items-center">
+                  <div class="text-h7 font-semibold text-800 mr-2">Bagikan</div>
+                  <ng-container *ngFor="let shareButton of shareButtons">
+                    <ng-container *ngIf="shareButton">
+                      <!-- (onClick)="handleOpenShare(shareButton)" -->
+
+                      <app-common-button-component
+                        color="white"
+                        class="m-0 p-0 ion-no-padding h-8 w-8 rounded-full bg-white box-shadow-shared-button"
+                      >
+                        <img
+                          [src]="shareButton.imageSrc"
+                          class="w-full h-full p-1 m-auto"
+                          alt="shareButton.type"
+                        />
+                      </app-common-button-component>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="md:hidden bg-white py-4">
+        <div class="h-max">
+          <div class="mb-6">
+            <swiper
+              #slides
+              [slidesPerView]="1.1"
+              [spaceBetween]="8"
+              [slidesOffsetAfter]="16"
+              [slidesOffsetBefore]="16"
+            >
+              <ng-container *ngFor="let bannerUri of promotion.bannersUri">
+                <ng-template swiperSlide>
+                  <app-promotion-banner-mobile-card
+                    [bannerUri]="bannerUri"
+                  ></app-promotion-banner-mobile-card>
+                </ng-template>
+              </ng-container>
+            </swiper>
+          </div>
+          
+          <div class="px-4">
+            <div>
+              <app-common-button-component
+                color="lazuli-50" (click)="handleOpenPromoBiodataFormModal(promotion)"
+                class="m-0 p-0 h-10 text-h7 rounded-2xl w-full"
+              >
+                <span class="text-lazuli-500">Tertarik</span>
+              </app-common-button-component>
+            </div>
+
+            <div
+              class="mb-3 mt-4 text-[16px] font-semibold text-600"
+              [innerHTML]="promotion.namaKategori"
+            ></div>
+            <div
+              class="mb-3 text-[16px] font-semibold text-800"
+              [innerHTML]="promotion.judul"
+            ></div>
+            <div class="mb-10">
+              <div class="mb-1.5 text-[14px] font-semibold text-800">
+                Deskripsi
+              </div>
+              <div
+                class="mb-4 text-body1 text-[14px] font-normal text-800"
+                [innerHTML]="promotion.detailPromo"
+              ></div>
+  
+              <!-- (click)="handleClose()" -->
+  
+              <ion-button
+                class="m-0 p-0 ion-no-padding text-[14px] ion-no-margin h-7"
+                mode="ios"
+                fill="clear"
+                size="small"
+                (click)="handleOpenPromo(promotion)"
+              >
+                Klik disini untuk informasi lebih lanjut
+              </ion-button>
+            </div>
+  
+            <div class="mb-10">
+              <div class="mb-1.5 text-[14px] font-semibold text-800">
+                Spesifikasi
+              </div>
+              <div
+                class="text-body1 text-[14px] font-normal text-800"
+                [innerHTML]="promotion.spesifikasiPromo"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</section>

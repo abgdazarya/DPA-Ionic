@@ -1,0 +1,21 @@
+<div
+  class="grid grid-cols-8 items-center gap-2 md:gap-4 py-2 md:py-3 px-2 md:px-2"
+  [class]="isMe ? 'bg-lazuli-600 rounded-[30px] mt-1.5 md:mt-2' : ''"
+>
+  <img
+    class="w-7 md:w-auto"
+    *ngIf="badge <= 5"
+    [src]="badge <= 5 ? 'images/badge-' + badge + '.svg' : ''"
+    alt=""
+  />
+  <div
+    *ngIf="badge > 5"
+    class="w-4 h-4 md:w-7 md:h-7 rounded-[50%] bg-[#DCBE9E] text-xs md:text-[16px] font-bold text-[#633F5C] flex items-center justify-center"
+  >
+    {{ badge }}
+  </div>
+  
+  <img src="{{verify == 'Y' ? 'images/user-bg.svg':'images/user-unverified.png'}}" alt="" />
+  <h2 class="text-0 text-xs md:text-2xl col-span-4 line-clamp-1">{{ name ? decryptUser(name):'-' }}</h2>
+  <h2 class="text-0 text-xs md:text-2xl col-span-2 text-right">{{ point }}</h2>
+</div>

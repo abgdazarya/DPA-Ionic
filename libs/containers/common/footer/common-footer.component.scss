@@ -1,0 +1,9 @@
+.iconQuiz {
+  --background: transparent;
+  background: none;
+  ::ng-deep {
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}

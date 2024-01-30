@@ -1,0 +1,64 @@
+<ion-header
+  *ngIf="templateService.headerShow$ | async"
+  class="ion-no-box-shadow ion-no-border ion-rounded-header"
+  [class]="templateService.ionHeaderClass$ | async"
+>
+  <ion-toolbar class="ion-no-padding">
+    <app-common-header-container
+      [useSecondaryHeader]="templateService.useSecondaryHeader$ | async"
+      [headerContainerClass]="templateService.headerContainerClass$ | async"
+      [pageTitle]="templateService.pageTitle$ | async"
+      [secondaryHeaderClass]="templateService.secondaryHeaderClass$ | async"
+      [onBack]="templateService.onBack$ | async"
+      [rightBtnClick]="templateService.rightBtnClick$ | async"
+      [rightIcon]="templateService.rightIcon$ | async"
+      [rightLabel]="templateService.rightLabel$ | async"
+    >
+    </app-common-header-container>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content
+  #pageContainerMain
+  class="ion-no-padding page-container-main ion-background-white ion-no-keyboard-offset"
+  [class]="templateService.ionContentClass$ | async"
+  [scrollEvents]="true"
+>
+  <router-outlet></router-outlet>
+
+  <div
+    *ngIf="templateService.footerShow$ | async"
+    class=" md:container md:mx-6 md:mx-auto bg-white {{templateService.footerClass$ | async}}"
+  >
+    <hr class="mb-10 mt-5 hidden md:block" />
+    <app-common-footer-container></app-common-footer-container>
+  </div>
+
+  <!-- <wa-floating-button
+    class="hidden md:block"
+    *ngIf="waUrl"
+    [link]="waUrl"
+  ></wa-floating-button> -->
+
+  <div
+    class="bottom-5 fixed right-6 md:right-20 hidden md:block text-right mt-10 z-50"
+  >
+    <ion-button
+      *ngIf="waUrl"
+      class="w-20 h-20 z-50 rounded-full bg-transparent !p-0 ion-no-padding"
+      nativeClass="bg-transparent !p-0 ion-no-padding"
+    >
+      <a target="_blank" [href]="waUrl">
+        <img src="logos/wa.png" class="w-20 h-20 object-contain" alt="" />
+      </a>
+    </ion-button>
+  </div>
+
+  <div *ngIf="templateService.floatingButton$ | async" class="md:hidden">
+    <wa-floating-button *ngIf="waUrl" [link]="waUrl"></wa-floating-button>
+    <quiz-floating-button
+      *ngIf="templateService.iconQuizShow$ | async"
+      (onClick)="navigateToQuiz()"
+    ></quiz-floating-button>
+  </div>
+</ion-content>

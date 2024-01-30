@@ -1,0 +1,19 @@
+<div class="flex flex-col justify-items-center bg-transparent sm-max:h-full">
+  <div
+    class="p-2 overflow-y-auto mx-auto my-auto md:mx-0 w-full ion-no-scrollbar bg-transparent"
+  >
+    <div class="flex w-full justify-end z-10 mb-4">
+      <app-common-icon-component
+        (click)="handleClose()"
+        name="close"
+        nativeClass="w-6 h-6 text-lazuli-500 bg-white cursor-pointer rounded-full"
+      />
+    </div>
+
+    <div class="flex flex-col justify-center bg-transparent">
+      <div class="w-full">
+        <img [src]="bannerUri" class="h-auto w-full" alt="" />
+      </div>
+    </div>
+  </div>
+</div>

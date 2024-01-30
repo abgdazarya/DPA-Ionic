@@ -1,0 +1,137 @@
+<app-header-second
+  [showClose]="isMobile()"
+  [isModal]="true"
+></app-header-second>
+<ion-content class="ion-background-white">
+  <div class="block md:px-8 px-2">
+    <img
+      class="mx-auto mt-8 mb-4 md:hidden"
+      width="48"
+      src="images/lock.png"
+      alt=""
+      srcset=""
+    />
+    <p
+      class="text-h4 md:text-h3 text-center font-bold text-lg text-neutral-800"
+    >
+      6 Digit PIN Dana Pensiun Astra kamu
+    </p>
+    <p
+      class="text-body-2 md:text-body1 text-center text-sm text-neutral-700 mb-12"
+    >
+      Masukkan 6 Digit PIN Dana Pensiun Astra
+    </p>
+
+    <!-- <div class="md:mx-10 mx-4">
+      <div class="mb-10">
+        <div class="mb-1 flex justify-between items-center space-x-5">
+          <ion-input
+            #firstInput
+            (ionInput)="handleChangeValue(0, $event)"
+            (keydown)="handleDeleteValue(0, $event)"
+            type="tel"
+            maxlength="1"
+            placeholder="*"
+            class="text-800 border-b-2 {{isError ? 'border-error-400' :'border-neutral-400'}}  text-h2 text-center"
+            style="--padding-start: 6px; --padding-end: 6px"
+          ></ion-input>
+          <ion-input
+            #secondInput
+            (ionInput)="handleChangeValue(1, $event)"
+            (keydown)="handleDeleteValue(1, $event)"
+            type="tel"
+            maxLength="1"
+            placeholder="*"
+            class="text-800 border-b-2 {{isError ? 'border-error-400' :'border-neutral-400'}}  text-h2 text-center"
+            style="--padding-start: 6px; --padding-end: 6px"
+          ></ion-input>
+          <ion-input
+            #thirdInput
+            (ionInput)="handleChangeValue(2, $event)"
+            (keydown)="handleDeleteValue(2, $event)"
+            type="tel"
+            maxLength="1"
+            placeholder="*"
+            class="text-800 border-b-2 {{isError ? 'border-error-400' :'border-neutral-400'}}  text-h2 text-center"
+            style="--padding-start: 6px; --padding-end: 6px"
+          ></ion-input>
+          <ion-input
+            #fourthInput
+            (ionInput)="handleChangeValue(3, $event)"
+            (keydown)="handleDeleteValue(3, $event)"
+            type="tel"
+            maxLength="1"
+            placeholder="*"
+            class="text-800 border-b-2 {{isError ? 'border-error-400' :'border-neutral-400'}}  text-h2 text-center"
+            style="--padding-start: 6px; --padding-end: 6px"
+          ></ion-input>
+          <ion-input
+            #fiveInput
+            (ionInput)="handleChangeValue(4, $event)"
+            (keydown)="handleDeleteValue(4, $event)"
+            type="tel"
+            maxLength="1"
+            placeholder="*"
+            class="text-800 border-b-2 {{isError ? 'border-error-400' :'border-neutral-400'}}  text-h2 text-center"
+            style="--padding-start: 6px; --padding-end: 6px"
+          ></ion-input>
+          <ion-input
+            #sixInput
+            (ionInput)="handleChangeValue(5, $event)"
+            (keydown)="handleDeleteValue(5, $event)"
+            type="tel"
+            maxLength="1"
+            placeholder="*"
+            class="text-800 border-b-2 {{isError ? 'border-error-400' :'border-neutral-400'}}  text-h2 text-center"
+            style="--padding-start: 6px; --padding-end: 6px"
+          ></ion-input>
+        </div>
+      </div>
+    </div> -->
+
+    <code-input
+      #ngOtpInput
+      [isCodeHidden]="isPasswordInput"
+      [codeLength]="length"
+      inputType="tel"
+      (codeChanged)="onOtpChange($event)"
+      (codeCompleted)="onInput($event)"
+    >
+    </code-input>
+
+    <!-- <ng-otp-input
+      #ngOtpInput
+      (onInputChange)="onOtpChange($event)"
+      (onkeydown)="onInput($event)"
+      [config]="{
+        length: length,
+        allowNumbersOnly: allowNumbersOnly,
+        isPasswordInput: isPasswordInput,
+        inputClass:
+          isWrong || isError ? 'error' : isCorrect ? 'correct' : undefined,
+        placeholder: '•'
+      }"
+    >
+    </ng-otp-input> -->
+    <p
+      *ngIf="wrongCounter === 0"
+      class="text-sm text-red-400 mt-2 text-center px-6"
+    >
+      Kamu sudah salah memasukkan PIN 3 kali. Gunakan Lupa PIN kamu untuk
+      lanjut.
+    </p>
+    <div class="text-center mt-8 md:mt-32">
+      <a
+        class="decoration-0 text-lazuli-500 text-[16px] font-bold cursor-pointer"
+        (click)="forgotPin()"
+        >Lupa PIN kamu?</a
+      >
+    </div>
+  </div>
+</ion-content>
+<app-common-alert-component
+  *ngIf="errorMessage"
+  type="danger"
+  [desc]="errorMessage"
+  [duration]="3000"
+></app-common-alert-component>

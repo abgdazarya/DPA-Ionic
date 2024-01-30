@@ -1,0 +1,8 @@
+<section>
+  <app-ruang-pensiun-list-part-mobile
+    *ngIf="screenSizeService.isMobileNativeResolution()"
+  />
+  <app-ruang-pensiun-list-part-web
+    *ngIf="!screenSizeService.isMobileNativeResolution()"
+  />
+</section>

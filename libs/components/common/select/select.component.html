@@ -1,0 +1,64 @@
+<ion-label *ngIf="label" class="text-neutral-800">{{ label }}</ion-label>
+<ion-item
+  class="w-full border border-neutral-400 rounded-xl text-body2 text-700 cursor-pointer"
+  fill="outline"
+>
+  <ion-select
+    *ngIf="!formGroup"
+    class="w-full"
+    [disabled]="disable"
+    [placeholder]="placeholder"
+    [formControlName]="controlName"
+    interface="popover"
+    mode="md"
+    justify="space-between"
+    color="secondary"
+    fill="none"
+    [interfaceOptions]="interfaceOptions"
+    #selectCustom
+  >
+    <ion-select-option *ngFor="let opt of options" [value]="opt.id">{{
+      opt.label
+    }}</ion-select-option>
+  </ion-select>
+
+  <div
+    *ngIf="formGroup"
+    class="w-full flex items-center h-full justify-between customs-x"
+    (click)="onOpenSelect($event)"
+    #selectCustomPopup
+  >
+    <span
+      class="text-800 {{ placeholder == value.label ? '!text-400' : '' }}"
+      >{{ value.label }}</span
+    >
+    <ion-input
+      class="w-full hidden"
+      [readonly]="true"
+      [placeholder]="placeholder"
+      [formControlName]="controlName"
+      justify="space-between"
+      color="secondary"
+      fill="none"
+    />
+    <app-common-icon-component
+      *ngIf="!isLoading"
+      name="chevron-bottom-normal"
+      nativeClass="w-5 h-5 text-neutral-800 bg-neutral-100"
+    >
+    </app-common-icon-component>
+  </div>
+
+  <app-common-icon-component
+    *ngIf="!isLoading && !formGroup"
+    (click)="triggerButton($event)"
+    name="chevron-bottom-normal"
+    nativeClass="w-5 h-5 text-neutral-800 bg-neutral-100"
+  >
+  </app-common-icon-component>
+  <ion-spinner
+    *ngIf="isLoading"
+    name="circular"
+    class="text-neutral-800"
+  ></ion-spinner>
+</ion-item>

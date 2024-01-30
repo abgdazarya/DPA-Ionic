@@ -1,0 +1,119 @@
+<div class="bg-neutral-0 md:shadow-lg p-8 md-max:pt-5 md-max:px-4 rounded-4xl">
+  <div *ngIf="monthYear" class="mb-12">
+    <p class="text-[24px] text-neutral-900 font-bold">{{ monthYear }}</p>
+    <p class="text-neutral-700 text-lg">
+      Total detail saldo sudah termasuk hasil investasi
+    </p>
+  </div>
+
+  <div class="pb-4" *ngIf="errorMsg">
+    <div
+      class="text-heading-4 text-center text-800 w-full bg-100 rounded-lg p-5 py-12"
+    >
+      {{ errorMsg }}
+    </div>
+  </div>
+
+  <div
+    *ngIf="saldo"
+    class="relative h-[136px]"
+    style="
+      width: 100%;
+      background: linear-gradient(180deg, #0074d9 0%, #54afff 100%);
+      border-radius: 12px;
+    "
+  >
+    <div
+      class="flex md:space-x-9 items-center p-4 md:px-10 md:py-7 mt-6 relative z-2"
+    >
+      <img
+        src="images/dompet-green.png"
+        alt=""
+        class="hidden md:block w-14 h-14"
+      />
+      <div class="">
+        <p class="text-sm text-neutral-0 font-normal">
+          Total Saldo Manfaat Pensiun • Reguler
+        </p>
+        <h2
+          class="text-neutral-0 py-3 md:py-0 text-[24px] md:text-[32px] font-bold md:leading-[44px]"
+        >
+          {{ renderSaldo(saldo) }}
+        </h2>
+        <p class="text-xs md:text-[16px] text-neutral-0 font-normal">
+          Total saldo regular terdiri atas Iuran Peserta, Iuran Pemberi Kerja &
+          Hasil Investasi.
+        </p>
+      </div>
+    </div>
+    <div class="absolute md:hidden top-3 right-3 z-2">
+      <img src="images/dompet-green.png" alt="" class="w-10 h-10" />
+    </div>
+    <div class="absolute right-0 top-0 h-[120px] md:h-auto z-0">
+      <img
+        src="images/saldo-box.svg"
+        alt=""
+        srcset=""
+        class="rounded-2xl h-full md:h-auto"
+      />
+    </div>
+  </div>
+
+  <div
+    *ngIf="iuranSukarela"
+    class="relative h-[120px] md:h-[136px]"
+    style="
+      width: 100%;
+      background: linear-gradient(180deg, #0074d9 0%, #54afff 100%);
+      border-radius: 12px;
+    "
+  >
+    <div
+      class="flex md:space-x-9 items-center p-4 md:px-10 md:py-7 mt-6 relative z-2"
+    >
+      <img
+        src="images/dompet-blue.png"
+        alt=""
+        class="hidden md:block w-14 h-14"
+      />
+      <div class="">
+        <p class="text-sm text-neutral-0 font-normal">Saldo Iuran Sukarela</p>
+        <h2
+          class="text-neutral-0 py-3 md:py-0 text-[24px] md:text-[32px] font-bold md:leading-[44px]"
+        >
+          {{ renderSaldo(iuranSukarela) }}
+        </h2>
+        <p class="text-xs md:text-[16px] text-neutral-0 font-normal">
+          Total saldo ISP terdiri atas Iuran Peserta & Hasil Investasi.
+        </p>
+      </div>
+    </div>
+    <div class="absolute md:hidden top-3 right-3 z-2">
+      <img src="images/dompet-blue.png" alt="" class="w-10 h-10" />
+    </div>
+    <div class="absolute right-0 top-0 h-[120px] md:h-auto z-0">
+      <img
+        src="images/saldo-box.svg"
+        alt=""
+        srcset=""
+        class="rounded-2xl h-full md:h-auto"
+      />
+    </div>
+  </div>
+  <div class="mt-5 px-8 py-4 bg-75 rounded-[20px]">
+    <div class="font-bold text-lg text-neutral-900">Informasi Tambahan</div>
+    <ul class="text-sm text-neutral-700 mt-2 list-decimal px-6">
+      <li>
+        Manfaat pensiun yang akan didapatkan dihitung sesuai ketentuan
+        perhitungan manfaat pensiun yang diatur perundangan dan Peraturan Dana
+        Pensiun. Jika peserta berhenti bekerja dengan masa kepesertaan dibawah 3
+        tahun, maka manfaat pensiun yang akan didapatkan adalah akumulasi iuran
+        peserta ditambah bunga layak.
+      </li>
+      <li>
+        Untuk mengetahui keseluruhan saldo silakan menghubungi customer service
+        DPA
+      </li>
+    </ul>
+  </div>
+</div>

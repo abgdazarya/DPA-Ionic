@@ -1,0 +1,56 @@
+<div class="flex flex-col modal-content bg-bg-0">
+  <div
+    class="p-8 relative overflow-y-auto mx-auto md:mx-0 w-full md:w-[30rem] ion-no-scrollbar h-full"
+  >
+    <div class="flex w-full justify-end z-10 mb-6">
+      <ion-button
+        mode="ios"
+        color="blank"
+        size="small"
+        class="shadow-none p-0 m-0 ion-no-padding"
+        (click)="close()"
+      >
+        <app-common-icon-component name="close" />
+      </ion-button>
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <section>
+        <div
+          class="bg-lazuli-100 rounded-2xl md:hidden p-3 mb-6 w-16 h-16 mx-auto"
+        >
+          <img src="logos/card.png" class="w-10 h-10" alt="" />
+        </div>
+        <div class="text-h4 md:text-h3 text-900 mb-2 text-center">
+          Pilih Kategori
+        </div>
+        <div class="text-body3 md:text-body1 text-800 mb-7 mx-12 text-center">
+          Pilih salah satu Kategori Pensiun dibawah ini.
+        </div>
+      </section>
+
+      <section>
+        <ng-container *ngFor="let data of kategoriPensiun">
+          <div *ngIf="data?.judulKategori != 'Jual Beli' && data?.judulKategori != 'Aktifitas Pensiun' && data?.judulKategori != 'Aktivitas Pensiun'">
+            <div
+              (click)="handleSelectKategori(data)"
+              class="user-number-box mb-5 rounded-2xl p-4 flex items-center justify-between"
+            >
+              <div class="flex items-center space-x-4">
+                <!-- <img src="logos/card.png" class="w-9 h-9" alt="" /> -->
+                <span class="text-800 text-h7 leading-[24px] font-semibold"
+                  >{{data?.judulKategori}}</span
+                >
+              </div>
+              <ion-badge class="rounded-xl {{data?.idKategori}}">
+                <span class="px-2 py-1 text-body3 {{data?.idKategori}}">
+                  {{ data?.idKategori}}
+                </span>
+              </ion-badge>
+            </div>
+          </div>
+        </ng-container>
+      </section>
+    </div>
+  </div>
+</div>

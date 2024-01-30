@@ -1,0 +1,115 @@
+<section>
+  <ng-container *ngIf="(loading$ | async) else dataTpl">
+    <div class="block">
+      <div class="mb-5">
+        <div class="grid grid-cols-1 gap-y-6">
+          <ng-container
+            *ngFor="let item of [].constructor(10); let index = index"
+          >
+            <app-ruang-pensiun-list-mobile-card
+              [loading]="true"
+            ></app-ruang-pensiun-list-mobile-card>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <div *ngIf="!(loading$ | async)">
+      <ng-container *ngIf="(allKonten$ | async) as allKonten else noDataTpl">
+        <div class="md:hidden">
+          <div class="mb-5">
+            <div class="grid grid-cols-1 gap-x-3 gap-y-4">
+              <ng-container *ngFor="let item of allKonten; let index = index">
+                <div *ngIf="item.templateRuangPensiun" class="growing">
+                  <app-ruang-pensiun-list-mobile-card 
+                    *ngIf="item.templateRuangPensiun"
+                    [allKonten]="decryptUser(item)"
+                    [pageTypeEnum]="pageTypeEnum"
+                    [pageService]="pageService"
+                    [isPensiunan]="isPensiunan"
+                    (onClick)="handleNavigateToDetail(item)"
+                    (onClickImage)="openImage(item.gambar)"
+                    (onClickLike)="handleLikeContent(item)"
+                  ></app-ruang-pensiun-list-mobile-card>
+                  <hr class="mt-4"/>
+                </div>
+              </ng-container>
+    
+              <!-- <ion-infinite-scroll (ionInfinite)="loadData($event)">
+                <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles">
+                </ion-infinite-scroll-content>
+              </ion-infinite-scroll> -->
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-template>
+
+  <ng-template #noDataTpl>
+    <div class="block" *ngIf="keyword != '' && !(loading$ | async)">
+      <div class="mb-5 mt-10">
+        <div class="text-center">
+          <img
+            src="images/news-not-found.png"
+            class="mb-8 w-[180px] h-[152px] mx-auto"
+            alt=""
+          />
+          <div class="text-h5 text-800 font-semibold mb-1.5">
+            Hasil Pencarian Tidak Ditemukan
+          </div>
+          <div class="text-body2 text-700">
+            Silakan coba lagi atau kembali lagi nanti.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="md:hidden" *ngIf="keyword == '' && !(loading$ | async)">
+      <div class="mb-5 mt-10">
+        <div class="text-center">
+          <img
+            src="images/error.png"
+            class="mb-8 w-[180px] h-[152px] mx-auto"
+            alt=""
+          />
+          <div class="text-h5 text-800 font-semibold mb-1.5">
+            Data Belum Tersedia
+          </div>
+          <div class="text-body2 text-700">
+            Maaf data pada halaman ini belum tersedia, silakan coba
+            lagi nanti atau lain kali.
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <div
+    class="target children-scroll"
+    [id]="targetScrollPosRP"
+    #targetScrollPosRP
+  ></div>
+</section>
+
+<app-common-alert-component
+  *ngIf="errorLikeIdx"
+  [duration]="3000"
+  type="danger"
+  [desc]="errorLikeIdx"
+  transformShowClass="translate-y-24"
+  transformHideClass="-translate-y-24"
+>
+</app-common-alert-component>
+
+<app-common-alert-component
+  *ngIf="successLikeIdx"
+  [duration]="3000"
+  type="success"
+  [desc]="successLikeIdx"
+  transformShowClass="translate-y-24"
+  transformHideClass="-translate-y-24"
+>
+</app-common-alert-component>

@@ -1,0 +1,132 @@
+<section>
+  <!-- <div [class.hidden]="!isModalVisible"> -->
+  <ion-modal
+    [backdropDismiss]="false"
+    class="modal-web ion-background-white"
+    [isOpen]="isOpenModal && isModalVisible"
+  >
+    <ng-template>
+      <ng-container *ngTemplateOutlet="sectionTpl"> </ng-container>
+    </ng-template>
+  </ion-modal>
+  <!-- </div> -->
+
+  <div
+    [class.hidden]="isModalVisible"
+    class="fixed top-0 right-0 left-0 h-screen bg-white"
+    *ngIf="!isModalVisible"
+    style="z-index: 99999 !important"
+  >
+    <div class="overflow-y-auto relative">
+      <ng-container *ngTemplateOutlet="sectionTpl"> </ng-container>
+    </div>
+  </div>
+
+  <ng-template #sectionTpl>
+    <div class="hidden md:block mx-6">
+      <!-- <app-common-alert-component
+        type="success"
+        [desc]="requestOtpSuccess$ | async"
+      ></app-common-alert-component> -->
+
+      <app-common-alert-component
+        type="danger"
+        [desc]="requestOtpError$ | async"
+      ></app-common-alert-component>
+    </div>
+
+    <div class="p-4 md:p-7 overflow-y-auto mx-auto md:mx-0 w-full md:w-[480px]">
+      <div class="flex w-full justify-start md:justify-between z-10 mb-6">
+        <app-common-button-component
+          color="blank"
+          class="ion-no-padding m-0 p-0 w-6 h-6"
+          (onClick)="handleBack()"
+        >
+          <app-common-icon-component
+            nativeClass="text-neutral-800 w-6 h-6"
+            name="back-modal"
+          />
+        </app-common-button-component>
+        <app-common-button-component
+          color="blank"
+          class="hidden md:block ion-no-padding m-0 p-0 w-6 h-6"
+          (onClick)="handleClose()"
+        >
+          <app-common-icon-component
+            nativeClass="text-neutral-800 w-6 h-6"
+            name="close-modal"
+          />
+        </app-common-button-component>
+      </div>
+
+      <div class="flex flex-col justify-center">
+        <div class="mb-6">
+          <img
+            *ngIf="type !== 'email'"
+            src="logos/message-more.png"
+            class="md:hidden mb-4 w-12 h-12 mx-auto"
+            alt=""
+          />
+          <img
+            *ngIf="type === 'email'"
+            src="logos/mail.png"
+            class="md:hidden mb-4 w-12 h-12 mx-auto"
+            alt=""
+          />
+
+          <div
+            class="text-h4 md:text-h3 text-800 md:text-900 font-bold mb-1.4 md:mb-3 text-center"
+          >
+            Verifikasi OTP kamu
+          </div>
+          <div
+            class="hidden md:block text-body3 md:text-body1 text-800 mb-7 mx-12 text-center"
+          >
+            <div>
+              Isi dengan kode OTP yang dikirim ke {{ type === 'email' ? 'email'
+              : 'nomor ponsel'}} kamu:
+            </div>
+            <div class="font-bold" [innerHtml]="getEncryptedValue()"></div>
+          </div>
+          <div class="md:hidden text-body2 text-700 mb-8 mx-12 text-center">
+            <div>Isi dengan kode OTP yang dikirim ke:</div>
+            <div class="font-semibold" [innerHtml]="getEncryptedValue()"></div>
+          </div>
+
+          <div class="mx-4 md:mx-10 text-center">
+            <app-auth-otp-form
+              #form
+              [formGroup]="formGroup"
+              (submitted)="handleSubmit()"
+              [isError]="isError"
+              (verifyOtp)="handleVerifyOtp($event)"
+              (clearInterval)="handleClearInterval()"
+              (valueChanges)="handleChangeValue($event)"
+            ></app-auth-otp-form>
+            <small *ngIf="isError" class="text-body2 text-error-400">
+              {{(interactVerifyRes$ | async)?.error}}
+            </small>
+          </div>
+
+          <div
+            [class.hidden]="otpCounter === null ||  minutes === null || seconds === null"
+            class="mt-4 md:mt-12 text-body1 md:text-h7 {{ otpCounter > 0 ? 'text-700 md:text-800' : 'text-lazuli-500' }} text-800 mx-12 text-center"
+          >
+            <span
+              class="cursor-pointer"
+              (click)="handleResendOtp()"
+              *ngIf="otpCounter <= 0"
+            >
+              Kirimkan kode OTP baru
+            </span>
+            <span *ngIf="otpCounter > 0"> Kirimkan kode OTP baru </span>
+            <span class="text-800" *ngIf="otpCounter > 0"
+              >({{ minutes < 10 ? '0'+minutes : minutes}}:{{seconds < 10 ?
+              '0'+seconds : seconds}})</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</section>

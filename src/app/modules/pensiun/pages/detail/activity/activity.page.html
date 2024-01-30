@@ -1,0 +1,353 @@
+<section>
+  <div
+    class="flex items-center space-x-3 mb-7"
+    *ngIf="screenSizeService.isDesktopResolution()"
+  >
+    <div class="mb-8 hidden md:block">
+      <app-common-breadcrumb-component
+        [breadcrumbs]="breadcrumbs"
+        activeClass="text-neutral-800"
+        (onClick)="handleSelectBreadcrumb($event)"
+      >
+      </app-common-breadcrumb-component>
+    </div>
+  </div>
+
+
+  <div *ngIf="postingan$ | async as postingan">
+    <div
+      [ngClass]="screenSizeService.isDesktopResolution() ? 'grid grid-cols-1':'md:container px-6 md:px-auto z-10 relative pt-6 md:pt-16'"
+    >
+      <div class="col-span-1" *ngIf="screenSizeService.isDesktopResolution()">
+        <div class="relative" *ngIf="postingan?.gambar">
+          <ion-button
+            (click)="handleSlide('next')"
+            color="none"
+            class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -right-7 z-20"
+          >
+            <img
+              src="logos/chevron-right-circle.png"
+              class="w-10 h-10"
+              alt=""
+            />
+          </ion-button>
+          <ion-button
+            (click)="handleSlide('prev')"
+            color="none"
+            class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -left-7 z-20"
+          >
+            <img src="logos/chevron-left-circle.png" class="w-10 h-10" alt="" />
+          </ion-button>
+
+          <swiper #imageSlides [loop]="true" [slidesPerView]="1">
+            <ng-container *ngFor="let i of [1,2,3,4]" class="removeScroll">
+              <ng-template
+                swiperSlide
+                *ngIf="postingan?.gambarJualBeli || postingan?.gambar"
+              >
+                <!-- <div *ngIf="postingan?.gambarJualBeli">
+                  <ng-container *ngIf="postingan?.gambarJualBeli['IMAGE_' + i]">
+                    <img
+                      [src]="postingan?.gambarJualBeli['IMAGE_' + i]"
+                      (click)="openImage(postingan?.gambarJualBeli['IMAGE_' + i])"
+                      class="mb-8 rounded-xl w-full h-[512px] object-cover object-center rounded-xl"
+                      alt=""
+                    />
+                  </ng-container>
+
+                  <ng-container
+                    *ngIf="!postingan?.gambarJualBeli['IMAGE_' + i]"
+                  >
+                    <div
+                      class="mb-8 rounded-xl bg-neutral-600 h-[250px] max-w-full max-h-[250px] text-neutral-700 flex items-center justify-center text-h3"
+                    >
+                      No Thumbnail
+                    </div>
+                  </ng-container>
+                </div> -->
+                <div>
+                  <ng-container>
+                    <img
+                      [src]="postingan?.gambar"
+                      (click)="openImage(postingan?.gambar)"
+                      class="mb-8 rounded-xl w-full h-[512px] object-cover object-center rounded-xl"
+                      alt=""
+                    />
+                  </ng-container>
+
+                  <ng-container *ngIf="!postingan?.gambar">
+                    <div
+                      class="mb-8 rounded-xl bg-neutral-600 h-[250px] max-w-full max-h-[250px] text-neutral-700 flex items-center justify-center text-h3"
+                    >
+                      No Thumbnail
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-template>
+
+              <!-- no image -->
+              <!-- <ng-template
+                swiperSlide
+              >
+                <ng-container>
+                  <div
+                    class="mb-8 rounded-xl bg-neutral-600 h-[250px] max-w-full max-h-[250px] text-neutral-700 flex items-center justify-center text-h3"
+                  >
+                    No Thumbnail
+                  </div>
+                </ng-container>
+              </ng-template> -->
+            </ng-container>
+          </swiper>
+        </div>
+      </div>
+
+      <div>
+        <div
+          class="text-500 text-h6 mb-4"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+        >
+          Ruang Pensiun
+
+          <ion-chip *ngIf="postingan.isMe && isPensiunan" color="{{postingan.statusApproval | statusApprovalEnum:'chipColor'}}">{{postingan.statusApproval | statusApprovalEnum:'text'}}</ion-chip>
+
+        </div>
+
+        <!-- Mobile Web -->
+        <div
+          class="flex space-x-6 items-center mb-4"
+          *ngIf="screenSizeService.isDesktopResolution()"
+        >
+        <div
+            *ngIf="!decryptUser(postingan.photoUser)"
+            class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl mr-2"
+          >
+            {{ decryptUser(postingan.namaUser)?.toUpperCase() | nickName }}
+          </div>
+
+          <div *ngIf="decryptUser(postingan.photoUser)" class="h-[52px] w-[52px] mr-2">
+            <ng-container>
+              <img
+                class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl"
+                [src]="decryptUser(postingan.photoUser)"
+                alt=""
+              />
+            </ng-container>
+          </div>
+          <div>
+            <div class="text-h4 text-900 mb-3">
+              {{decryptUser(postingan.namaUser) || 'Tidak ada nama'}}
+            </div>
+            <div class="flex space-x-1 items-center text-600 text-body3">
+              <app-common-icon-component
+                name="bag-1"
+                nativeClass="w-6 h-6 text-600"
+              />
+              <span>{{postingan.namaPerusahaan || '-'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile App -->
+        <div
+          class="flex space-x-6 items-center mb-1"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+        >
+        <div
+            *ngIf="!decryptUser(postingan.photoUser)"
+            class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl mr-2"
+          >
+            {{ decryptUser(postingan.namaUser)?.toUpperCase() | nickName }}
+          </div>
+
+          <div *ngIf="decryptUser(postingan.photoUser)" class="h-[52px] w-[52px] mr-2">
+            <ng-container>
+              <img
+                class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl"
+                [src]="decryptUser(postingan.photoUser)"
+                alt=""
+              />
+            </ng-container>
+          </div>
+          <div>
+            <div class="text-[12px] text-900 mb-1">
+              <b>{{decryptUser(postingan.namaUser) || 'Tidak ada nama'}}</b>
+            </div>
+            <div
+              class="flex space-x-1 items-center text-[12px] text-600 text-body3"
+            >
+              <app-common-icon-component
+                name="bag-1"
+                nativeClass="w-4 h-4 text-600"
+              />
+              <span>{{postingan.namaPerusahaan || '-'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="cursor-pointer flex-1 flex space-x-2 items-center mb-5"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+        >
+          <app-common-icon-component
+            (click)="handleLikeContent(postingan)"
+            nativeClass="w-8 h-8 {{ postingan.isLike === 1 ? 'text-lazuli-500' : 'text-neutral-200'}}"
+            name="heart-filled"
+          />
+          <span class="text-700 text-[12px]"
+            >{{postingan.jumlahLike || '0'}} Suka</span
+          >
+
+          <span class="text-500 text-[12px]"
+            >{{postingan.createdOn | date: 'dd MMMM YYYY'}}
+          </span>
+
+          <div *ngIf="postingan.isMe && isPensiunan && postingan.statusApproval != 'WAITING-APPROVAL'" style="display: flex;">
+            <a
+              class="cursor-pointer text-lazuli-500 text-xs font-semibold flex items-center mx-5 md:text-sm"
+              (click)="updateData(postingan)"
+            >
+              Edit
+            </a>
+            <a
+              style="color: red;"
+              class="cursor-pointer text-lazuli-500 text-xs font-semibold flex items-center md:text-sm"
+              (click)="deleteData(postingan)"
+            >
+              Hapus
+            </a>
+
+          </div>
+        </div>
+
+        <div class="text-h4 text-900 mb-3">{{postingan.judulThread}}</div>
+
+        <div
+          class="text-500 mb-4 text-[12px]"
+          style="display: flex; align-items: center;"
+          *ngIf="screenSizeService.isDesktopResolution()"
+        >
+          {{postingan.createdOn | date: 'dd MMMM YYYY'}}
+
+          <div *ngIf="postingan.isMe && isPensiunan && postingan.statusApproval != 'WAITING-APPROVAL'" style="display: flex;">
+            <ion-chip color="{{postingan.statusApproval | statusApprovalEnum:'chipColor'}}">{{postingan.statusApproval | statusApprovalEnum:'text'}}</ion-chip>
+
+            <a
+              class="cursor-pointer text-lazuli-500 text-xs font-semibold flex items-center mx-5 md:text-sm"
+              (click)="updateData(postingan)"
+            >
+              Edit
+            </a>
+            <a
+              style="color: red;"
+              class="cursor-pointer text-lazuli-500 text-xs font-semibold flex items-center md:text-sm"
+              (click)="deleteData(postingan)"
+            >
+              Hapus
+            </a>
+
+          </div>
+        </div>
+        <!-- <div class="text-h3 text-900 mb-8">
+          {{postingan.hargaBarang | currency:'IDR':'symbol-narrow'}}
+        </div> -->
+        <div
+          class="cursor-pointer flex-1 flex space-x-2 items-center mb-8"
+          *ngIf="screenSizeService.isDesktopResolution()"
+        >
+          <app-common-icon-component
+            (click)="handleLikeContent(postingan)"
+            nativeClass="w-8 h-8 {{ postingan.isLike === 1 ? 'text-lazuli-500' : 'text-neutral-200'}}"
+            name="heart-filled"
+          />
+          <span class="text-h5 text-700"
+            >{{postingan.jumlahLike || '0'}} Suka</span
+          >
+        </div>
+
+        <!-- Mobile View -->
+        <div
+          class="col-span-2"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+        >
+          <div class="relative">
+            <ion-button
+              (click)="handleSlide('next')"
+              color="none"
+              class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -right-7 z-20"
+            >
+              <img
+                src="logos/chevron-right-circle.png"
+                class="w-10 h-10"
+                alt=""
+              />
+            </ion-button>
+            <ion-button
+              (click)="handleSlide('prev')"
+              color="none"
+              class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -left-7 z-20"
+            >
+              <img
+                src="logos/chevron-left-circle.png"
+                class="w-10 h-10"
+                alt=""
+              />
+            </ion-button>
+            <div
+              class="image-container rounded-4xl w-full flex items-center justify-center mb-2"
+            >
+              <img
+                *ngIf="postingan?.gambar"
+                [src]="postingan?.gambar"
+                data-object-fit='contain'
+                (click)="openImage(postingan?.gambar)"
+                class="image-content rounded-xl bg-neutral-600 h-full max-w-full max-h-full text-neutral-700 flex items-center justify-center text-h3"
+                alt=""
+              />
+
+              <div
+                *ngIf="!postingan?.gambar"
+                style="padding: 50px;"
+                class="image-content rounded-xl bg-neutral-600 h-full max-w-full max-h-full text-neutral-700 flex items-center justify-center text-h3"
+              >
+                No Thumbnail
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <!-- <div class="text-h5 text-900 mb-1">Deskripsi</div> -->
+          <div
+            class="custom-detail text-body1 text-700"
+            [innerHTML]="postingan.deskripsi"
+          ></div>
+        </div>
+      </div>
+      <div *ngIf="screenSizeService.isMobileBrowser()">
+        <hr class="mb-10 mt-5" />
+        <app-common-footer-container></app-common-footer-container>
+      </div>
+
+    </div>
+  </div>
+</section>
+<app-common-alert-component
+  *ngIf="errorLikeAOne"
+  [duration]="3000"
+  type="danger"
+  [desc]="errorLikeAOne"
+  transformShowClass="translate-y-24"
+  transformHideClass="-translate-y-24"
+>
+</app-common-alert-component>
+
+<app-common-alert-component
+  *ngIf="successLikeAOne"
+  [duration]="3000"
+  type="success"
+  [desc]="successLikeAOne"
+  transformShowClass="translate-y-24"
+  transformHideClass="-translate-y-24"
+>
+</app-common-alert-component>

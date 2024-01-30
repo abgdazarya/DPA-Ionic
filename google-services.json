@@ -1,0 +1,114 @@
+{
+  "project_info": {
+    "project_number": "747596971905",
+    "project_id": "dpa-mobile-reborn-prod",
+    "storage_bucket": "dpa-mobile-reborn-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747596971905:android:050dbab707fe8435f9f280",
+        "android_client_info": {
+          "package_name": "com.dpareborn.id"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747596971905-8msfbp5vbt1t552q1juebg2dhgrvk1kb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dpareborn.id",
+            "certificate_hash": "23d0be54de0d4ab4831acaade431ec11b9f32f37"
+          }
+        },
+        {
+          "client_id": "747596971905-hljoje8e86uao3lsiffkbi16ja398e11.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dpareborn.id",
+            "certificate_hash": "bbf65664e4204359a46eb2cff0e9daf6eb021981"
+          }
+        },
+        {
+          "client_id": "747596971905-ku5fqt1pd1gu31fc1313qak73o09orkt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dpareborn.id",
+            "certificate_hash": "f5640790d61608b9c77522534284a140cc6097c1"
+          }
+        },
+        {
+          "client_id": "747596971905-pod23fd4nc5ag1a7thflq3udkmln8ciu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dpareborn.id",
+            "certificate_hash": "180a743728281dd585d313b3f170cec623e3861c"
+          }
+        },
+        {
+          "client_id": "747596971905-nhacnsrdk76jttc5vpcba68r22felfk5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLWa_owh8GYgkv_dgGAxZeuD4MZXsEcCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747596971905-aih0cvmh08g6u6r0fua4fhk2q8tm9kio.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "747596971905-4kj45u1esjk8tlmuvpjv2q9j4p691nrp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dpareborn.id.dev"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747596971905:android:be02c83114d0e9c1f9f280",
+        "android_client_info": {
+          "package_name": "com.dpareborn.id.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747596971905-nhacnsrdk76jttc5vpcba68r22felfk5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLWa_owh8GYgkv_dgGAxZeuD4MZXsEcCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747596971905-aih0cvmh08g6u6r0fua4fhk2q8tm9kio.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "747596971905-4kj45u1esjk8tlmuvpjv2q9j4p691nrp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dpareborn.id.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

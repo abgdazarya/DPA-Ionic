@@ -1,0 +1,39 @@
+:host {
+  .overlay {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}
+
+ion-grid ion-col div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+ion-grid ion-col img {
+  margin-bottom: 5px; /* Sesuaikan jarak antara gambar dengan teks */
+}
+
+/* CSS untuk mengurangi jarak (margin) pada elemen <span> */
+ion-grid ion-col span {
+  margin-top: -5px; /* Sesuaikan nilai negatif sesuai kebutuhan */
+}
+
+.data-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button-pilihan {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 350px;
+  overflow-y: auto;
+}
+
+.disabled-content {
+  pointer-events: none;
+  opacity: 0.5;
+}

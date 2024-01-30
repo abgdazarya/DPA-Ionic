@@ -1,0 +1,17 @@
+<!-- <ion-header class="ion-background-white ion-no-border" *ngIf="screenSizeService.isDesktopResolution()">
+  <common-header-component></common-header-component>
+</ion-header> -->
+
+<ion-content class="ion-background-white relative">
+  <!-- <div class="flex md:hidden items-center text-center pt-16">
+    <div class="flex-1 py-2 border-b-2 border-lazuli-400">Berita</div>
+    <div class="flex-1 py-2 border-b-2 border-neutral-400">Astramagz</div>
+  </div> -->
+  <div class="md:container md:px-auto z-10 relative md:pt-16">
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+    <!-- <hr class="my-10 hidden md:block" /> -->
+    <!-- <common-footer-component *ngIf="screenSizeService.isDesktopResolution()"></common-footer-component> -->
+  </div>
+</ion-content>

@@ -1,0 +1,246 @@
+<!-- <ion-header class="ion-background-white ion-no-border">
+  <profile-header-component
+    [headerTitle]="'Aktivitas Pensiun'"
+  ></profile-header-component>
+</ion-header> -->
+
+<ion-content class="ion-background-white relative">
+  <div class="md:container md:px-auto z-10 relative md:pt-16">
+    <div>
+      <div
+        class="grid grid-cols-7 gap-7 md-max:flex md-max:flex-col md-max:gap-0 md-max:px-4"
+      >
+        <div class="col-span-5">
+          <div class="">
+            <div
+              *ngIf="(noPeserta$ | async) && isPensiunan"
+              class="mb-2 flex space-x-2 justify-between"
+            >
+              <app-common-button-component
+                color="blank"
+                class="rounded-4xl bg-neutral-100 ion-no-padding p-3 w-full text-h4 text-lazuli-300 font-bold"
+                (onClick)="handleOpenPostinganModal()"
+              >
+                <div class="flex space-x-1 justify-center items-center">
+                  <app-common-icon-component
+                    nativeClass="w-6 h-6 text-lazuli-300"
+                    name="edit-6"
+                  />
+                  <span>Buat Postingan</span>
+                </div>
+              </app-common-button-component>
+            </div>
+          </div>
+        </div>
+
+        <section>
+          <ng-container *ngIf="isLoading else dataTpl">
+            <div class="block">
+              <div class="grid grid-cols-1 gap-y-6">
+                <ng-container *ngFor="let item of [].constructor(9); let index = index">
+                  <app-ruang-pensiun-list-web-card [loading]="true"></app-ruang-pensiun-list-web-card>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+          
+          <ng-template #dataTpl>
+            <ng-container
+              *ngIf="(pageService.pageType$ | async) === pageTypeEnum.PUBLIC || ((pageService.pageType$ | async) === pageTypeEnum.PERSONAL && (noPeserta$ | async)) 
+              else featureNotAvailableTpl"
+            >
+              <!-- Mobile View -->
+              <div class="md:hidden">
+                <ng-container
+                  *ngFor="let item of postingan$ | async; let last = last"
+                >
+                  <div class="box-shadow-card bg-0 mb-3 bg-white rounded-4xl p-1">
+                    <div class="p-4">
+                      <div class="flex">
+                        <ion-img
+                          (click)="handleNavigateToDetail(item)"
+                          *ngIf="item?.gambar"
+                          [src]="item?.gambar"
+                          class="h-24 w-32 rounded-3xl object-cover object-center overflow-hidden"
+                          alt="item Image"
+                        ></ion-img>
+    
+                        <div
+                          (click)="handleNavigateToDetail(item)"
+                          *ngIf="!item?.gambar"
+                          class="h-24 w-32 rounded-3xl bg-neutral-800 text-neutral-900 flex items-center justify-center text-body3"
+                        >
+                          No Thumbnail
+                        </div>
+    
+                        <div class="flex-shrink-1 w-full ml-3">
+                          <div
+                            (click)="handleNavigateToDetail(item)"
+                            class="text-body1 text-800 font-semibold mb-1 truncated-title"
+                          >
+                            <!-- {{item?.judulThread && item?.judulThread != 'null' ? item?.judulThread:'Tidak ada judul'}} -->
+                            {{item?.judulThread || 'Tidak ada judul' | shorten: 55}}
+                          </div>
+    
+                          <div
+                            class="text-body3 text-500 items-center space-x-2"
+                            (click)="handleNavigateToDetail(item)"
+                          >
+                            <div class="inline">
+                              {{ decryptUser(item.namaUser) || 'Tidak ada nama user' |
+                              shorten:25}}
+                            </div>
+                          </div>
+    
+                          <div class="flex item-center mt-7">
+                            <div
+                              class="cursor-pointer flex-1 flex space-x-2 items-center"
+                            >
+                              <app-common-icon-component
+                                (click)="handleLikeContent(item)"
+                                nativeClass="w-5 h-5 {{ item.isLike === 1 ? 'text-lazuli-500' : 'text-neutral-200'}}"
+                                name="heart-filled"
+                              />
+                              <span class="text-[12px] text-700"
+                                >{{item.jumlahLike}} Suka</span
+                              >
+                            </div>
+    
+                            <div
+                              (click)="handleNavigateToDetail(item)"
+                              class="text-[12px] text-600"
+                            >
+                              {{item.createdOn | date:'dd MMMM YYYY'}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr *ngIf="!last" class="my-2 border-b border-neutral-200" />
+                </ng-container>
+              </div>
+              <ng-container *ngIf="pagination$ | async as pagination">
+                <div class="flex justify-center">
+                  <ion-infinite-scroll (ionInfinite)="loadData($event, pagination)">
+                    <ion-infinite-scroll-content loadingText="Mohon tunggu..." loadingSpinner="circles">
+                    </ion-infinite-scroll-content>
+                  </ion-infinite-scroll>
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-template>
+
+          <ng-template #featureNotAvailableTpl>
+            <div
+              *ngIf="!isPensiunan"
+              class="flex items-center justify-center my-28"
+            >
+              <app-common-feature-not-available-component />
+            </div>
+
+            <div *ngIf="isPensiunan">
+              <div class="md:hidden">
+                <div class="mb-5 mt-10">
+                  <div class="text-center">
+                    <img
+                      src="images/error.png"
+                      class="mb-8 w-[180px] h-[152px] mx-auto"
+                      alt=""
+                    />
+                    <div class="text-h5 text-800 font-semibold mb-1.5">
+                      Data Belum Tersedia
+                    </div>
+                    <div class="text-body2 text-700">
+                      Maaf data pada halaman ini belum tersedia, silakan coba
+                      lagi nanti atau lain kali.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="hidden md:flex justify-center items-center overflow-hidden container-box-shadow rounded-[24px] bg-white min-h-[494px]"
+              >
+                <div class="text-center">
+                  <img
+                    src="images/error.png"
+                    class="mb-8 w-[180px] h-[152px] mx-auto"
+                    alt=""
+                  />
+                  <div class="text-h3 text-800 font-semibold mb-1.5">
+                    Data Belum Tersedia
+                  </div>
+                  <div class="text-h4 text-700 font-normal">
+                    Maaf data pada halaman ini belum tersedia, silakan coba lagi
+                    nanti atau lain kali.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <div
+              *ngIf="!(postingan$ | async)?.length"
+            >
+              <div class="md:hidden">
+                <div class="mb-5 mt-10">
+                  <div class="text-center">
+                    <img
+                      src="images/news-not-found.png"
+                      class="mb-8 w-[180px] h-[152px] mx-auto"
+                      alt=""
+                    />
+                    <div class="text-h5 text-800 font-semibold mb-1.5">
+                      Hasil Pencarian Tidak Ditemukan
+                    </div>
+                    <div class="text-body2 text-700">
+                      Silakan coba lagi atau kembali lagi nanti.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="hidden md:flex justify-center items-center overflow-hidden container-box-shadow rounded-[24px] bg-white min-h-[494px]"
+              >
+                <div class="text-center">
+                  <img
+                    src="images/news-not-found.png"
+                    class="mb-8 w-[180px] h-[152px] mx-auto"
+                    alt=""
+                  />
+                  <div class="text-h3 text-800 font-semibold mb-1.5">
+                    Hasil Pencarian Tidak Ditemukan
+                  </div>
+                  <div class="text-h4 text-700 font-normal">
+                    Silakan coba lagi atau kembali lagi nanti.
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<app-common-alert-component
+  *ngIf="errorLikeAOne"
+  [duration]="3000"
+  type="danger"
+  [desc]="errorLikeAOne"
+  transformShowClass="translate-y-24"
+  transformHideClass="-translate-y-24"
+>
+</app-common-alert-component>
+
+<app-common-alert-component
+  *ngIf="successLikeAOne"
+  [duration]="3000"
+  type="success"
+  [desc]="successLikeAOne"
+  transformShowClass="translate-y-24"
+  transformHideClass="-translate-y-24"
+>
+</app-common-alert-component>

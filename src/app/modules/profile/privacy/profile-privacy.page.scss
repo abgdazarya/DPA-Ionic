@@ -1,0 +1,23 @@
+:host {
+  ::ng-deep {
+    .custom-privacy {
+      ul li {
+        list-style: disc;
+        margin: 0;
+        padding: 0;
+        margin-left: 34px;
+      }
+
+      ol li {
+        list-style: decimal;
+        margin: 0;
+        padding: 0;
+        margin-left: 34px;
+      }
+    }
+  }
+
+  // ol {
+  //   margin-bottom: 6px;
+  // }
+}

@@ -1,0 +1,61 @@
+<section>
+  <div class="mt-4 md:px-[90px]">
+    <div class="hidden md:block my-8">
+      <h2 class="text-xl text-neutral-800 font-bold">Astra Hub</h2>
+      <p class="text-neutral-700 text-lg">
+        Temukan aplikasi dari Astra yang dapat memudahkanmu.
+      </p>
+    </div>
+    <div
+      *ngIf="(response$ | async)?.data"
+      class="md:bg-0 md:rounded-2xl md:shadow-lg"
+    >
+      <app-accordion
+        [accordions]="((response$ | async)?.data | accordionTitleTransformer:'category')"
+        expandedIndex="0"
+      >
+        <ng-template #templateRef let-index="index">
+          <ng-container
+            *ngFor="let item of (response$ | async)?.data; let i = index"
+          >
+            <ng-container *ngIf="index === i">
+              <div class="grid grid-cols-3 md:grid-cols-4 gap-3 lg:gap-y-8">
+                <div
+                  *ngFor="let app of item?.apps"
+                  class="bg-neutral-0 border border-solid rounded-xl border-neutral-400 p-3 md:p-6 md:w-[256px] md:h-[276px]"
+                >
+                  <img
+                    class="mx-auto w-[40px] md:w-[100px] md:mt-2 md:mb-10 rounded-xl md:rounded-[32px]"
+                    [src]="app?.icon"
+                    alt=""
+                  />
+                  <p
+                    class="text-neutral-800 text-xs mt-2 font-semibold md:font-bold md:mb-2 md:text-xl"
+                  >
+                    {{app?.namaApp}}
+                  </p>
+                  <a
+                    class="cursor-pointer text-lazuli-500 text-xs font-semibold flex items-center md:text-sm"
+                    (click)="navigateApp(app?.linkAppstore, app?.linkPlaystore)"
+                  >
+                    Unduh
+                    <app-common-icon-component
+                      nativeClass="w-6 h-6 text-lazuli-500"
+                      name="arrow_right_normal"
+                    />
+                  </a>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </app-accordion>
+    </div>
+  </div>
+</section>
+
+<!-- <div class="px-[120px] hidden md:block bg-white">
+    <hr class="my-10 hidden md:block" />
+    <common-footer-component></common-footer-component>
+  </div> -->
+<!-- <wa-floating-button></wa-floating-button> -->

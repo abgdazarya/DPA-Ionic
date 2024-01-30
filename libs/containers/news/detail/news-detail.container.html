@@ -1,0 +1,257 @@
+<section>
+  <ng-container *ngIf="loading$ | async; else dataTpl">
+    <section>
+      <div class="md:hidden">
+        <div class="mb-4">
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-[48px] w-full"
+          ></ion-skeleton-text>
+        </div>
+
+        <div class="flex justify-between items-center mb-4">
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-8 w-24"
+          ></ion-skeleton-text>
+
+          <div class="flex space-x-2 items-center">
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-8 overflow-hidden rounded-full"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-8 overflow-hidden rounded-full"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-8 overflow-hidden rounded-full"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-8 overflow-hidden rounded-full"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-8 overflow-hidden rounded-full"
+            ></ion-skeleton-text>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-[149px] overflow-hidden rounded-3xl"
+          ></ion-skeleton-text>
+        </div>
+
+        <div class="flex flex-col space-y-7">
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-[200px] overflow-hidden"
+          ></ion-skeleton-text>
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-[150px] overflow-hidden"
+          ></ion-skeleton-text>
+        </div>
+      </div>
+
+      <div class="hidden md:block">
+        <div class="mb-7">
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-[88px] w-full"
+          ></ion-skeleton-text>
+        </div>
+
+        <div class="flex justify-between items-center mb-9">
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-8 w-24"
+          ></ion-skeleton-text>
+
+          <div class="flex space-x-2 items-center">
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-24 mr-2"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-8 overflow-hidden rounded-full"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-8 overflow-hidden rounded-full"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-8 overflow-hidden rounded-full"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-8 overflow-hidden rounded-full"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-8 overflow-hidden rounded-full"
+            ></ion-skeleton-text>
+          </div>
+        </div>
+
+        <div class="mb-7">
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-[456px] overflow-hidden rounded-4xl"
+          ></ion-skeleton-text>
+        </div>
+
+        <div class="flex flex-col space-y-7">
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-[200px] overflow-hidden"
+          ></ion-skeleton-text>
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-[150px] overflow-hidden"
+          ></ion-skeleton-text>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+  <ng-template #dataTpl>
+    <ng-container *ngIf="news$ | async as news">
+      <section>
+        <div class="md:hidden">
+          <div class="text-h5 font-semibold text-800 mb-4">
+            {{news?.judulBerita}}
+          </div>
+
+          <div class="flex justify-between items-center mb-4">
+            <div class="text-body2 font-semibold text-500">
+              {{news.tanggalPost | date:'dd MMM YYYY'}}
+            </div>
+
+            <div class="flex space-x-3 items-center">
+              <ng-container *ngFor="let shareButton of shareButtons">
+                <div *ngIf="shareButton">
+                  <app-common-button-component
+                    color="white"
+                    class="m-0 p-0 ion-no-padding h-7 w-7 rounded-full bg-white"
+                    (onClick)="handleOpenShare(shareButton, news)"
+                  >
+                    <img
+                      [src]="shareButton.imageSrc"
+                      class="h-6 w-6"
+                      alt="shareButton.type"
+                    />
+                  </app-common-button-component>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div class="overflow-hidden rounded-3xl">
+              <ion-skeleton-text
+                *ngIf="imageStatus === 'onload'"
+                [animated]="true"
+                class="h-[149px] w-full"
+              ></ion-skeleton-text>
+
+              <ion-img
+                *ngIf="news.picture"
+                [src]="news.picture"
+                (ionError)="imageStatus = 'error';"
+                (ionImgDidLoad)="imageStatus = 'succeed';"
+                (ionImgWillLoad)="imageStatus = 'onload';"
+                class="h-[149px] w-full object-cover object-center overflow-hidden"
+                alt="News Image"
+                [class.hidden]="imageStatus === 'error' || imageStatus === 'onload'"
+              ></ion-img>
+
+              <div
+                *ngIf="!news.picture || imageStatus === 'error'"
+                class="h-[149px] bg-neutral-800 w-full text-neutral-900 flex items-center justify-center text-h4"
+              >
+                No Thumbnail
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="custom-news text-body-1 md:text-body[18px] font-normal text-700"
+            [innerHTML]="news.isiBerita"
+          ></div>
+        </div>
+
+        <div class="hidden md:block">
+          <div class="text-h2 font-semibold text-800 mb-7">
+            {{news?.judulBerita}}
+          </div>
+
+          <div class="flex justify-between items-center mb-9">
+            <div class="text-h5 font-semibold text-500">
+              {{news.tanggalPost | date:'dd MMM YYYY'}}
+            </div>
+
+            <div>
+              <div class="flex space-x-2 items-center">
+                <div class="text-h7 font-semibold text-800 mr-2">Bagikan</div>
+                <ng-container *ngFor="let shareButton of shareButtons">
+                  <div *ngIf="shareButton">
+                    <app-common-button-component
+                      color="white"
+                      class="m-0 p-0 ion-no-padding h-12 w-12 rounded-full bg-white"
+                      (onClick)="handleOpenShare(shareButton, news)"
+                    >
+                      <img
+                        [src]="shareButton.imageSrc"
+                        class="h-6 w-6"
+                        alt="shareButton.type"
+                      />
+                    </app-common-button-component>
+                  </div>
+                </ng-container>
+              </div>
+           </div>
+          </div>
+
+          <div class="mb-7">
+            <div class="overflow-hidden rounded-4xl">
+              <ion-skeleton-text
+                *ngIf="imageStatus === 'onload'"
+                [animated]="true"
+                class="h-[456px] w-full"
+              ></ion-skeleton-text>
+
+              <ion-img
+                *ngIf="news.picture"
+                [src]="news.picture"
+                (ionError)="imageStatus = 'error';"
+                (ionImgDidLoad)="imageStatus = 'succeed';"
+                (ionImgWillLoad)="imageStatus = 'onload';"
+                class="h-[456px] w-full object-cover object-center overflow-hidden"
+                alt="News Image"
+                [class.hidden]="imageStatus === 'error' || imageStatus === 'onload'"
+              ></ion-img>
+
+              <div
+                *ngIf="!news.picture || imageStatus === 'error'"
+                class="h-[456px] bg-neutral-800 w-full text-neutral-900 flex items-center justify-center text-h4"
+              >
+                No Thumbnail
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="custom-news text-body-1 md:text-body[18px] font-normal text-700"
+            [innerHTML]="news.isiBerita"
+          ></div>
+        </div>
+      </section>
+    </ng-container>
+  </ng-template>
+</section>

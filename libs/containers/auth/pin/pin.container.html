@@ -1,0 +1,113 @@
+<section>
+  <ion-modal
+    [backdropDismiss]="false"
+    class="modal-web ion-background-white"
+    [isOpen]="isOpenModal && isModalVisible"
+  >
+    <ng-template>
+      <ng-container *ngTemplateOutlet="sectionTpl"> </ng-container>
+    </ng-template>
+  </ion-modal>
+
+  <div
+    [class.hidden]="isModalVisible"
+    class="fixed top-0 right-0 left-0 h-screen bg-white"
+    *ngIf="!isModalVisible"
+    style="z-index: 99999 !important"
+  >
+    <div class="overflow-y-auto relative h-full">
+      <ng-container *ngTemplateOutlet="sectionTpl"> </ng-container>
+    </div>
+  </div>
+
+  <ng-template #sectionTpl>
+    <div
+      class="p-4 md:p-7 overflow-y-auto mx-auto md:mx-0 w-full md:w-[480px] md:mt-0 h-full"
+    >
+      <div class="flex w-full justify-start md:justify-between z-10 mb-6">
+        <app-common-button-component
+          color="blank"
+          class="ion-no-padding m-0 p-0 w-6 h-6"
+          (onClick)="handleBack()"
+        >
+          <app-common-icon-component
+            nativeClass="text-neutral-800 w-6 h-6"
+            name="back-modal"
+          />
+        </app-common-button-component>
+        <app-common-button-component
+          color="blank"
+          class="hidden md:block ion-no-padding m-0 p-0 w-6 h-6"
+          (onClick)="handleClose()"
+        >
+          <app-common-icon-component
+            nativeClass="text-neutral-800 w-6 h-6"
+            name="close-modal"
+          />
+        </app-common-button-component>
+      </div>
+
+      <div
+        class="flex flex-col justify-start md:justify-center mx-0 md:mx-16 relative h-full"
+      >
+        <img
+          src="images/lock.png"
+          class="md:hidden mb-6 w-10 h-10 mx-auto"
+          alt=""
+        />
+
+        <app-common-alert-component
+          [isOpen]="isError"
+          type="danger"
+          title="Buat PIN Gagal"
+        >
+        </app-common-alert-component>
+
+        <div
+          class="text-h4 md:text-h3 text-800 md:text-900 mb-1.5 md:mb-2 text-center"
+        >
+          Buat 6 Digit PIN kamu
+        </div>
+        <div
+          class="text-body-2 md:text-body1 text-800 mb-10 md:mb-7 text-center"
+        >
+          Buat 6 Digit PIN Dana Pensiun Astra kamu
+        </div>
+
+        <div class="mb-6">
+          <app-auth-pin-form
+            #form
+            [formGroup]="formGroup"
+            (submitted)="handleUseReferral()"
+          ></app-auth-pin-form>
+        </div>
+
+        <div
+          class="hidden md:flex flex-col md:flex-row justify-end items-center space-x-0 md:space-x-4"
+        >
+          <app-common-button-component
+            [disabled]="!formGroup.valid || (interactRes$ | async)?.isLoading"
+            [isLoading]="(interactRes$ | async)?.isLoading"
+            class="text-heading-7 leading-heading-7 h-11 w-full md:mb-0 font-semibold rounded-lg"
+            (onClick)="form.submit()"
+          >
+            <span>Lanjut</span>
+          </app-common-button-component>
+        </div>
+
+        <div
+          class="fixed md:hidden bottom-10 px-4 left-0 right-0 w-full flex flex-col md:flex-row justify-end items-center"
+        >
+          <app-common-button-component
+            [disabled]="!formGroup.valid || (interactRes$ | async)?.isLoading"
+            [isLoading]="(interactRes$ | async)?.isLoading"
+            class="text-heading-7 leading-heading-7 h-11 w-full md:mb-0 font-semibold rounded-lg"
+            (onClick)="form.submit()"
+          >
+            <span>Lanjut</span>
+          </app-common-button-component>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</section>

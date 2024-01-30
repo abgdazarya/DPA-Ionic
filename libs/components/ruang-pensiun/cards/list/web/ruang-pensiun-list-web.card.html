@@ -1,0 +1,278 @@
+<div
+  class="overflow-hidden relative box-shadow-card bg-white rounded-4xl growing"
+  style="padding: 10px"
+  [ngClass]="nativeClass"
+>
+  <ng-container *ngIf="loading else dataTpl">
+    <div>
+      <div class="flex items-center mb-2">
+        <div class="h-[52px] w-[52px] mr-2">
+          <ng-container>
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-5 w-full"
+            ></ion-skeleton-text>
+          </ng-container>
+        </div>
+
+        <span class="flex-1 text-h7 text-900">
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-5 w-full"
+          ></ion-skeleton-text>
+        </span>
+        <div class="float-right">
+          <div class="text-h6 text-[13px] text-600 mb-1">
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-5 w-full"
+            ></ion-skeleton-text>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2 relative rounded-4xl overflow-hidden">
+        <ion-skeleton-text
+          [animated]="true"
+          class="h-[85px] w-full rounded-3xl"
+        ></ion-skeleton-text>
+      </div>
+      <div class="flex space-x-10">
+        <div class="flex-1">
+          <div class="mb-2">
+            <div class="flex item-center mb-2">
+              <span class="flex-1 text-h6 text-[14px] text-500">
+                <ion-skeleton-text
+                  [animated]="true"
+                  class="h-5 w-full"
+                ></ion-skeleton-text>
+              </span>
+              <div class="float-right">
+                <div class="flex-1 flex space-x-2 items-center">
+                  <ion-skeleton-text
+                    [animated]="true"
+                    class="h-5 w-full"
+                  ></ion-skeleton-text>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-h5 text-900">
+              <ion-skeleton-text
+                [animated]="true"
+                class="h-5 w-full"
+              ></ion-skeleton-text>
+            </div>
+            <div class="flex items-center">
+              <div class="flex-1 text-h7 text-900">
+                <span>
+                  <ion-skeleton-text
+                    [animated]="true"
+                    class="h-5 w-full"
+                  ></ion-skeleton-text>
+                </span>
+              </div>
+              <div class="float-right">
+                <ion-skeleton-text
+                  [animated]="true"
+                  class="h-5 w-full"
+                ></ion-skeleton-text>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="allKonten">
+      <div *ngIf="allKonten.templateRuangPensiun == 'JUAL-BELI'">
+        <div class="flex items-center mb-2">
+          <!-- Photo User -->
+          <div
+            *ngIf="!allKonten.photoUser"
+            class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl mr-2"
+          >
+            {{ allKonten.namaUser?.toUpperCase() | nickName }}
+          </div>
+
+          <div class="h-[52px] w-[52px] mr-2">
+            <ng-container>
+              <img
+                class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl"
+                [src]="allKonten.photoUser"
+                alt=""
+              />
+            </ng-container>
+          </div>
+          <!-- End Photo User -->
+
+          <span class="flex-1 text-h7 text-900">
+            {{ allKonten.namaUser || 'Tidak ada nama user' | shorten:25}}
+          </span>
+          <div class="float-right">
+            <div class="text-h6 text-[13px] text-600 mb-1">Jual Beli</div>
+            <div
+              *ngIf="(pageService.pageType$ | async) === pageTypeEnum.PERSONAL"
+              class="text-h7 text-[13px] {{allKonten.statusApproval | statusApprovalEnum:'textColor'}} text-right"
+            >
+              {{allKonten.statusApproval | statusApprovalEnum:'text'}}
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 relative rounded-4xl overflow-hidden">
+          <ion-img
+            *ngIf="allKonten.gambar && allKonten.gambar != ''"
+            [src]="allKonten.gambar"
+            (click)="onClickImage.emit(allKonten)"
+            class="h-[140px] w-full object-cover object-center overflow-hidden"
+            alt="News Image"
+          ></ion-img>
+
+          <div
+            *ngIf="!allKonten.gambar || allKonten.gambar == ''"
+            class="mb-8 rounded-xl bg-neutral-600 h-[140px] rounded-xl w-full text-neutral-700 flex items-center justify-center text-h3"
+          >
+            No Thumbnail
+          </div>
+        </div>
+        <div class="flex space-x-10">
+          <div class="flex-1">
+            <div class="mb-2">
+              <div class="flex item-center mb-2">
+                <span class="flex-1 text-h6 text-[14px] text-500">
+                  {{allKonten.createdOn | date:'dd MMMM YYYY'}}</span
+                >
+                <div class="float-right">
+                  <div class="flex-1 flex space-x-2 items-center">
+                    <app-common-icon-component
+                      (click)="onClickLike.emit(allKonten)"
+                      nativeClass="w-8 h-8 {{ allKonten.isLike === 1 ? 'text-lazuli-500' : 'text-neutral-200'}}"
+                      name="heart-filled"
+                    />
+                    <span class="text-h6 text-700"
+                      >{{allKonten.jumlahLike}} Suka</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-h5 text-900">
+                {{allKonten.judulThread && allKonten.judulThread != 'null' ?
+                allKonten.judulThread:'Tidak ada judul' | shorten:23}}
+              </div>
+              <div class="flex items-center">
+                <div
+                  class="flex-1 text-h7 text-900"
+                  *ngIf="allKonten.hargaBarang"
+                >
+                  <span
+                    >{{ allKonten.hargaBarang |
+                    currency:'IDR':'symbol-narrow'}}</span
+                  >
+                </div>
+                <div class="float-right">
+                  <app-common-button-component
+                    color="blank"
+                    class="float-right ion-no-padding p-0 m-0 text-h6 text-lazuli-500 font-bold"
+                    (onClick)="onClick.emit(allKonten)"
+                  >
+                    Lihat Detail
+                  </app-common-button-component>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Postingan -->
+
+      <div *ngIf="allKonten.templateRuangPensiun == 'AKTIVITAS-PENSIUN'">
+        <div class="flex items-center mb-6">
+          <!-- Photo User -->
+          <div
+            *ngIf="!allKonten.photoUser"
+            class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl mr-2"
+          >
+            {{ allKonten.namaUser?.toUpperCase() | nickName }}
+          </div>
+
+          <div *ngIf="allKonten.photoUser" class="h-[52px] w-[52px] mr-2">
+            <ng-container>
+              <img
+                class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl"
+                [src]="allKonten.photoUser"
+                alt=""
+              />
+            </ng-container>
+          </div>
+          <!-- End Photo User -->
+
+          <span class="flex-1 text-h5 text-900"
+            >{{ allKonten.namaUser || 'Tidak ada nama user' | shorten:25}}</span
+          >
+          <div class="float-right">
+            <div class="text-h6 text-[13px] text-600 mb-1">Ruang Pensiun</div>
+            <div
+              *ngIf="(pageService.pageType$ | async) === pageTypeEnum.PERSONAL"
+              class="text-h6 {{allKonten.statusApproval | statusApprovalEnum:'textColor'}} text-right"
+            >
+              {{allKonten.statusApproval | statusApprovalEnum:'text'}}
+            </div>
+          </div>
+        </div>
+        <div class="flex space-x-20">
+          <div class="flex-1">
+            <div class="mb-8">
+              <div class="text-h3 text-900 mb-3">
+                {{allKonten.judulThread || 'Tidak ada judul' | shorten:35}}
+              </div>
+              <div class="flex space-x-2">
+                <span class="text-h5 text-500">
+                  {{allKonten.createdOn | date:'dd MMMM YYYY'}}</span
+                >
+              </div>
+            </div>
+            <div class="flex item-center">
+              <div class="flex-1 flex space-x-2 items-center">
+                <app-common-icon-component
+                  (click)="onClickLike.emit(allKonten)"
+                  nativeClass="w-8 h-8 {{ allKonten.isLike === 1 ? 'text-lazuli-500' : 'text-neutral-200'}}"
+                  name="heart-filled"
+                />
+                <span class="text-h5 text-700"
+                  >{{allKonten.jumlahLike}} Suka</span
+                >
+              </div>
+
+              <app-common-button-component
+                color="blank"
+                class="float-right ion-no-padding p-0 m-0 text-h5 text-lazuli-500 font-bold"
+                (onClick)="onClick.emit(allKonten)"
+              >
+                Lihat Detail
+              </app-common-button-component>
+            </div>
+          </div>
+          <div class="float-right">
+            <img
+              *ngIf="allKonten.gambar && allKonten.gambar != ''"
+              [src]="allKonten.gambar"
+              (click)="onClickImage.emit(allKonten)"
+              class="w-[150px] h-[150px] rounded-4xl"
+              alt=""
+            />
+
+            <div
+              *ngIf="!allKonten?.gambar || allKonten.gambar == ''"
+              class="mb-8 rounded-xl bg-neutral-600 h-[150px] rounded-xl w-full text-neutral-700 flex items-center justify-center text-h3"
+            >
+              No Thumbnail
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</div>

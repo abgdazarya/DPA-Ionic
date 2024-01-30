@@ -1,0 +1,72 @@
+.lirary-image {
+  width: 100%;
+  .lirary-image-inside {
+    padding: 5px;
+    overflow: hidden;
+    position: relative;
+    .image-view {
+      position: relative;
+      padding-top: 20%;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      border: 2px solid transparent;
+      svg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        right: 0;
+        z-index: 2;
+        width: 35px;
+        height: 35px;
+        opacity: 0.5;
+      }
+      .animation-loader {
+        animation: lazyloader_lirary_image 1s infinite;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        // background-color: #e9e9e9;
+      }
+      .animation_speed_two {
+        animation-duration: 1.2s;
+      }
+      .animation_speed_three {
+        animation-duration: 0.8s;
+      }
+      .animation_speed_four {
+        animation-duration: 0.5s;
+      }
+      .animation_speed_five {
+        animation-duration: 1.6s;
+      }
+    }
+  }
+}
+
+@keyframes lazyloader_lirary_image {
+  0% {
+    width: 0;
+    left: 0;
+    background: linear-gradient(90deg, #e9e9e9 84%, rgba(0, 0, 0, 0) 100%);
+  }
+  64% {
+    width: 100%;
+    left: 0;
+    background: linear-gradient(90deg, #e9e9e9 84%, rgba(0, 0, 0, 0) 100%);
+  }
+  65% {
+    width: 100%;
+    right: 0;
+    left: auto;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #e9e9e9 23%);
+  }
+  100% {
+    width: 0%;
+    right: 0;
+    left: auto;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #e9e9e9 23%);
+  }
+}

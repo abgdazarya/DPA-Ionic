@@ -1,0 +1,37 @@
+:host {
+  ::ng-deep {
+    .custom-news {
+      ul li {
+        list-style: disc;
+        margin: 0;
+        padding: 0;
+        margin-left: 34px;
+      }
+
+      ol li {
+        list-style: decimal;
+        margin: 0;
+        padding: 0;
+        margin-left: 34px;
+      }
+    }
+
+    .truncated-title {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+
+    .truncated-headline {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+    }
+
+    .box-shadow-shared-button {
+      box-shadow: 0px 0px 20px 0px rgba(143, 149, 178, 0.2);
+    }
+  }
+}

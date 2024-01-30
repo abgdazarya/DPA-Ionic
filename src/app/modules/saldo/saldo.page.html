@@ -1,0 +1,116 @@
+<section>
+  <div class="md:hidden block px-2 mt-4">
+    <div class="px-3">
+      <div
+        *ngIf="isStop"
+        class="my-6 px-3 py-2.5 flex space-x-3.5 bg-warning-300 rounded-lg"
+      >
+        <app-common-icon-component
+          nativeClass="w-6 h-6 text-neutral-800"
+          name="attention-circle"
+        />
+        <p class="text-sm text-neutral-800">
+          Peserta pensiun kamu saat ini sudah berhenti, mohon segera ajukan
+          klaim
+        </p>
+      </div>
+      <div class="font-bold text-lg text-neutral-800">Pilih Periode Bulan</div>
+      <p class="text-[16px] text-neutral-700">
+        Cek saldo manfaat pensiunmu setiap bulan
+      </p>
+    </div>
+    <form [formGroup]="saldoForm">
+      <div class="px-3 pt-3">
+        <app-month-year-dialog
+          controlName="periode"
+          (dateChange)="dateChange($event)"
+        ></app-month-year-dialog>
+        <div class="mt-5">
+          <ion-button
+            color="primary"
+            class="w-full md:w-auto text-h7 h-12 mb-4 rounded-lg text-lazuli-500"
+            (click)="cariPeriode()"
+          >
+            <span class="px-4 capitalize">Cari Periode</span>
+            <ion-spinner
+              *ngIf="(monthlyInteractionResponse$ | async)?.type === interactionType.PROCESS"
+              name="circular"
+            ></ion-spinner>
+          </ion-button>
+        </div>
+      </div>
+    </form>
+
+    <app-saldo-card
+      [saldo]="((response$ | async)?.data?.saldo | currency:'IDR':'symbol':'4.2-2') || ''"
+      [nomorPeserta]="(response$ | async)?.data?.noPeserta || ''"
+      [errorMsg]="errorMsg"
+      [investment]="((response$ | async)?.data?.iuranTerakhir | currency:'IDR':'symbol':'4.2-2') || ''"
+      [iuranSukarela]="((response$ | async)?.data?.iuranSukarela || (response$ | async)?.data?.iuranSukarelaTerakhir | currency:'IDR':'symbol':'4.2-2') || ''"
+    >
+    </app-saldo-card>
+  </div>
+
+  <div class="hidden md:block">
+    <div class="py-[60px] md:px-[120px] md:px-1">
+      <div class="card-saldo rounded-[20px]">
+        <div class="p-7 mb-6 pb-0">
+          <p class="text-[24px] text-neutral-0 font-bold">Saldo</p>
+        </div>
+
+        <div
+          class="rounded-[20px] bg-neutral-0 md:shadow-lg py-[45px] px-[40px] flex justify-between items-center mb-[58px]"
+        >
+          <div class="flex space-x-3.5">
+            <img src="images/ion-wallet.svg" alt="" />
+            <p class="text-[24px] text-neutral-900 font-bold">
+              Pilih Periode Bulan
+            </p>
+          </div>
+          <form class="flex space-x-6 items-center" [formGroup]="saldoForm">
+            <app-select
+              controlName="month"
+              class="w-[148px] lg:w-[248px]"
+              [options]="monthOptions"
+            ></app-select>
+            <app-select
+              controlName="year"
+              class="w-[148px] lg:w-[248px]"
+              [options]="yearOptions"
+            ></app-select>
+            <ion-button
+              mode="ios"
+              color="primary"
+              class="w-full md:w-auto text-h7 h-12 col-start-3 rounded-lg text-lazuli-500"
+              (click)="cariPeriode()"
+            >
+              <span class="px-4 capitalize">Cari Periode</span>
+              <ion-spinner
+                *ngIf="(monthlyInteractionResponse$ | async)?.type === interactionType.PROCESS"
+                name="circular"
+              ></ion-spinner>
+            </ion-button>
+          </form>
+        </div>
+      </div>
+      <app-saldo-card
+        [saldo]="((response$ | async)?.data?.saldo | currency:'IDR':'symbol':'4.2-2') || ''"
+        [nomorPeserta]="(response$ | async)?.data?.noPeserta || ''"
+        [monthYear]="monthYear"
+        [errorMsg]="errorMsg"
+        [investment]="((response$ | async)?.data?.iuranTerakhir | currency:'IDR':'symbol':'4.2-2') || ''"
+        [iuranSukarela]="((response$ | async)?.data?.iuranSukarela || (response$ | async)?.data?.iuranSukarelaTerakhir | currency:'IDR':'symbol':'4.2-2') || ''"
+      >
+      </app-saldo-card>
+    </div>
+  </div>
+</section>
+
+<app-common-alert-component
+  *ngIf="errorMsgToken"
+  type="danger"
+  [desc]="errorMsgToken"
+  [duration]="3000"
+  transformShowClass="translate-y-24"
+  transformHideClass="-translate-y-24"
+></app-common-alert-component>

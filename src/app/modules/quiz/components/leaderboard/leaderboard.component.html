@@ -1,0 +1,60 @@
+<div class="leaderboard relative mt-10 md:mt-16 w-fit mx-auto">
+  <img class="w-[370px] md:w-auto" [src]="showPeriod ? 'images/leaderboard-period-bg.svg' :'images/leaderboard-bg.svg'"
+    alt="" />
+  <div class="w-full absolute top-[-10px] md:top-[-20px]">
+    <img src="images/leaderboard.svg" alt="" srcset="" class="w-[125px] md:w-fit mx-auto" />
+  </div>
+  <div
+    class="button absolute top-6 md:top-20 flex items-center w-full space-x-5 md:space-x-0 justify-center md:justify-between p-7">
+    <div class="relative cursor-pointer" (click)="selectedLeaderboard = 'astra'">
+      <img class="w-[101px] md:w-auto"
+        [src]="selectedLeaderboard === 'astra' ? 'images/bg-btn-quiz-1.svg' : 'images/bg-btn-quiz.svg'" alt=""
+        srcset="" />
+      <div class="flex w-full h-full items-center justify-center absolute top-0">
+        <span class="text-sm md:text-3xl text-[12px] font-bold">Astra</span>
+      </div>
+    </div>
+    <div class="relative cursor-pointer" (click)="selectedLeaderboard = 'non'">
+      <img class="w-[101px] md:w-auto"
+        [src]="selectedLeaderboard === 'non' ? 'images/bg-btn-quiz-1.svg' : 'images/bg-btn-quiz.svg'" alt=""
+        srcset="" />
+      <div class="flex w-full h-full items-center justify-center absolute top-0">
+        <span class="text-sm md:text-3xl text-[12px] font-bold">Non Astra</span>
+      </div>
+    </div>
+  </div>
+  <div class="leaderboard-ctn absolute top-24 md:top-44 w-full px-5 md:px-6">
+    <div class="grid grid-cols-1 divide-y">
+      <ng-container *ngIf="selectedLeaderboard === 'astra'; else elseTemplate">
+        <app-leaderboard-card *ngFor="let item of leaderboard?.astra; let i = index" [badge]="i+1"
+          [name]="item!.namaPeserta || ''" [point]="item!.skor || ''" [isMe]="item!.isMe || false" [active]="true" [verify]="item.statusVerify">
+        </app-leaderboard-card>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <app-leaderboard-card *ngFor="let item of leaderboard?.nonAstra; let i = index" [badge]="i+1"
+          [name]="item!.namaPeserta || ''" [point]="item!.skor || ''" [isMe]="item!.isMe || false" [active]="false" [verify]="item.statusVerify">
+        </app-leaderboard-card>
+      </ng-template>
+      <!-- <app-leaderboard-card [badge]="2" name="Demas Ahmad" point="10100"></app-leaderboard-card>
+      <app-leaderboard-card [badge]="3" name="Erikha" point="10000"></app-leaderboard-card>
+      <app-leaderboard-card [badge]="4" name="Chenko" point="9000"></app-leaderboard-card>
+      <app-leaderboard-card [badge]="5" name="Ahmad" point="8000"></app-leaderboard-card> -->
+      <!-- <app-leaderboard-card *ngIf="showPeriod" [badge]="12" name="Kamu" point="7000" [active]="true">
+      </app-leaderboard-card> -->
+    </div>
+  </div>
+  <div *ngIf="showPeriod"
+    class="absolute bottom-[30px] md:bottom-[50px] items-center justify-center space-x-2 flex text-[16px] md:text-4xl font-bold w-full">
+    <img src="images/quiz-arrow-left.svg" class="w-4 md:w-auto cursor-pointer"
+      [class]="leaderboard?.periode?.prevPeriode === null ? 'opacity-50 cursor-default' : 'opacity-100 cursor-pointer'"
+      alt="" (click)="handlePeriod('prev')" />
+    <h2>{{monthLabel}} {{year}}</h2>
+    <img src="images/quiz-arrow-right.svg" class="w-4 md:w-auto cursor-pointer"
+      [class]="leaderboard?.periode?.nextPeriode === null ? 'opacity-50 cursor-default' : 'opacity-100 cursor-pointer'"
+      alt="" (click)="handlePeriod('next')" />
+  </div>
+  <div *ngIf="!showPeriod" class="btn-mulai absolute bottom-[-20px] md:bottom-[-40px] w-full">
+    <img src="images/btn-mulai-quiz.svg" alt="" class="w-[182px] md:w-auto mx-auto cursor-pointer"
+      (click)="onClick.emit()" />
+  </div>
+</div>

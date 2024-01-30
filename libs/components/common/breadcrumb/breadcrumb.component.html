@@ -1,0 +1,36 @@
+<ng-container *ngIf="loading; else dataTpl">
+  <div class="flex space-x-1.5 items-center">
+    <ng-container *ngFor="let item of [].constructor(length); let last = last">
+      <ion-skeleton-text [animated]="true" class="w-20 h-5">
+      </ion-skeleton-text>
+
+      <app-common-icon-component
+        *ngIf="!last"
+        name="chevron-right-normal"
+        nativeClass="text-neutral-600 w-6 h-6"
+      ></app-common-icon-component>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #dataTpl>
+  <ng-container *ngIf="breadcrumbs?.length">
+    <div class="flex space-x-1.5 items-center">
+      <ng-container *ngFor="let item of breadcrumbs; let last = last">
+        <div
+          (click)="onClick.emit(item.link)"
+          class="cursor-pointer text-h5 font-semibold {{
+            last ? activeClass : class
+          }} text-neutral-600"
+        >
+          {{ item.label }}
+        </div>
+        <app-common-icon-component
+          *ngIf="!last"
+          name="chevron-right-normal"
+          nativeClass="text-neutral-600 w-6 h-6"
+        ></app-common-icon-component>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>

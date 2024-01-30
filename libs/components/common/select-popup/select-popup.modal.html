@@ -1,0 +1,13 @@
+<div class="w-full flex flex-col">
+  <span class="text-800 text-sm mb-[2px]">{{label}}</span>
+  <div [class]="className" (click)="openPopup()">
+    <div class="w-full flex justify-between items-center">
+      <span class="text-800 text-body-1">{{getSelected()}}</span>
+      <app-common-icon-component
+        name="chevron-bottom-normal"
+        nativeClass="w-5 h-5 text-neutral-800 bg-neutral-100"
+      >
+      </app-common-icon-component>
+    </div>
+  </div>
+</div>

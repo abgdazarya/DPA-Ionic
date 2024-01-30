@@ -1,0 +1,67 @@
+<section>
+  <ng-container *ngIf="loading$ | async else dataTpl">
+    <div class="block">
+      <div class="mb-5">
+        <ng-container *ngFor="let item of [].constructor(9); let last = last;">
+          <app-job-web-career-list-web-item [loading]="true">
+          </app-job-web-career-list-web-item>
+
+          <hr *ngIf="!last" class="border-b border-neutral-200 my-8" />
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="(job$ | async) as job else noDataTpl">
+      <div class="block">
+        <div class="mb-5">
+          <ng-container *ngFor="let item of job | jobFilterTransformer:'PORTAL-KARIR'; let last = last;">
+            <app-job-web-career-list-web-item
+              [job]="item"
+              (onClick)="handleNavigateToACC($event)"
+            >
+            </app-job-web-career-list-web-item>
+
+            <hr *ngIf="!last" class="border-b border-neutral-200 my-0" />
+          </ng-container>
+        </div>
+        <ng-container *ngIf="pagination$ | async as pagination">
+          <div class="flex justify-center">
+            <app-common-pagination-component
+              [pagination]="pagination"
+              [showMiddlePage]="4"
+              (onClick)="handlePageChange($event)"
+            ></app-common-pagination-component>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <ng-template #noDataTpl>
+      <div
+        class="flex justify-center items-center overflow-hidden container-box-shadow rounded-[24px] bg-white min-h-[494px]"
+      >
+        <div class="text-center">
+          <img
+            src="images/news-not-found.png"
+            class="mb-8 w-[180px] h-[152px] mx-auto"
+            alt=""
+          />
+          <div class="text-h3 text-800 font-semibold mb-1.5">
+            Hasil Pencarian Tidak Ditemukan
+          </div>
+          <div class="text-h4 text-700 font-normal">
+            Silakan coba lagi atau kembali lagi nanti.
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
+
+  <div
+    class="target children-scroll"
+    [id]="targetScrollPos"
+    #targetScrollPos
+  ></div>
+</section>

@@ -1,0 +1,29 @@
+<div class="text-center">
+  <img
+    src="images/error.png"
+    class="mx-auto h-[152px] w-[180px] mb-6"
+    alt=""
+  />
+  <div class="text-h3 md-max:text-heading-4 font-semibold text-800 mb-1">
+    Oops! Perangkat Terdeteksi Tidak Aman
+  </div>
+  <div class="text-h7 md-max:text-body-2 text-700 w-2/3 mx-auto">
+    Aplikasi MyDPA tidak dapat berfungsi pada perangkat 
+    yang telah di-root. Silahkan uninstal aplikasi yang
+    tidak resmi atau kembali kepengaturan pabrik
+    (Factory Reset) atau gunakan perangkat lain untuk
+    bisa mengakses MyDPA kembali.
+    
+    <div class="place-self-end w-full md:!w-auto mt-10">
+      <ion-button
+        mode="ios"
+        class="text-h7 h-11 rounded-lg w-full md:!w-auto"
+        (click)="exitApp()"
+      >
+        <span class="px-16">
+          Saya Mengerti
+        </span>
+      </ion-button>
+    </div>
+  </div>
+</div>

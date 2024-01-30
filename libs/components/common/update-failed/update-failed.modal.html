@@ -1,0 +1,212 @@
+<ng-container *ngIf="type === 'email'">
+  <div
+    class="p-8 overflow-y-auto mx-auto md:mx-0 w-full md:w-[40rem]"
+    *ngIf="!screenSizeService.isMobileResolution()"
+  >
+    <div class="flex justify-end pb-4">
+      <app-common-icon-component
+        name="close"
+        nativeClass="h-8 w-8 text-neutral-800 cursor-pointer"
+        (click)="handleClose()"
+      ></app-common-icon-component>
+    </div>
+
+    <img
+      src="images/retirement-card-not-found.png"
+      class="w-64 mx-auto mt-10 md:mt-0 mb-4"
+      alt=""
+    />
+
+    <div class="text-center">
+      <div class="text-800 text-[14px] md:text-[16px] mb-2 font-semibold">
+        Mohon maaf NIK Anda belum terdaftar pada DPA.
+        <br />
+        Silahkan hubungi HRD perusaahan untuk
+        <br />
+        mendaftarkan NIK Anda pada DPA
+      </div>
+      <div class="text-800 text-[14px] md:text-[16px] mb-2 font-semibold">
+        apabila Anda sudah berhenti bekerja di Astra Group
+        <br />
+        silahkan hubungi WA official DPA
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="w-vw h-full bg-transparent bottom-0 flex flex-col justify-end"
+    *ngIf="screenSizeService.isMobileResolution()"
+  >
+    <div
+      class="w-full h-full absolute left-0 top-0 z-1"
+      (click)="handleClose()"
+    ></div>
+    <div
+      class="w-full bg-white min-h-[150px] relative z-[2] p-8 rounded-ss-xl rounded-tr-xl"
+    >
+      <img
+        src="images/retirement-card-not-found.png"
+        class="w-40 mx-auto mt-10 md:mt-0 mb-4"
+        alt=""
+      />
+
+      <div class="text-center">
+        <div class="text-800 text-[14px] md:text-[16px] mb-2 font-semibold">
+          Mohon maaf NIK Anda belum terdaftar pada DPA.
+          <br />
+          Silahkan hubungi HRD perusaahan untuk
+          <br />
+          mendaftarkan NIK Anda pada DPA
+        </div>
+        <div class="text-800 text-[14px] md:text-[16px] mb-2 font-semibold">
+          apabila Anda sudah berhenti bekerja di Astra Group
+          <br />
+          silahkan hubungi WA official DPA
+        </div>
+      </div>
+      <div class="flex justify-end sm-max:w-full">
+        <ion-button
+          (click)="handleClose()"
+          mode="ios"
+          class="text-h7 text-neutral-0 h-11 rounded-lg md-max:w-full"
+        >
+          <span class="px-20"> Oke </span>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type === 'toggle-invalid'">
+  <div
+    class="p-8 overflow-y-auto mx-auto md:mx-0 w-full md:w-[40rem]"
+    *ngIf="!screenSizeService.isMobileResolution()"
+  >
+    <div class="flex justify-end pb-4">
+      <app-common-icon-component
+        name="close"
+        nativeClass="h-8 w-8 text-neutral-800 cursor-pointer"
+        (click)="handleClose()"
+      ></app-common-icon-component>
+    </div>
+
+    <img
+      src="images/error.png"
+      class="w-64 mx-auto mt-10 md:mt-0 mb-4"
+      alt=""
+    />
+
+    <div class="text-center">
+      <div class="text-800 text-[14px] md:text-[16px] mb-2 font-semibold">
+        Data email Akun yang Anda pilih berbeda
+        <br />
+        dengan Email yang terdaftar di Profile
+        <br />
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="w-vw h-full bg-transparent bottom-0 flex flex-col justify-end"
+    *ngIf="screenSizeService.isMobileResolution()"
+  >
+    <div
+      class="w-full h-full absolute left-0 top-0 z-1"
+      (click)="handleClose()"
+    ></div>
+    <div
+      class="w-full bg-white min-h-[150px] relative z-[2] p-8 rounded-ss-xl rounded-tr-xl"
+    >
+      <img
+        src="images/error.png"
+        class="w-40 mx-auto mt-10 md:mt-0 mb-4"
+        alt=""
+      />
+
+      <div class="text-center">
+        <div class="text-800 text-[14px] md:text-[16px] mb-2 font-semibold">
+          Data email Akun yang Anda pilih berbeda
+          <br />
+          dengan Email yang terdaftar di Profile
+          <br />
+        </div>
+      </div>
+      <div class="flex justify-end sm-max:w-full">
+        <ion-button
+          (click)="handleClose()"
+          mode="ios"
+          class="text-h7 text-neutral-0 h-11 rounded-lg md-max:w-full"
+        >
+          <span class="px-20"> Oke </span>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type === 'toggle-failed'">
+  <div
+    class="p-8 overflow-y-auto mx-auto md:mx-0 w-full md:w-[40rem]"
+    *ngIf="!screenSizeService.isMobileResolution()"
+  >
+    <div class="flex justify-end pb-4">
+      <app-common-icon-component
+        name="close"
+        nativeClass="h-8 w-8 text-neutral-800 cursor-pointer"
+        (click)="handleClose()"
+      ></app-common-icon-component>
+    </div>
+
+    <img
+      src="images/error.png"
+      class="w-64 mx-auto mt-10 md:mt-0 mb-4"
+      alt=""
+    />
+
+    <div class="text-center">
+      <div class="text-800 text-[14px] md:text-[16px] mb-2 font-semibold">
+        Silahkan Lengkapi Data Email Anda
+        <br />
+        Pada Biodata Terlebih Dahulu
+        <br />
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="w-vw h-full bg-transparent bottom-0 flex flex-col justify-end"
+    *ngIf="screenSizeService.isMobileResolution()"
+  >
+    <div
+      class="w-full h-full absolute left-0 top-0 z-1"
+      (click)="handleClose()"
+    ></div>
+    <div
+      class="w-full bg-white min-h-[150px] relative z-[2] p-8 rounded-ss-xl rounded-tr-xl"
+    >
+      <img
+        src="images/error.png"
+        class="w-40 mx-auto mt-10 md:mt-0 mb-4"
+        alt=""
+      />
+
+      <div class="text-center">
+        <div class="text-800 text-[14px] md:text-[16px] mb-2 font-semibold">
+          Silahkan Lengkapi Data Email Anda
+          <br />
+          Pada Biodata Terlebih Dahulu
+          <br />
+        </div>
+      </div>
+      <div class="flex justify-end sm-max:w-full">
+        <ion-button
+          (click)="handleClose()"
+          mode="ios"
+          class="text-h7 text-neutral-0 h-11 rounded-lg md-max:w-full"
+        >
+          <span class="px-20"> Oke </span>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ng-container>

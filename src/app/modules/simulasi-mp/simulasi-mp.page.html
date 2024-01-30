@@ -1,0 +1,208 @@
+<ion-content class="ion-background-white">
+  <div class="hidden md:block">
+    <div class="py-[60px] md:px-[120px] md:px-11 bg-lazuli-50 h-[436px]">
+      <h2 class="font-bold text-[32px] text-neutral-800">Simulasi MP</h2>
+      <p class="text-neutral-700 text-[24px] mt-2">
+        Yuk, hitung simulasi manfaat pensiunmu disini!
+      </p>
+    </div>
+    <div class="md:px-[120px] py-[60px] md:px-11">
+      <div class="card-simulasi rounded-[20px] mt-[-300px]">
+        <div class="flex items-center justify-between py-[32px] px-[42px]">
+          <div>
+            <p class="text-lg font-semibold text-neutral-0">
+              Saldo Manfaat Pensiun Terakhir
+            </p>
+            <p class="text-[24px] text-neutral-0 font-bold">
+              <ng-container *ngIf="isLoading">
+                <ion-skeleton-text
+                  [animated]="true"
+                  class="w-30 h-8 rounded-2xl"
+                ></ion-skeleton-text>
+              </ng-container>
+
+              <span *ngIf="!isLoading"
+                >Rp{{removeNaN((response$ | async)?.data?.saldo | number,
+                'uang')}}</span
+              >
+            </p>
+          </div>
+          <div class="flex space-x-10">
+            <div class="flex space-x-3">
+              <img class="h-fit" src="images/cake-2.svg" alt="cake" />
+              <div>
+                <p class="text-neutral-0 text-[20px] font-semibold">
+                  Usia kamu saat ini
+                </p>
+                <p class="text-neutral-0 text-[20px]">
+                  <ng-container *ngIf="isLoading">
+                    <ion-skeleton-text
+                      [animated]="true"
+                      class="w-30 h-8 rounded-2xl"
+                    ></ion-skeleton-text>
+                  </ng-container>
+
+                  <span *ngIf="!isLoading"
+                    >{{removeNaN((response$ | async)?.data?.tanggalLahir || '' |
+                    yearMonth, 'bulan')}}</span
+                  >
+                </p>
+              </div>
+            </div>
+            <div class="flex space-x-3">
+              <img class="h-fit" src="images/alarm.svg" alt="cake" />
+              <div>
+                <p class="text-neutral-0 text-[20px] font-semibold">
+                  Lama Bekerja
+                </p>
+                <p class="text-neutral-0 text-[20px]">
+                  <ng-container *ngIf="isLoading">
+                    <ion-skeleton-text
+                      [animated]="true"
+                      class="w-30 h-8 rounded-2xl"
+                    ></ion-skeleton-text>
+                  </ng-container>
+
+                  <span *ngIf="!isLoading"
+                    >{{removeNaN((response$ | async)?.data?.tanggalMulaiKerja ||
+                    '' | yearMonth, 'bulan')}}</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-neutral-0 rounded-[20px] px-10 py-7 shadow-md">
+          <div class="flex space-x-2 items-center">
+            <img src="images/attention-security-shield.svg" alt="" />
+            <p class="text-[24px] text-neutral-800 font-semibold">
+              Simulasi MP
+            </p>
+          </div>
+          <form
+            [formGroup]="simulasiForm"
+            class="py-6 grid grid-cols-3 gap-6 pb-0"
+          >
+            <app-currency-input
+              type="text"
+              [class]="isInputFilled()"
+              controlName="gaji"
+              label="Gaji Bulan Terakhir"
+            ></app-currency-input>
+
+            <app-text-input
+              label="Kenaikan Gaji per Tahun (%)"
+              placeholder="Nominal kenaikan gaji per tahun dalam persen"
+              [min]="1"
+              appNumberInput
+              [error]="simulasiForm.controls['kenaikan'].errors?.['pattern'] ? 'Tidak boleh kurang dari 1':''"
+              type="number"
+              controlName="kenaikan"
+            >
+            </app-text-input>
+            <app-text-input
+              label="Pengembangan per Tahun (%)"
+              [min]="1"
+              appNumberInput
+              [error]="simulasiForm.controls['pengembangan'].errors?.['pattern'] ? 'Tidak boleh kurang dari 1':''"
+              placeholder="Pengembangan per tahun dalam persen"
+              type="number"
+              controlName="pengembangan"
+            ></app-text-input>
+            <ion-button
+              [disabled]="simulasiForm.invalid"
+              mode="ios"
+              color="primary"
+              class="w-full md:w-auto text-h7 h-12 col-start-3 rounded-xl text-lazuli-500 hitung"
+              (click)="handleHitung()"
+            >
+              <span class="px-4">Hitung</span>
+              <ion-spinner *ngIf="isSubmitting" name="circular"></ion-spinner>
+            </ion-button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="md:px-[120px] mb-10">
+      <app-hasil-simulasi
+        *ngIf="showDetail"
+        [development]="simulasiForm.get('pengembangan')?.value"
+        [increment]="simulasiForm.get('kenaikan')?.value"
+        [lastSalary]="simulasiForm.get('gaji')?.value"
+        [total]="simulasiData?.totalMp || 0"
+      ></app-hasil-simulasi>
+      <div *ngIf="showDetail==false" class="text-center mt-12">
+        <img
+          class="mb-[6] mx-auto"
+          src="images/simulasi-empty.svg"
+          alt="empty"
+        />
+        <h2 class="font-bold text-[32px] text-neutral-800">
+          Belum Ada Simulasi MP
+        </h2>
+        <p class="text-neutral-700 text-[24px] mt-2">
+          Silakan isi terlebih dahulu form yang tersedia
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="md:hidden">
+    <form [formGroup]="simulasiForm" class="p-4 flex flex-col space-y-5 block">
+      <app-currency-input
+        type="text"
+        [class]="isInputFilled()"
+        controlName="gaji"
+        label="Gaji Bulan Terakhir"
+      ></app-currency-input>
+      <app-text-input
+        label="Kenaikan Gaji per Tahun (%)"
+        [min]="1"
+        appNumberInput
+        [error]="simulasiForm.controls['kenaikan'].errors?.['pattern'] ? 'Tidak boleh kurang dari 1':''"
+        placeholder="Nominal kenaikan gaji per tahun dalam persen"
+        type="number"
+        controlName="kenaikan"
+      ></app-text-input>
+      <app-text-input
+        label="Pengembangan per Tahun (%)"
+        [min]="1"
+        appNumberInput
+        [error]="simulasiForm.controls['pengembangan'].errors?.['pattern'] ? 'Tidak boleh kurang dari 1':''"
+        placeholder="Pengembangan per tahun dalam persen"
+        type="number"
+        controlName="pengembangan"
+      ></app-text-input>
+
+      <ion-button
+        [disabled]="simulasiForm.invalid"
+        mode="ios"
+        color="primary"
+        class="w-full md:w-auto text-h7 h-12 mb-12 rounded-xl text-lazuli-500 hitung"
+        (click)="handleHitung()"
+      >
+        <span class="px-4">Hitung</span>
+        <ion-spinner *ngIf="isSubmitting" name="circular"></ion-spinner>
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
+
+<app-common-alert-component
+  *ngIf="simulasiError"
+  type="danger"
+  [desc]="simulasiError"
+  [duration]="3000"
+  transformShowClass="translate-y-24"
+  transformHideClass="-translate-y-24"
+></app-common-alert-component>
+
+<app-common-alert-component
+  *ngIf="errorMsgToken"
+  type="danger"
+  [desc]="errorMsgToken"
+  [duration]="3000"
+  transformShowClass="translate-y-24"
+  transformHideClass="-translate-y-24"
+></app-common-alert-component>

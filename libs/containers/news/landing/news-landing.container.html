@@ -1,0 +1,120 @@
+<section>
+  <ng-container *ngIf="loading$ | async else titleTpl">
+    <div class="text-center mb-8 hidden md:block">
+      <div class="text-h3 text-900 mb-1">
+        <ion-skeleton-text
+          animated
+          class="h-8 w-1/3 mx-auto"
+        ></ion-skeleton-text>
+      </div>
+      <div class="text-h7 text-600">
+        <ion-skeleton-text
+          animated
+          class="h-6 w-1/2 mx-auto"
+        ></ion-skeleton-text>
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center md:hidden mb-4 mx-4 md:mx-0">
+      <div class="text-h4 text-800 flex-1">
+        <ion-skeleton-text animated class="h-6 w-1/3"></ion-skeleton-text>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #titleTpl>
+    <div class="text-center mb-8 hidden md:block">
+      <div class="text-h3 text-900 mb-1">Berita Buat Kamu</div>
+      <div class="text-h7 text-600">
+        Dapatkan berita terbaru dari Dana Pensiun Astra
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center md:hidden mb-4 mx-4 md:mx-0">
+      <div class="text-h4 text-800">Berita Buat Kamu</div>
+
+      <app-common-button-component
+        color="blank"
+        class="text-body1 font-semibold h-7 m-0 p-0 ion-no-padding"
+        (onClick)="navigateClicked.emit()"
+      >
+        <span class="text-lazuli-500">Lihat Semua</span>
+      </app-common-button-component>
+    </div>
+  </ng-template>
+
+  <div class="md:hidden">
+    <!-- <swiper
+      class="pb-1"
+      #newsSlides
+      [initialSlide]="1"
+      [slidesPerView]="1.5"
+      [spaceBetween]="28"
+      [slidesOffsetAfter]="16"
+      [slidesOffsetBefore]="16"
+      [centeredSlides]="false"
+    > -->
+
+    <swiper
+      class="pb-1"
+      #newsSlides
+      [slidesPerView]="1.5"
+      [spaceBetween]="28"
+      [slidesOffsetAfter]="16"
+      [slidesOffsetBefore]="16"
+      [centeredSlides]="false"
+    >
+      <ng-container *ngIf="loading$ | async else containerTpl">
+        <ng-container *ngFor="let item of [].constructor(3)">
+          <ng-template swiperSlide>
+            <app-news-common-mobile-card
+              nativeClass="min-h-[184px] mb-0.5 cursor-pointer"
+              [loading]="true"
+            ></app-news-common-mobile-card>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+
+      <ng-template #containerTpl>
+        <ng-container *ngFor="let item of (news$ | async)">
+          <ng-template swiperSlide>
+            <app-news-common-mobile-card
+              nativeClass="min-h-[184px] mb-0.5 cursor-pointer"
+              [news]="item"
+              (click)="newsClicked.emit(item)"
+            ></app-news-common-mobile-card>
+          </ng-template>
+        </ng-container>
+      </ng-template>
+    </swiper>
+  </div>
+
+  <div class="hidden md:block">
+    <div class="grid grid-cols-3 gap-9 mb-7">
+      <ng-container *ngIf="loading$ | async else lgContainerTpl">
+        <ng-container *ngFor="let item of [].constructor(3)">
+          <app-news-common-web-card [loading]="true"></app-news-common-web-card>
+        </ng-container>
+      </ng-container>
+
+      <ng-template #lgContainerTpl>
+        <ng-container *ngFor="let item of (news$ | async)">
+          <app-news-common-web-card
+            class="cursor-pointer"
+            [news]="item"
+            (click)="newsClicked.emit(item)"
+          ></app-news-common-web-card>
+        </ng-container>
+      </ng-template>
+    </div>
+    <div class="flex justify-center">
+      <app-common-button-component
+        color="lazuli-50"
+        class="text-h7 text-neutral-0 rounded-2xl"
+        (onClick)="navigateClicked.emit()"
+      >
+        <span class="px-14 text-lazuli-500">Lihat Semua Berita</span>
+      </app-common-button-component>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,173 @@
+<ng-container *ngIf="loading; else paginationTpl">
+  <div class="flex items-center space-x-5">
+    <div>
+      <ion-skeleton-text
+        [animated]="true"
+        class="{{ type === 'web' ? 'h-8 w-20' : 'h-4 w-10' }}"
+      ></ion-skeleton-text>
+    </div>
+
+    <ng-container *ngFor="let item of [].constructor(showMiddlePage)">
+      <div>
+        <ion-skeleton-text
+          [animated]="true"
+          class="{{
+            type === 'web' ? 'h-[50px] w-[50px]' : 'h-[30px] w-[30px]'
+          }} rounded-full"
+        ></ion-skeleton-text>
+      </div>
+    </ng-container>
+
+    <div>
+      <ion-skeleton-text
+        [animated]="true"
+        class="{{ type === 'web' ? 'h-8 w-20' : 'h-4 w-10' }}"
+      ></ion-skeleton-text>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #paginationTpl>
+  <div class="flex items-center space-x-5">
+    <app-common-button-component
+      [disabled]="pagination.page === 1"
+      color="blank"
+      class="m-0 p-0 ion-no-padding"
+      (onClick)="onClick.emit(pagination.page - 1)"
+    >
+      <span
+        class="{{ type === 'web' ? 'text-h3' : 'text-h7' }} {{
+          pagination.page === 1 ? 'text-neutral-500' : 'text-lazuli-400'
+        }}"
+        >Prev</span
+      >
+    </app-common-button-component>
+
+    <div class="flex items-center space-x-2.5">
+      <app-common-button-component
+        (onClick)="onClick.emit(1)"
+        [color]="pagination.page === 1 ? 'lazuli-500' : 'blank'"
+        class="m-0 p-0 ion-no-padding {{
+          type === 'web' ? 'h-[50px] w-[50px]' : 'h-[30px] w-[30px]'
+        }} rounded-full {{
+          pagination.page === 1 ? '' : 'border border-lazuli-400'
+        }}"
+      >
+        <div
+          class="flex items-center {{
+            type === 'web' ? 'text-h3' : 'text-h7'
+          }} {{ pagination.page === 1 ? 'text-white' : 'text-lazuli-400' }}"
+        >
+          {{ "01" }}
+        </div>
+      </app-common-button-component>
+
+      <app-common-button-component
+        (onClick)="onClick.emit(2)"
+        *ngIf="pagination.page > 2 && pagination.totalPage > showMiddlePage + 1"
+        color="blank"
+        class="m-0 p-0 ion-no-padding {{
+          type === 'web' ? 'h-[50px] w-[50px]' : 'h-[30px] w-[30px]'
+        }} rounded-full border border-lazuli-400"
+      >
+        <div
+          class="flex items-center {{
+            type === 'web' ? 'text-h3' : 'text-h7'
+          }} text-lazuli-400"
+        >
+          {{ "..." }}
+        </div>
+      </app-common-button-component>
+
+      <ng-container *ngFor="let page of getPages()">
+        <app-common-button-component
+          *ngIf="page !== 1 && page !== pagination.totalPage"
+          (onClick)="onClick.emit(page)"
+          [color]="pagination.page === page ? 'lazuli-500' : 'blank'"
+          class="m-0 p-0 ion-no-padding {{
+            type === 'web' ? 'h-[50px] w-[50px]' : 'h-[30px] w-[30px]'
+          }} rounded-full {{
+            pagination.page === page ? '' : 'border border-lazuli-400'
+          }}"
+        >
+          <div
+            class="flex items-center {{
+              type === 'web' ? 'text-h3' : 'text-h7'
+            }}
+          {{ pagination.page === page ? 'text-white' : 'text-lazuli-400 ' }}
+          "
+          >
+            {{ page >= 10 ? page : "0" + page }}
+          </div>
+        </app-common-button-component>
+      </ng-container>
+
+      <app-common-button-component
+        (onClick)="onClick.emit(pagination.totalPage - 1)"
+        *ngIf="
+          pagination.page + showMiddlePage + 1 <= pagination.totalPage &&
+          !(pagination.totalPage <= showMiddlePage)
+        "
+        color="blank"
+        class="m-0 p-0 ion-no-padding {{
+          type === 'web' ? 'h-[50px] w-[50px]' : 'h-[30px] w-[30px]'
+        }} rounded-full border border-lazuli-400"
+      >
+        <div
+          class="flex items-center {{
+            type === 'web' ? 'text-h3' : 'text-h7'
+          }} text-lazuli-400"
+        >
+          {{ "..." }}
+        </div>
+      </app-common-button-component>
+
+      <app-common-button-component
+        *ngIf="pagination.totalPage !== 1"
+        (onClick)="onClick.emit(pagination.totalPage)"
+        [color]="
+          pagination.page === pagination.totalPage ? 'lazuli-500' : 'blank'
+        "
+        class="m-0 p-0 ion-no-padding {{
+          type === 'web' ? 'h-[50px] w-[50px]' : 'h-[30px] w-[30px]'
+        }} rounded-full {{
+          pagination.page === pagination.totalPage
+            ? ''
+            : 'border border-lazuli-400'
+        }}"
+      >
+        <div
+          class="flex items-center {{
+            type === 'web' ? 'text-h3' : 'text-h7'
+          }}  {{
+            pagination.page === pagination.totalPage
+              ? 'text-white'
+              : 'text-lazuli-400'
+          }}"
+        >
+          {{
+            pagination.totalPage >= 10
+              ? pagination.totalPage
+              : "0" + pagination.totalPage
+          }}
+        </div>
+      </app-common-button-component>
+    </div>
+
+    <app-common-button-component
+      [disabled]="pagination.page === pagination.totalPage"
+      color="blank"
+      class="m-0 p-0 ion-no-padding"
+      (onClick)="onClick.emit(pagination.page + 1)"
+    >
+      <span
+        class="{{ type === 'web' ? 'text-h3' : 'text-h7' }} {{
+          pagination.page === pagination.totalPage
+            ? 'text-neutral-500'
+            : 'text-lazuli-400'
+        }}"
+        >Next</span
+      >
+    </app-common-button-component>
+  </div>
+</ng-template>

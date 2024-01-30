@@ -1,0 +1,19 @@
+ion-item {
+  --ion-color-base: #fefefe !important;
+  --ion-color-shade: #edeff5 !important;
+  --ion-color-contrast: #474d66 !important;
+  --inner-padding-top: 5px;
+  --inner-padding-bottom: 5px;
+}
+
+ion-accordion-group {
+  ::ng-deep {
+    ion-accordion {
+      .ion-accordion-toggle-icon {
+        @media (max-width: 576px) {
+          transform: rotate(-90deg);
+        }
+      }
+    }
+  }
+}

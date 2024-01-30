@@ -1,0 +1,28 @@
+ion-label {
+  color: #474d66;
+  font-size: 14px;
+}
+ion-item {
+  &:hover {
+    --border-width: 0;
+    --border-color: transparent;
+    --border-style: none;
+  }
+
+  --color: #474d66;
+  --background: none;
+  margin-top: 4px;
+  --border-width: 0;
+  --border-color: transparent;
+  border: 1px solid #d8dae5;
+  border-radius: 8px;
+  --higlight-color-focused: #0b8dff;
+
+  // ion-input:before {
+  //   content: "$";
+  // }
+}
+
+ion-item::part(native) {
+  border-bottom: none !important;
+}

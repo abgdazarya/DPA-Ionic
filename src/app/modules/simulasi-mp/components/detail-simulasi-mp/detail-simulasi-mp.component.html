@@ -1,0 +1,31 @@
+<!-- <app-header-second title="Detail Hasil Simulasi MP" [showClose]="false"></app-header-second> -->
+<ion-content class="ion-background-white">
+  <img class="my-10 mx-auto" src="images/hasil-simulasi.png" alt="" srcset="">
+  <div class="px-4">
+    <div class="flex justify-between items-center my-4">
+      <span class="text-xs text-neutral-800">Pengembangan per Tahun</span>
+      <span class="text-xs text-neutral-800">{{simulasiData?.pengembangan}}%</span>
+    </div>
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-xs text-neutral-800">Kenaikan Gaji per Tahun</span>
+      <span class="text-xs text-neutral-800">{{simulasiData?.kenaikan}}%</span>
+    </div>
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-xs text-neutral-800">Gaji Bulan Terakhir</span>
+      <span class="text-xs text-neutral-800">Rp{{simulasiData?.gaji | number}}</span>
+    </div>
+    <div class="bg-neutral-400 w-full h-[1px] mb-4 mt-1"></div>
+    <div class="flex justify-between items-center">
+      <span class="text-900 font-semibold text-sm">Total Simulasi</span>
+      <span class="text-lazuli-400 text-sm font-semibold">Rp{{simulasiData?.totalMp | number}}</span>
+    </div>
+  </div>
+  <div class="bg-neutral-0 md:shadow-lg p-8 md-max:pt-5 md-max:px-4 rounded-4xl">
+    <div class="mt-5 px-8 py-4 bg-75 rounded-[20px]">
+      <div class="font-bold text-lg text-neutral-900">Informasi Tambahan</div>
+      <span class="text-sm text-neutral-700 mt-2 list-decimal">
+        Hasil perhitungan tersebut hanya berupa perkiraan dari asumsi-asumsi yang telah ditetapkan dan bukan merupakan janji atau jaminan dari pihak Dana Pensiun Astra kepada peserta.
+      </span>
+    </div>
+  </div>
+</ion-content>

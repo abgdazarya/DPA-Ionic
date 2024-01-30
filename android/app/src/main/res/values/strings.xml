@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<resources>
+    <string name="app_name">myDPA</string>
+    <string name="title_activity_main">myDPA</string>
+    <string name="package_name">com.dpareborn.id</string>
+    <string name="custom_url_scheme">com.dpareborn.id</string>
+    <string
+    name="server_client_id"
+  >747596971905-nhacnsrdk76jttc5vpcba68r22felfk5.apps.googleusercontent.com</string>
+</resources>

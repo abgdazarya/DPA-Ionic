@@ -1,0 +1,53 @@
+<div class="flex items-center justify-between">
+  <ng-container *ngIf="loading else dataTpl">
+    <div>
+      <ion-skeleton-text
+        [animated]="true"
+        class="h-10 w-36 flex-1"
+      ></ion-skeleton-text>
+    </div>
+    <div>
+      <ion-skeleton-text
+        [animated]="true"
+        class="h-10 w-20 flex-1"
+      ></ion-skeleton-text>
+    </div>
+  </ng-container>
+  <ng-template #dataTpl>
+    <ng-container *ngIf="laporanInvestasi">
+      <span
+        *ngIf="!laporanInvestasi.pdf"
+        (click)="onTitleClick.emit(laporanInvestasi)"
+        class="flex items-center text-800"
+      >
+        <app-common-icon-component
+          name="file-filled"
+          class="w-6 h-6 text-600 mr-3"
+        />
+        {{laporanInvestasi.judulLaporan}}
+      </span>
+      <span *ngIf="laporanInvestasi.pdf" class="flex items-center text-800">
+        <app-common-icon-component
+          name="file-filled"
+          class="w-6 h-6 text-600 mr-3"
+        />
+        {{laporanInvestasi.judulLaporan}}
+      </span>
+
+      <app-common-button-component
+        [disabled]="!laporanInvestasi.pdf"
+        color="blank"
+        class="text-lazuli-400 text-[18px] h-7 font-semibold rounded-lg"
+        (onClick)="onClick.emit(laporanInvestasi)"
+      >
+        <span class="flex items-center">
+          Unduh
+          <app-common-icon-component
+            name="download"
+            nativeClass="ml-2 w-6 h-6 text-lazuli-400"
+          />
+        </span>
+      </app-common-button-component>
+    </ng-container>
+  </ng-template>
+</div>

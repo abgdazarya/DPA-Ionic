@@ -1,0 +1,42 @@
+::ng-deep .ng-otp-input-wrapper {
+  text-align: center;
+}
+::ng-deep .otp-input {
+  border: 0 !important;
+  border-bottom: 2px solid #e6e8f0 !important;
+  border-radius: 0 !important;
+  margin-right: 15px !important;
+  color: #474d66;
+  font-weight: bold !important;
+  font-size: 24px !important;
+  padding-bottom: 14px;
+
+  &:focus {
+    outline: none !important;
+  }
+  &.error {
+    border-bottom: 2px solid #d14343 !important;
+  }
+  &.correct {
+    border-bottom: 2px solid #005baa !important;
+  }
+}
+@media (max-width: 420px) {
+  ::ng-deep .otp-input {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+
+code-input {
+  --item-spacing: 10px;
+  --item-height: 3em;
+  --item-border: none;
+  --item-border-bottom: 2px solid #dddddd;
+  --item-border-has-value: none;
+  --item-border-bottom-has-value: 2px solid #888888;
+  --item-border-focused: none;
+  --item-border-bottom-focused: 2px solid #809070;
+  --item-shadow-focused: none;
+  --item-border-radius: 0px;
+}

@@ -1,0 +1,85 @@
+<ion-header
+  *ngIf="screenSizeService.isMobileResolution()"
+  class="ion-background-white ion-no-border"
+>
+  <profile-header-component
+    [headerTitle]="''"
+    [onBack]="handleBack"
+  ></profile-header-component>
+</ion-header>
+
+<div
+  class="p-8 md-max:px-4 md-max:pt-4 overflow-y-auto mx-auto md:mx-0 max-h-md-modal h-full md:max-h-vh flex flex-col justify-between md:w-[35rem] w-vw"
+>
+  <div
+    *ngIf="!screenSizeService.isMobileNativeResolution()"
+    class="flex w-full justify-between md:justify-end z-10 mb-8 sm-max:h-[0px] sm-max:opacity-0"
+  >
+    <!-- <app-common-button-component
+      *ngIf="screenSizeService.isMobileResolution()"
+      color="blank"
+      class="m-0 p-0 ion-no-padding h-7"
+      (click)="handleBack()"
+    >
+      <common-icon-component name="arrow-left-large" />
+    </app-common-button-component> -->
+    <app-common-button-component
+      *ngIf="!screenSizeService.isMobileResolution()"
+      color="blank"
+      class="m-0 p-0 ion-no-padding h-7"
+      (click)="handleClose()"
+    >
+      <app-common-icon-component name="close" />
+    </app-common-button-component>
+  </div>
+
+  <div class="flex flex-col justify-center">
+    <img
+      src="images/lock.png"
+      class="md:hidden mb-6 w-10 h-10 mx-auto"
+      alt=""
+    />
+    <div
+      *ngIf="isError"
+      class="bg-red-50 border border-solid border-red-400 rounded-xl font-semibold text-red-500 text-[16px] p-4 flex space-x-4 my-6"
+    >
+      <app-common-icon-component
+        nativeClass="w-6 h-6  text-red-500"
+        name="attention-circle"
+      />
+      <span>Buat PIN Gagal</span>
+    </div>
+    <div class="text-h4 md:text-h3 text-900 mb-2 text-center">
+      Buat 6 Digit PIN kamu
+    </div>
+    <div class="text-body-2 md:text-body1 text-800 mb-7 mx-12 text-center">
+      Buat 6 Digit PIN Dana Pensiun Astra kamu
+    </div>
+
+    <div class="md:mx-10">
+      <div class="mb-6">
+        <app-auth-pin-form
+          #authPinForm
+          [formGroup]="formGroup"
+          (submitted)="handleCreatePin($event)"
+        ></app-auth-pin-form>
+      </div>
+    </div>
+  </div>
+  <div class="md:mx-10">
+    <app-common-button-component
+      [disabled]="(interactRes$ | async)?.isLoading || !formGroup.valid"
+      [isLoading]="(interactRes$ | async)?.isLoading"
+      class="text-heading-7 leading-heading-7 h-11 w-full md:mb-7 font-semibold rounded-lg"
+      (click)="authPinForm.submit()"
+    >
+      <span>Lanjut</span>
+    </app-common-button-component>
+  </div>
+</div>
+<app-common-alert-component
+  *ngIf="changePinMessage"
+  type="success"
+  [desc]="changePinMessage"
+  [duration]="3000"
+></app-common-alert-component>

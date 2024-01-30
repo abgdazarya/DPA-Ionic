@@ -1,0 +1,175 @@
+<!-- <ion-header class="ion-background-white ion-no-border">
+  <profile-header-component
+    [headerTitle]="'Cari Teman'"
+  ></profile-header-component>
+</ion-header> -->
+
+<ion-content class="ion-background-white relative">
+  <div class="md:container md:px-auto z-10 relative md:pt-16">
+    <div>
+      <div
+        class="grid grid-cols-7 gap-7 md-max:flex md-max:flex-col md-max:gap-0 md-max:px-4"
+      >
+        <div class="md-max:w-full md-max:mt-2">
+          <ion-searchbar
+            [ngModel]="pageService.keyword$ | async"
+            (ionInput)="pageService.handleChangeKeyword($event)"
+            (ionCancel)="pageService.handleChangeKeyword($event)"
+            (ionClear)="pageService.handleChangeKeyword($event)"
+            [debounce]="500"
+            class="searchbar-input ion-background-white w-full md:w-96 rounded-input ion-no-box-shadow border border-neutral-400 p-0 rounded-xl text-neutral-800"
+            placeholder="Cari berdasarkan nama"
+            (input)="onSearchChange($event)"
+          ></ion-searchbar>
+        </div>
+
+        <section>
+          <ng-container *ngIf="isLoading else dataTpl">
+            <div class="text-h4 text-900 mt-3">Daftar Peserta Pasif</div>
+            <div class="text-[14px] text-700 mb-3">
+              Apabila mengenal nama-nama tersebut, yuk ajak mereka untuk
+              mengajukan klaim manfaat pensiunnya di Dana Pensiun Astra
+            </div>
+            <div class="block">
+              <div class="grid grid-cols-1 gap-y-6">
+                <ng-container *ngFor="let item of [].constructor(9); let index = index">
+                  <app-ruang-pensiun-list-web-card [loading]="true"></app-ruang-pensiun-list-web-card>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+          
+          <ng-template #dataTpl>
+            <ng-container
+              *ngIf="(friendList$ | async) else featureNotAvailableTpl"
+            >
+              <div class="text-h4 text-900 mt-3">Daftar Peserta Pasif</div>
+              <div class="text-[14px] text-700 mb-3">
+                Apabila mengenal nama-nama tersebut, yuk ajak mereka untuk
+                mengajukan klaim manfaat pensiunnya di Dana Pensiun Astra
+              </div>
+  
+              <div class="grid grid-cols-1 md:grid-cols-1 gap-x-4 gap-y-1">
+                <ng-container
+                  *ngFor="let item of (friendList$ | async); let last = last"
+                >
+                  <div
+                    class="flex py-1 md-max:px-5 bg-0 mb-3 rounded-4xl p-1 shadow-md"
+                    (click)="openCustomPopUpModal(item)"
+                  >
+                    <div class="h-20 w-20 mt-3">
+                
+                      <!-- Photo User -->
+                      <div *ngIf="!item.photo"
+                        class="bg-havertz-400 rounded-[1.5rem] h-20 w-20 flex justify-center items-center"
+                      >
+                        <div class="text-h1 text-white">
+                          {{ decryptUser(item.namaPeserta)?.toUpperCase() || 'Tidak ada nama user' | nickName }}
+                        </div>
+                      </div>
+
+                      <div *ngIf="item.photo"
+                        class="bg-havertz-400 rounded-[1.5rem] h-20 w-20 flex justify-center items-center"
+                      >
+                        <ng-container>
+                          <img 
+                            class="h-20 w-20 flex items-center justify-center bg-havertz-400 text-white rounded-4xl"
+                            [src]="decryptUser(item.photo)"
+                            alt=""
+                          />
+                        </ng-container>
+                      </div>
+                      <!-- End Photo User -->
+                    </div>
+  
+                    <div class="text-heading-6 text-800 mb-1 px-3 py-1">
+                      <div class="font-semibold flex">
+                        <span class="text-800 font-semibold">
+                          {{decryptUser(item.namaPeserta) || 'Tidak ada nama user'}}</span
+                        >
+                      </div>
+                      <div class="text-body1 !font-normal mt-[4px]">
+                        Mitra di {{item.namaPerusahaan}}
+                      </div>
+                      <div class="mt-4">
+                        <ion-badge
+                          class="rounded-xl {{item?.statusPeserta | statusPesertaEnum:'bgColor'}}"
+                        >
+                          <span
+                            class="px-2 py-1 text-body3 {{item?.statusPeserta | statusPesertaEnum:'textColor'}}"
+                          >
+                            {{ item?.statusPeserta | statusPesertaEnum:'text'}}
+                          </span>
+                        </ion-badge>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <!-- <hr *ngIf="!last" class="my-8 border-b border-neutral-200" /> -->
+                </ng-container>
+              </div>
+              <a id="whatsappLink" hidden href="" target="_blank">Buka WhatsApp</a>
+            </ng-container>
+          </ng-template>
+
+          <ng-template #featureNotAvailableTpl>
+            <div
+              *ngIf="!isLoading && !isPensiunan"
+              class="flex items-center justify-center my-28"
+            >
+              <app-common-feature-not-available-component />
+            </div>
+
+            <div *ngIf="!isLoading && isPensiunan">
+              <div class="md:hidden">
+                <div class="mb-5 mt-10">
+                  <div class="text-center">
+                    <img
+                      src="images/error.png"
+                      class="mb-8 w-[180px] h-[152px] mx-auto"
+                      alt=""
+                    />
+                    <div class="text-h5 text-800 font-semibold mb-1.5">
+                      Data Belum Tersedia
+                    </div>
+                    <div class="text-body2 text-700">
+                      Maaf data pada halaman ini belum tersedia, silakan coba
+                      lagi nanti atau lain kali.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="hidden md:flex justify-center items-center overflow-hidden container-box-shadow rounded-[24px] bg-white min-h-[494px]"
+              >
+                <div class="text-center">
+                  <img
+                    src="images/error.png"
+                    class="mb-8 w-[180px] h-[152px] mx-auto"
+                    alt=""
+                  />
+                  <div class="text-h3 text-800 font-semibold mb-1.5">
+                    Data Belum Tersedia
+                  </div>
+                  <div class="text-h4 text-700 font-normal">
+                    Maaf data pada halaman ini belum tersedia, silakan coba lagi
+                    nanti atau lain kali.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </section>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
+
+<app-common-alert-component
+  type="danger"
+  [desc]="friendError"
+  *ngIf="friendError"
+  [duration]="3000"
+></app-common-alert-component>

@@ -1,0 +1,64 @@
+<ion-content>
+  <div class="relative">
+    <div *ngIf="!showQuiz" class="card-quiz w-full " [ngClass]="(response$ | async)?.data && !showPeriod && !showResult ? 'h-max ': 'h-screen'">
+      <ion-button
+        fill="clear"
+        (click)="backToHome()"
+        class="custom-floating fixed top-1 left-4 z-50 bg-transparent !p-0 ion-no-padding"
+        nativeClass="bg-transparent !p-0 ion-no-padding"
+      >
+        <img src="images/arrow-left.png" class="w- h-7 mr-3" alt="" />
+        <span class="text-h5 text-100 capitalize">Main Quiz</span>
+      </ion-button>
+
+      <div class="pt-20 md:pt-40 pb-60 md:pb-40" [ngStyle]="{'height': screenSizeService.isDesktopResolution() ? '':'100vh'}">
+        <img class="w-[282px] md:w-[505px] mx-auto" *ngIf="!showResult" src="images/quiz-text.svg" alt="" srcset="" />
+        <h1 *ngIf="leaderboardComponent?.monthLabel && leaderboardComponent?.year && !showResult"
+          class="text-[20px] md:text-4xl text-center mt-[-10px] md:mt-[-20px] uppercase">
+          PERIODE {{leaderboardComponent.monthLabel}} {{leaderboardComponent.year}}
+        </h1>
+        <div *ngIf="(response$ | async)?.data && !showPeriod && !showResult" class="growing">
+          <app-leaderboard #leaderboardComponent [leaderboard]="(response$ | async)?.data" [showPeriod]="showPeriod"
+            (onClick)="mulai()">
+          </app-leaderboard>
+        </div>
+        <div *ngIf="showPeriod && !showResult" [class]="showPeriod ? 'growing' : ''">
+          <app-leaderboard #leaderboardComponent [leaderboard]="(responseHistory$ | async)?.data"
+            [showPeriod]="showPeriod" (onClick)="mulai()" (onChangePeriod)="changePeriod($event)">
+          </app-leaderboard>
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let question of (responseQuestion$ | async)?.data; let i = index" class="card-mulai-quiz opacity-0"
+      [class]="showQuiz && indexSoal === i ? 'transition-opacity ease-in duration-700 opacity-100' : ''">
+      <ion-button *ngIf="showQuiz && indexSoal === i"
+        fill="clear"
+        (click)="backToHome()"
+        class="custom-floating fixed top-1 left-4 z-50 bg-transparent !p-0 ion-no-padding"
+        nativeClass="bg-transparent !p-0 ion-no-padding"
+      >
+        <img src="images/arrow-left.png" class="w- h-7 mr-3" alt="" />
+        <span class="text-h5 text-100 capitalize">Main Quiz</span>
+      </ion-button>
+
+      <app-mulai-quiz *ngIf="showQuiz && indexSoal === i" [index]="i+1"
+        [soal]="{pertanyaan: question?.pertanyaan, gambar: question?.gambar}" [pilihan]="question.jawaban || []"
+        (onAnswerClick)="onHandleAnswer($event)" [minutes]="minutes" [seconds]="seconds" [point]="point">
+      </app-mulai-quiz>
+    </div>
+    <!-- <div class="px-[120px] hidden md:block relative z-10 bg-white" [ngClass]="{'!absolute': showQuiz}">
+      <hr class="my-10 hidden md:block" />
+      <common-footer-component></common-footer-component>
+    </div> -->
+  </div>
+
+</ion-content>
+
+<app-common-alert-component *ngIf="errorQuestion"
+  [duration]="3000" type="danger" [desc]="errorQuestion">
+</app-common-alert-component>
+
+<app-common-alert-component *ngIf="errorPeriod"
+  [duration]="3000" type="danger" [desc]="errorPeriod">
+</app-common-alert-component>

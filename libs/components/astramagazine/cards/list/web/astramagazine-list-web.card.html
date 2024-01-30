@@ -1,0 +1,79 @@
+<div class="overflow-hidden relative" [ngClass]="nativeClass">
+  <ng-container *ngIf="loading else dataTpl">
+    <div class="mb-3">
+      <ion-skeleton-text
+        [animated]="true"
+        class="h-[385px] w-full rounded-3xl"
+      ></ion-skeleton-text>
+    </div>
+    <div class="mb-4">
+      <div class="mb-1">
+        <ion-skeleton-text
+          [animated]="true"
+          class="h-10 w-full"
+        ></ion-skeleton-text>
+      </div>
+      <div>
+        <ion-skeleton-text
+          [animated]="true"
+          class="h-5 w-full"
+        ></ion-skeleton-text>
+      </div>
+    </div>
+    <div>
+      <ion-skeleton-text
+        [animated]="true"
+        class="h-8 w-full"
+      ></ion-skeleton-text>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="astramagazine">
+      <div class="mb-3">
+        <ion-skeleton-text
+          *ngIf="imageStatus === 'onload'"
+          [animated]="true"
+          class="h-[385px] w-full rounded-3xl overflow-hidden"
+        ></ion-skeleton-text>
+
+        <ion-img
+          *ngIf="astramagazine.gambar"
+          [src]="astramagazine.gambar"
+          (ionError)="imageStatus = 'error';"
+          (ionImgDidLoad)="imageStatus = 'succeed';"
+          (ionImgWillLoad)="imageStatus = 'onload';"
+          class="growing h-[385px] w-full rounded-3xl overflow-hidden object-cover object-center overflow-hidden"
+          alt="News Image"
+          [class.hidden]="imageStatus === 'error' || imageStatus === 'onload'"
+        ></ion-img>
+
+        <div
+          *ngIf="!astramagazine.gambar || imageStatus === 'error'"
+          class="h-[385px] w-full rounded-3xl overflow-hidden bg-neutral-800 text-neutral-900 flex items-center justify-center text-h6"
+        >
+          No Thumbnail
+        </div>
+      </div>
+
+      <div class="mb-4" *ngIf="astramagazine.judulKonten">
+        <div
+          class="mb-1 text-h3 font-bold text-800"
+          [innerHTML]="truncateHTML(astramagazine.judulKonten, 15)"
+        ></div>
+        <div class="text-body2 font-normal text-600">
+          {{(astramagazine.monthEdt == currentMonth && astramagazine.yearEdt == currentYear) ? truncateHTML('Oleh DPA, Diterbitkan bulan ini', 30):truncateHTML('Oleh DPA, Diterbitkan pada '+astramagazine.dateCreated, 30)}}
+        </div>
+      </div>
+      <div>
+        <app-common-button-component
+          color="lazuli-50"
+          class="text-h7 text-neutral-0 rounded-2xl w-full"
+          (onClick)="onClick.emit(astramagazine)"
+        >
+          <span class="px-14 text-lazuli-500">Lihat Detail</span>
+        </app-common-button-component>
+      </div>
+    </ng-container>
+  </ng-template>
+</div>

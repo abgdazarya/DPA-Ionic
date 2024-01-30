@@ -1,0 +1,315 @@
+<div class="flex flex-col justify-items-center modal-content">
+  <div
+    class="overflow-y-auto md:mx-0 w-[100vw] md:w-[90vw] mx-auto ion-no-scrollbar h-fit"
+  >
+    <div class="flex flex-col justify-center h-[100vh]">
+      <ng-container *ngIf="type === 'promo'">
+        <div>
+          <swiper
+            #promoSlides
+            [config]="getPromoSlidesOptions()"
+            class="w-full items-center"
+          >
+            <ng-container
+              *ngFor="let i of [].constructor(5); let index = index"
+              style="width: 273px !important"
+              class="sm-max:w-[273px] w-[831px] md:h-[400px] relative"
+            >
+              <ng-template swiperSlide>
+                <div class="justify-end button-close mb-2">
+                  <app-common-icon-component
+                    name="close"
+                    (click)="handleClose()"
+                    nativeClass="w-6 h-6 text-lazuli-500 rounded-full bg-white"
+                  />
+                </div>
+                <img
+                  src="images/popup-img-large.png"
+                  class="!m-0 hidden md:block !w-full promo-slide object-contains object-center rounded-4xl"
+                  alt=""
+                />
+                <img
+                  src="images/popup-img-1.png"
+                  class="!m-0 md:hidden promo-slide !w-full"
+                  alt=""
+                />
+              </ng-template>
+            </ng-container>
+          </swiper>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="type === 'news'">
+        <div class="flex items-center justify-center">
+          <div class="bg-neutral-0 rounded-3xl max-w-[304px] relative">
+            <img
+              class="rounded-tl-3xl rounded-tr-3xl"
+              src="images/news.png"
+              alt=""
+            />
+            <p
+              class="text-neutral-800 font-semibold text-sm w-11/12 mx-auto text-center my-4"
+            >
+              {{ title }}
+            </p>
+            <div class="flex justify-center">
+              <ion-button
+                (click)="gotoNews()"
+                mode="ios"
+                color="blank"
+                class="w-9/12 md:w-auto text-h7 h-11 mb-7 rounded-xl text-lazuli-500 bg-[#E7F4FF]"
+              >
+                <span class="px-4">Baca Berita Lebih Lengkap</span>
+              </ion-button>
+              <div class="absolute right-2.5 top-4">
+                <app-common-icon-component
+                  name="close-rounded"
+                  nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-blue-300"
+                  (click)="handleClose()"
+                >
+                </app-common-icon-component>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="type === 'claim'">
+        <div class="flex items-center justify-center">
+          <div
+            class="bg-neutral-0 rounded-3xl max-w-[304px] min-w-[304px] relative"
+          >
+            <img
+              class="mt-8 mx-auto"
+              [src]="picture || 'images/file-filled.png'"
+              alt=""
+            />
+            <p
+              class="text-neutral-800 font-semibold text-sm w-11/12 mx-auto text-center my-4 mb-1"
+              [innerHTML]="title"
+            ></p>
+            <p
+              class="text-neutral-700 text-sm w-11/12 mx-auto text-center my-4 mt-0"
+              [innerHTML]="description"
+            ></p>
+            <div class="flex justify-center">
+              <ion-button
+                (click)="gotoEclaim()"
+                mode="ios"
+                color="blank"
+                class="w-9/12 md:w-auto text-h7 h-11 mb-7 rounded-xl text-lazuli-500 bg-[#E7F4FF]"
+              >
+                <span class="px-4">Lanjut e-Klaim</span>
+              </ion-button>
+              <div class="absolute right-2.5 top-4">
+                <app-common-icon-component
+                  name="close-rounded"
+                  nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-blue-300"
+                  (click)="handleClose()"
+                >
+                </app-common-icon-component>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="type === 'birthday'"
+        class="max-w-[200px] min-w-[200px] md:max-w-[320px] md:min-w-[320px] w-full"
+      >
+        <div
+          class="birthday relative max-w-[200px] md:max-w-[502px] min-w-[304px] md-max:max-w-[320px] w-full m-auto"
+        >
+          <img
+            [src]="'/images/birthday-bg.svg'"
+            alt=""
+            class="absolute min-w-[70px] min-h-[70px] md:min-w-[100px] md:min-h-[100px] w-full h-full left-0 top-0"
+          />
+          <div class="relative w-fit mx-auto">
+            <div
+              class="absolute md:right-[-73px] right-[-63px] top-[-35px] md:top-[-30px]"
+            >
+              <app-common-icon-component
+                name="close-rounded"
+                nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-blue-300"
+                (click)="handleClose()"
+              >
+              </app-common-icon-component>
+            </div>
+            <img
+              [src]="picture || '/images/cake.svg'"
+              class="mx-auto w-[150px] md:w-[304px] object-contain mt-8"
+              alt=""
+              srcset=""
+            />
+            <span
+              class="absolute font-bold text-body2 md:text-xl text-neutral-900 md:top-[110px] top-[65px] right-[6px] mx-3 md:mx-0"
+              >{{ date }}</span
+            >
+          </div>
+
+          <p
+            class="relative font-semibold text-body2 md:text-base text-neutral-800 text-center mx-auto my-3 mx-2 md:mx-0"
+            [innerHTML]="description"
+          ></p>
+          <div class="flex justify-center px-5">
+            <ion-button
+              (click)="gotoSettings()"
+              mode="ios"
+              color="primary"
+              class="w-auto md-max:w-auto text-h7 h-8 mb-12 rounded-xl text-lazuli-500 max-w-[230px]"
+            >
+              <span class="px-4">Ubah tanggal lahirmu disini</span>
+            </ion-button>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="type === 'custom'">
+        <div class="flex items-center justify-center">
+          <div class="relative">
+            <div
+              class="bg-neutral-0 rounded-3xl max-w-[304px] relative overflow-hidden"
+            >
+              <img
+                class="mx-auto bg-cover bg-container image-center w-full"
+                [src]="picture"
+                alt=""
+              />
+              <p
+                class="text-neutral-800 font-semibold text-sm w-11/12 mx-auto text-center my-4 mb-1"
+              >
+                {{ title }}
+              </p>
+              <p
+                class="text-neutral-700 text-sm w-11/12 mx-auto text-center my-4 mt-0"
+                [innerHTML]="description"
+              ></p>
+            </div>
+
+            <div class="absolute right-2.5 top-4">
+              <app-common-icon-component
+                name="close-rounded"
+                nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-blue-300"
+                (click)="handleClose()"
+              >
+              </app-common-icon-component>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- 
+<ng-container *ngIf="type === 'promo'">
+  <div class="flex justify-end px-8 mb-2">
+    <app-common-icon-component
+      name="close-rounded"
+      nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-blue-300"
+      (click)="handleClose()"
+    >
+    </app-common-icon-component>
+  </div>
+  <swiper
+    #promoSlides
+    [config]="getPromoSlidesOptions()"
+    class="max-w-[560px] md:max-w-none w-full"
+  >
+    <ng-container *ngFor="let i of [].constructor(5)">
+      <ng-template swiperSlide>
+        <img src="images/popup-img-1.png" alt="" />
+      </ng-template>
+    </ng-container>
+  </swiper>
+</ng-container>
+<ng-container *ngIf="type === 'news'">
+  <div class="flex items-center justify-center">
+    <div class="bg-neutral-0 rounded-3xl max-w-[304px] relative">
+      <img class="rounded-tl-3xl rounded-tr-3xl" src="images/news.png" alt="" />
+      <p
+        class="text-neutral-800 font-semibold text-sm w-11/12 mx-auto text-center my-4"
+      >
+        {{ title }}
+      </p>
+      <div class="flex justify-center">
+        <ion-button
+          mode="ios"
+          color="blank"
+          class="w-9/12 md:w-auto text-h7 h-11 mb-7 rounded-xl text-lazuli-500 bg-[#E7F4FF]"
+        >
+          <span class="px-4">Baca Berita Lebih Lengkap</span>
+        </ion-button>
+        <div class="absolute right-2.5 top-4">
+          <app-common-icon-component
+            name="close-rounded"
+            nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-blue-300"
+            (click)="handleClose()"
+          >
+          </app-common-icon-component>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type === 'claim'">
+  <div class="flex items-center justify-center">
+    <div class="bg-neutral-0 rounded-3xl max-w-[304px] relative">
+      <img class="mt-8 mx-auto" src="images/file-filled.png" alt="" />
+      <p
+        class="text-neutral-800 font-semibold text-sm w-11/12 mx-auto text-center my-4"
+      >
+        {{ title }}
+      </p>
+      <p class="text-neutral-700 text-sm w-11/12 mx-auto text-center my-4">
+        {{ description }}
+      </p>
+      <div class="flex justify-center">
+        <ion-button
+          mode="ios"
+          color="blank"
+          class="w-9/12 md:w-auto text-h7 h-11 mb-7 rounded-xl text-lazuli-500 bg-[#E7F4FF]"
+        >
+          <span class="px-4">Lanjut e-Klaim</span>
+        </ion-button>
+        <div class="absolute right-2.5 top-4">
+          <app-common-icon-component
+            name="close-rounded"
+            nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-blue-300"
+            (click)="handleClose()"
+          >
+          </app-common-icon-component>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type === 'birthday'">
+  <div class="birthday relative">
+    <div class="relative w-fit mx-auto">
+      <div class="absolute right-[-70px] top-[-30px]">
+        <app-common-icon-component
+          name="close-rounded"
+          nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-blue-300"
+          (click)="handleClose()"
+        >
+        </app-common-icon-component>
+      </div>
+      <img src="images/cake.svg" class="mt-8 mx-auto" alt="" srcset="" />
+      <span
+        class="absolute font-bold text-xl text-neutral-900 top-[65px] right-[6px]"
+        >{{ date }}</span
+      >
+    </div>
+    <p class="text-sm text-neutral-800 text-center my-3">
+      Hari ini bukan ulang tahunmu?
+    </p>
+    <div class="flex justify-center px-5">
+      <ion-button
+        mode="ios"
+        color="primary"
+        class="w-9/12 md:w-auto text-h7 h-8 mb-12 rounded-xl text-lazuli-500 max-w-[230px]"
+      >
+        <span class="px-4">Ubah tanggal lahirmu disini</span>
+      </ion-button>
+    </div>
+  </div>
+</ng-container> -->

@@ -1,0 +1,202 @@
+<section>
+  <ng-container *ngIf="loading$ | async; else dataTpl">
+    <div
+      class="hidden md:grid grid-cols-1 md:grid-cols-4 md:gap-x-10 gap-y-2 md:gap-y-0"
+    >
+      <div>
+        <div class="mb-1">
+          <ion-skeleton-text [animated]="true" class="h-14 w-1/2">
+          </ion-skeleton-text>
+        </div>
+        <div class="mb-6">
+          <ion-skeleton-text [animated]="true" class="h-20 w-full">
+          </ion-skeleton-text>
+        </div>
+        <div>
+          <ion-skeleton-text [animated]="true" class="h-7 w-full">
+          </ion-skeleton-text>
+        </div>
+      </div>
+      <div class="col-span-3 relative">
+        <ion-button
+          *ngIf="showNextButton"
+          (click)="handleSlide('next')"
+          color="none"
+          class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[30%] lg:top-[24%] -right-7 z-20"
+        >
+          <img src="logos/chevron-right-circle.png" class="w-10 h-10" alt="" />
+        </ion-button>
+        <ion-button
+          *ngIf="showPrevButton"
+          (click)="handleSlide('prev')"
+          color="none"
+          class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[30%] lg:top-[24%] -left-7 z-20"
+        >
+          <img src="logos/chevron-left-circle.png" class="w-10 h-10" alt="" />
+        </ion-button>
+
+        <div>
+          <swiper
+            #slidesLoading
+            [slidesPerView]="2.2"
+            [spaceBetween]="16"
+            [slidesOffsetAfter]="1"
+            [slidesOffsetBefore]="1"
+          >
+            <ng-container *ngFor="let item of [].constructor(5)">
+              <ng-template swiperSlide>
+                <app-promotion-common-web-card
+                  class="cursor-pointer"
+                  [loading]="true"
+                >
+                </app-promotion-common-web-card>
+              </ng-template>
+            </ng-container>
+          </swiper>
+        </div>
+      </div>
+    </div>
+
+    <div class="md:hidden">
+      <div class="flex items-center justify-between px-4 mb-3">
+        <ion-skeleton-text [animated]="true" class="h-5 w-1/2">
+        </ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" class="h-5 w-1/4">
+        </ion-skeleton-text>
+      </div>
+      <div>
+        <div>
+          <swiper
+            [initialSlide]="1"
+            [slidesPerView]="1.2"
+            [spaceBetween]="8"
+            [slidesOffsetAfter]="16"
+            [slidesOffsetBefore]="16"
+          >
+            <ng-container *ngFor="let item of [].constructor(5)">
+              <ng-template swiperSlide>
+                <app-promotion-common-mobile-card
+                  class="cursor-pointer"
+                  [loading]="true"
+                >
+                </app-promotion-common-mobile-card>
+              </ng-template>
+            </ng-container>
+          </swiper>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="promotion$ | async as promotion">
+      <div
+        class="hidden md:grid grid-cols-1 md:grid-cols-4 md:gap-x-10 gap-y-2 md:gap-y-0"
+      >
+        <div>
+          <div class="mb-1">
+            <img src="logos/label-tag.png" width="40" height="40" alt="" />
+          </div>
+          <div class="mb-6">
+            <div class="text-h3 font-semibold text-800">
+              Cek banyak promo dari Mitra kami, kuy!
+            </div>
+          </div>
+          <div class="mb-1">
+            <app-common-button-component
+              color="lazuli-500"
+              class="text-h7 w-3/4 h-9 ion-no-margin ion-no-padding text-neutral-0 rounded-2xl"
+              (onClick)="navigateClicked.emit()"
+            >
+              <span>Lihat Semua Promo</span>
+            </app-common-button-component>
+          </div>
+        </div>
+        <div class="col-span-3 relative">
+          <ion-button
+            (click)="handleSlide('next')"
+            color="none"
+            class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[30%] lg:top-[24%] -right-7 z-20"
+          >
+            <img
+              src="logos/chevron-right-circle.png"
+              class="w-10 h-10"
+              alt=""
+            />
+          </ion-button>
+          <ion-button
+            (click)="handleSlide('prev')"
+            color="none"
+            class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[30%] lg:top-[24%] -left-7 z-20"
+          >
+            <img src="logos/chevron-left-circle.png" class="w-10 h-10" alt="" />
+          </ion-button>
+
+          <div>
+            <swiper
+              #slidesLoading
+              [loop]="true"
+              [slidesPerView]="2.2"
+              [spaceBetween]="16"
+              [slidesOffsetAfter]="1"
+              [slidesOffsetBefore]="1"
+            >
+              <ng-container *ngFor="let item of promotion">
+                <ng-template swiperSlide>
+                  <app-promotion-common-web-card
+                    class="cursor-pointer"
+                    [promotion]="item"
+                    (click)="promotionClicked.emit(item)"
+                  >
+                  </app-promotion-common-web-card>
+                </ng-template>
+              </ng-container>
+            </swiper>
+          </div>
+        </div>
+      </div>
+
+      <div class="md:hidden">
+        <div class="flex items-center justify-between px-4 mb-3">
+          <div class="flex items-center space-x-3">
+            <img src="logos/label-tag.png" class="h-6 w-6" alt="" />
+            <span class="text-body1 text-800 font-semibold"
+              >Cek promo Mitra kami, kuy!</span
+            >
+          </div>
+
+          <app-common-button-component
+            color="blank"
+            class="text-body1 ion-no-padding ion-no-margin h-7 font-semibold text-neutral-0 rounded-2xl"
+            (onClick)="navigateClicked.emit()"
+          >
+            <span class="text-lazuli-500">Lihat Semua</span>
+          </app-common-button-component>
+        </div>
+        <div>
+          <div>
+            <swiper
+              [initialSlide]="1"
+              [loop]="true"
+              [slidesPerView]="1.2"
+              [spaceBetween]="8"
+              [slidesOffsetAfter]="16"
+              [slidesOffsetBefore]="16"
+            >
+              <ng-container *ngFor="let item of promotion">
+                <ng-template swiperSlide>
+                  <app-promotion-common-mobile-card
+                    class="cursor-pointer"
+                    [promotion]="item"
+                    (click)="promotionClicked.emit(item)"
+                  >
+                  </app-promotion-common-mobile-card>
+                </ng-template>
+              </ng-container>
+            </swiper>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</section>

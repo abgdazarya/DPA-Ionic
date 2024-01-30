@@ -1,0 +1,55 @@
+<div
+  class="p-8 overflow-y-auto mx-auto md:mx-0 w-full md:w-[50rem]"
+  *ngIf="screenSizeService.isDesktopResolution()"
+>
+  <div class="flex justify-end pb-4">
+    <app-common-icon-component
+      name="close"
+      nativeClass="h-8 w-8 text-neutral-500 cursor-pointer"
+      (click)="handleClose()"
+    ></app-common-icon-component>
+  </div>
+
+  <div class="rounded-xl bg-lazuli-50 p-7 flex space-x-5 items-center mb-10">
+    <ng-container *ngIf="content.banner">
+      <img
+        [src]="content.banner"
+        class="w-44 h-auto object-cover rounded-xl"
+        alt=""
+      />
+    </ng-container>
+
+    <ng-container *ngIf="!content.banner">
+      <div
+        class="rounded-xl bg-neutral-600 w-44 h-auto text-neutral-700 flex items-center justify-center text-h6"
+      >
+        No Thumbnail
+      </div>
+    </ng-container>
+
+    <div class="text-900 font-semibold text-[24px]">
+      {{content.title || "untitled"}}
+    </div>
+  </div>
+
+  <div class="text-800 mb-5 font-bold text-h2">Mau bagikan lewat mana?</div>
+  <share-media-list [contentData]="content"></share-media-list>
+</div>
+
+<div
+  class="w-vw h-full bg-transparent bottom-0 flex flex-col justify-end"
+  *ngIf="!screenSizeService.isDesktopResolution()"
+>
+  <div
+    class="w-full h-full absolute left-0 top-0 z-1"
+    (click)="handleBack()"
+  ></div>
+  <div
+    class="w-full bg-white min-h-[150px] relative z-[2] p-8 px-5 rounded-ss-2xl rounded-tr-2xl"
+  >
+    <div class="text-800 mb-5 font-bold text-heading-4">
+      Mau bagikan lewat mana?
+    </div>
+    <share-media-list [contentData]="content"></share-media-list>
+  </div>
+</div>

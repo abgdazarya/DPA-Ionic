@@ -1,0 +1,8 @@
+<section>
+  <app-job-vacancy-list-part-mobile
+    *ngIf="screenSizeService.isMobileNativeResolution()"
+  />
+  <app-job-vacancy-list-part-web
+    *ngIf="!screenSizeService.isMobileNativeResolution()"
+  />
+</section>

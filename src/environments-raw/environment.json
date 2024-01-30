@@ -1,0 +1,31 @@
+{
+  "production": true, 
+  "firebase": {
+    "apiKey": "AIzaSyAl6v4zSK0tLZ5XjjHoo58U9rqNpjTE8jA",
+    "authDomain": "dpa-mobile-reborn-prod.firebaseapp.com",
+    "projectId": "dpa-mobile-reborn-prod",
+    "storageBucket": "dpa-mobile-reborn-prod.appspot.com",
+    "messagingSenderId": "747596971905",
+    "appId": "1:747596971905:web:0113f10102b2562bf9f280",
+    "measurementId": "G-R75DWZNKHN"
+  },
+  "key": "BerijalanDPA2023",
+  "apiEndpoint": "https://dev-api-new.dapenastra.com/",
+  "apiEndpointLoginEklaim": "https://api-dev.dapenastra.com/api/",
+  "apiEndpointEklaim": "https://digi-dev.dapenastra.com/index.php/",
+  "apiEndpointEklaimPengajuan": "https://moris-dev.dapenastra.com/index.php/",
+  "endpoint": "http://localhost:8100/",
+  "urlWeb": "https://dev-new.dapenastra.com",
+  "apiPaths": {
+    "auth": "api/mw/auth/",
+    "home": "api/mw/homepage/",
+    "profile": "api/mw/profile/",
+    "menu": "api/mw/menu/",
+    "menuPublic": "api/mw/public/",
+    "quiz": "api/mw/quiz/",
+    "simulasiMp": "api/mw/manfaat-pensiun/",
+    "master": "api/mw/master/"
+  },
+  "secretKeyConfig": "21312344@AWEDQ#$SDADS#Q$@#DSDSsdFEW#@DSFDSFSDF.w,rweWER@#EWF",
+  "secretIvConfig": "iv@AWEDQ#$SDADS#Q$awdkjAWDdawjj.w,rweWER@#EWF"
+}

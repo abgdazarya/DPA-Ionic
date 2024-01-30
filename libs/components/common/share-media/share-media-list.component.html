@@ -1,0 +1,107 @@
+<div class="justify-between flex overflow-hidden overflow-x-auto">
+  <div
+    class="cursor-pointer"
+    (click)="onShare('email')"
+    *ngIf="screenSizeService.isDesktopResolution()"
+  >
+    <div
+      class="bg-bg-0 rounded-[24px] {{
+        getStyleIcon().wrapper
+      }} flex justify-center items-center"
+    >
+      <img
+        src="logos/mail-color.png"
+        class="{{ getStyleIcon().image }} icon-share"
+        alt=""
+      />
+    </div>
+    <div *ngIf="isLabel" class="text-body3 text-700 text-center">Email</div>
+  </div>
+  <div class="cursor-pointer" (click)="onShare('telegram')">
+    <div
+      class="bg-bg-0 rounded-[24px] {{
+        getStyleIcon().wrapper
+      }} flex justify-center items-center"
+    >
+      <img
+        src="logos/telegram-color.png"
+        class="{{ getStyleIcon().image }} icon-share"
+        alt=""
+      />
+    </div>
+    <div *ngIf="isLabel" class="text-body3 text-700 text-center">Telegram</div>
+  </div>
+  <div class="cursor-pointer" (click)="onShare('whatsapp')">
+    <div
+      class="bg-bg-0 rounded-[24px] {{
+        getStyleIcon().wrapper
+      }} flex justify-center items-center"
+    >
+      <img
+        src="logos/whatsapp-color.png"
+        class="{{ getStyleIcon().image }} icon-share"
+        alt=""
+      />
+    </div>
+    <div *ngIf="isLabel" class="text-body3 text-700 text-center">whatsapp</div>
+  </div>
+  <div class="cursor-pointer" (click)="onShare('twitter')">
+    <div
+      class="bg-bg-0 rounded-[24px] {{
+        getStyleIcon().wrapper
+      }} flex justify-center items-center"
+    >
+      <img
+        src="logos/twitter-color.png"
+        class="{{ getStyleIcon().image }} icon-share"
+        alt=""
+      />
+    </div>
+    <div *ngIf="isLabel" class="text-body3 text-700 text-center">Twitter</div>
+  </div>
+  <div class="cursor-pointer" (click)="onShare('facebook')">
+    <div
+      class="bg-bg-0 rounded-[24px] {{
+        getStyleIcon().wrapper
+      }} flex justify-center items-center "
+    >
+      <img
+        src="logos/facebook-color.png"
+        class="{{ getStyleIcon().image }} icon-share"
+        alt=""
+      />
+    </div>
+    <div *ngIf="isLabel" class="text-body3 text-700 text-center">Facebook</div>
+  </div>
+  <div class="cursor-pointer" (click)="onShare('instagram')">
+    <div
+      class="bg-bg-0 rounded-[24px] {{
+        getStyleIcon().wrapper
+      }} flex justify-center items-center"
+    >
+      <img
+        src="logos/instagram-color.png"
+        class="{{ getStyleIcon().image }} icon-share"
+        alt=""
+      />
+    </div>
+    <div *ngIf="isLabel" class="text-body3 text-700 text-center">Instagram</div>
+  </div>
+
+  <div class="cursor-pointer" (click)="onShare('clipboard')">
+    <div
+      class="bg-bg-0 rounded-[24px] {{
+        getStyleIcon().wrapper
+      }} flex justify-center items-center "
+    >
+      <img
+        src="logos/link-color.png"
+        class="{{ getStyleIcon().image }} icon-share"
+        alt=""
+      />
+    </div>
+    <div *ngIf="isLabel" class="text-body3 text-700 text-center">
+      Salin Link
+    </div>
+  </div>
+</div>

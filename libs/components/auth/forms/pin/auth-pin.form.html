@@ -1,0 +1,75 @@
+<form
+  novalidate
+  *ngIf="formGroup"
+  [formGroup]="formGroup"
+  (ngSubmit)="submit()"
+>
+  <ng-container *ngIf="formGroup.controls['pin']; let formControl">
+    <ion-item class="form-group mb-6 w-full" [counter]="false" lines="none">
+      <div class="form-group-control w-full">
+        <ion-label class="form-label">
+          <span class="text-body2 text-700">Buat PIN</span>
+        </ion-label>
+        <div class="form-control">
+          <ion-input
+            (clearInput)="false"
+            (clearOnEdit)="false"
+            [brmasker]="{mask: '000000', type:'num'}"
+            type="password"
+            formControlName="pin"
+            placeholder="Buat PIN"
+            class="border border-neutral-400 p-3 rounded-xl text-body2 text-700 w-full"
+            style="--padding-start: 12px; --padding-end: 12px"
+            maxLength="6"
+            minLength="6"
+            (ionInput)="onInputChange($event,'pin')"
+          ></ion-input>
+        </div>
+        <small class="text-error-400">
+          <ng-container
+            *ngIf="(formControl.errors?.['required'] || formControl.errors?.['minLength']) && formControl.touched"
+          >
+            Pin wajib diisi.
+          </ng-container>
+        </small>
+      </div>
+    </ion-item>
+  </ng-container>
+  <ng-container *ngIf="formGroup.controls['verifyPin']; let formControl">
+    <ion-item class="form-group w-full" [counter]="false" lines="none">
+      <div class="form-group-control w-full">
+        <ion-label class="form-label">
+          <span class="text-body2 text-700">Konfirmasi PIN</span>
+        </ion-label>
+        <div class="form-control">
+          <ion-input
+            (clearInput)="false"
+            (clearOnEdit)="false"
+            [brmasker]="{mask: '000000', type:'num'}"
+            type="password"
+            formControlName="verifyPin"
+            placeholder="Konfirmasi PIN"
+            class="border border-neutral-400 p-3 rounded-xl text-body2 text-700 w-full"
+            style="--padding-start: 12px; --padding-end: 12px"
+            maxLength="6"
+            minLength="6"
+            (ionInput)="onInputChange($event,'verifyPin')"
+          ></ion-input>
+        </div>
+        <small class="text-error-400">
+          <ng-container
+            *ngIf="((formGroup.controls['pin'].value !== formGroup.controls['verifyPin'].value) && formControl.touched)"
+          >
+            PIN dan Konfirmasi PIN tidak sesuai.
+          </ng-container>
+          <ng-template #errorTpl>
+            <ng-container *ngIf="formControl.errors?.['required']">
+              Konfirmasi PIN wajib diisi.
+            </ng-container>
+          </ng-template>
+        </small>
+      </div>
+    </ion-item>
+  </ng-container>
+  <input type="submit" class="hidden" />
+</form>

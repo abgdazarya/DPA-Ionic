@@ -1,0 +1,59 @@
+<ion-app #ionApp>
+  <ion-router-outlet></ion-router-outlet>
+  <div
+    *ngIf="appComponentService.showOcrKtp$ | async"
+    class="fixed top-0 h-[100vh] w-[100vw] flex items-center justify-center bg-loading"
+    style="z-index: 99999 !important"
+  >
+    <div>
+      <div class="mb-2 w-16 h-16 mx-auto">
+        <app-common-icon-component
+          name="button-loading"
+          [nativeClass]="'text-lazuli-400 animate-spin '"
+        />
+      </div>
+      <div class="text-center">
+        <div class="text-h5 font-bold text-900 mb-1">Sedang Mengunggah KTP</div>
+        <div class="text-body1 font-normal text-800 mb-1">
+          Mohon tunggu sedang membaca KTP Anda
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="appComponentService.showLoadingPending$ | async"
+    class="fixed top-0 h-[100vh] w-[100vw] flex items-center justify-center bg-loading"
+    style="z-index: 99999 !important"
+  >
+    <div>
+      <div class="mb-2 w-16 h-16 mx-auto">
+        <app-common-icon-component
+          name="button-loading"
+          [nativeClass]="'text-lazuli-400 animate-spin '"
+        />
+      </div>
+      <div class="text-center">
+        <div class="text-h5 font-bold text-900 mb-1">Sedang memproses</div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="appComponentService.showLoadingAuth$ | async"
+    class="fixed top-0 h-[100vh] w-[100vw] flex items-center justify-center bg-blank"
+    style="z-index: 99999 !important"
+  >
+    <div>
+      <div class="mb-2 w-16 h-16 mx-auto">
+        <app-common-icon-component
+          name="button-loading"
+          [nativeClass]="'text-lazuli-400 animate-spin '"
+        />
+      </div>
+      <div class="text-center">
+        <div class="text-h5 font-bold text-900 mb-1">
+          Sedang mengambil data...
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-app>

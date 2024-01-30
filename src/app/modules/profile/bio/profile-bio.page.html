@@ -1,0 +1,465 @@
+<div class="p-8 md:px-8 px-0 md-max:py-0 md:shadow-xl bg-bg-0 rounded-xl">
+  <app-common-alert-component
+    type="success"
+    [desc]="uploadPhotoProfileSuccess$ | async"
+    [duration]="5000"
+    transformShowClass="translate-y-24"
+    transformHideClass="-translate-y-24"
+  ></app-common-alert-component>
+
+  <app-common-alert-component
+    type="danger"
+    [desc]="uploadPhotoProfileFailed$ | async"
+    [duration]="5000"
+    transformShowClass="translate-y-24"
+    transformHideClass="-translate-y-24"
+  ></app-common-alert-component>
+
+  <div
+    class="text-h3 text-800 mb-1.5"
+    *ngIf="screenSizeService.isDesktopResolution()"
+  >
+    Detail Akun
+  </div>
+  <div
+    class="text-h5 font-normal text-700 mb-8"
+    *ngIf="screenSizeService.isDesktopResolution()"
+  >
+    Di sini kamu bisa mengatur detail akunmu.
+  </div>
+
+  <div
+    class="flex flex-col items-center md-max:py-5"
+    *ngIf="!screenSizeService.isDesktopResolution()"
+  >
+    <div class="h-24 w-24 relative overflow-hidden mb-4">
+      <ng-container *ngIf="getPhoto() as photo else noPhotoTpl">
+        <img
+          *ngIf="photo"
+          class="w-full h-full object-cover rounded-[1.5rem]"
+          [src]="photo"
+          alt=""
+        />
+      </ng-container>
+      <ng-template #noPhotoTpl>
+        <div
+          class="bg-havertz-400 rounded-[2rem] h-24 w-24 flex justify-center items-center mb-3"
+        >
+          <div class="text-h1 text-white">
+            {{(response$ | async)?.namaPeserta | nickName}}
+          </div>
+        </div>
+      </ng-template>
+      <div class="absolute right-0 bottom-0 z-10 bg-[#D5EBFF] rounded-lg p-1">
+        <app-common-icon-component
+          name="edit-5"
+          class="text-[#0074D9]"
+          nativeClass="h-4 w-4"
+          (click)="handleOpenUploadFotoModal()"
+        />
+      </div>
+    </div>
+
+    <div
+      class="text-h3 xl:text-h2 text-800 mb-1 flex flex-wrap justify-center px-5"
+    >
+      <span *ngFor="let name of renderName((response$ | async)?.namaPeserta)"
+        >{{name}}</span
+      >
+    </div>
+
+    <div class="text-700 text-body3 md:text-[16px] lg:text-[18px] xl:text-h7">
+      {{ (response$ | async)?.email }}
+    </div>
+    <!-- <div class="mb-3">
+      <ion-badge
+        class="rounded-md"
+        [class]="(response$ | async)?.statusVerify === 'Y' ? 'bg-green-400' :  'bg-error-400'"
+      >
+        <span class="p-1 text-body3 text-white">
+          {{ (response$ | async)?.statusVerify === 'Y' ? 'Terverifikasi' :
+          'Belum Terverifikasi'}}
+        </span>
+      </ion-badge>
+    </div> -->
+  </div>
+
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 gap-y-9 md:gap-y-0 gap-9 md-max:gap-0 md-max:py-0 md-max:flex md-max:pt-4 md-max:w-full md-max:flex-col"
+  >
+    <div *ngIf="screenSizeService.isDesktopResolution()">
+      <div
+        class="border border-neutral-300 p-6 rounded-xl mb-9 overflow-hidden"
+      >
+        <div
+          *ngIf="!(response$ | async)?.photo"
+          class="w-full h-[18.75rem] bg-havertz-400 flex justify-center items-center mb-6"
+        >
+          <div class="text-white text-[6rem]">
+            {{(response$ | async)?.namaPeserta | nickName}}
+          </div>
+        </div>
+        <div *ngIf="(response$ | async)?.photo" class="relative pt-[100%] mb-6">
+          <img
+            *ngIf="(response$ | async)?.photo"
+            class="w-full h-full object-cover rounded-xl absolute left-0 top-0"
+            [src]="(response$ | async)?.photo"
+            alt=""
+          />
+        </div>
+
+        <div
+          class="cursor-pointer p-3 bg-lazuli-50 flex items-center justify-between mb-6 rounded-xl"
+          (click)="handleOpenUploadFotoModal()"
+        >
+          <div class="text-lazuli-600 text-body2">Pilih Foto</div>
+          <app-common-icon-component
+            name="upload"
+            nativeClass="h-6 w-6 text-neutral-700"
+          ></app-common-icon-component>
+        </div>
+
+        <div class="text-body2 text-700 mb-16">
+          Besar file: maksimum 10.000.000 bytes (10 Megabytes). Ekstensi file
+          yang diperbolehkan: .JPG .JPEG .PNG
+        </div>
+      </div>
+
+      <!-- <ion-button
+        (click)="handleOpenOcrModal()"
+        mode="ios"
+        color="blank"
+        class="w-full text-h7 text-neutral-0 h-11 mb-7 rounded-xl bg-lazuli-50"
+      >
+        <span class="px-4 text-lazuli-500">Upload KTP</span>
+      </ion-button> -->
+    </div>
+    <div
+      class="md-max:bg-[#f6f9ff] h-3"
+      *ngIf="!screenSizeService.isDesktopResolution()"
+    ></div>
+    <div class="w-full">
+      <div class="mb-6" *ngIf="screenSizeService.isDesktopResolution()">
+        <div class="flex justify-between items-center">
+          <div class="text-h4 text-800">Ubah Biodata Diri</div>
+
+          <div class="flex items-center space-x-2">
+            <ion-button
+              (click)="handleOpenOcrModal()"
+              mode="ios"
+              fill="clear"
+              class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+            >
+              <span class="p-0"
+                ><b>{{ isVerified() ? 'Ubah' : 'Isi Biodata Diri'}}</b></span
+              >
+            </ion-button>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2 mb-4">
+          <ion-badge
+            class="rounded-md"
+            [class]="isVerified() ? 'bg-green-400' :  'bg-error-400'"
+          >
+            <span class="p-1 text-body3 text-white">
+              {{ isVerified() ? 'Terverifikasi' : 'Belum Terverifikasi'}}
+            </span>
+          </ion-badge>
+        </div>
+
+        <div class="flex flex-col space-y-4">
+          <div class="grid grid-cols-3 gap-3">
+            <div class="text-body2 text-700 no-wrap">Nama</div>
+            <div class="col-span-2 text-body2 text-700">
+              {{(response$ | async)?.namaPeserta}}
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="text-body2 text-700 no-wrap">Tanggal Lahir</div>
+            <div class="col-span-2 text-body2 text-700">
+              {{(response$ | async)?.tanggalLahir}}
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="text-body2 text-700 no-wrap">Jenis Kelamin</div>
+            <div class="col-span-2 text-body2 text-700">
+              {{(response$ | async)?.jenisKelamin}}
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="text-body2 text-700 no-wrap">NIK</div>
+            <div class="col-span-2 text-body2 text-700">
+              {{(response$ | async)?.nik}}
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="text-body2 text-700 no-wrap">Status</div>
+            <div class="col-span-2 text-body2 text-700">
+              {{ isVerified() ? 'Terverifikasi' : 'Belum Terverifikasi'}}
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3">
+            <div class="text-body2 text-700 no-wrap">Alamat</div>
+            <div class="col-span-2 text-body2 text-700">
+              {{(response$ | async)?.alamat}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-full px-0">
+        <div
+          class="mb-6 md-max:px-4"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+        >
+          <div class="flex justify-between items-center mb-4 mt-4">
+            <div class="text-h4 text-800">Biodata Diri</div>
+          </div>
+          <div
+            class="flex justify-between items-center mb-4"
+            (click)="handleOpenOcrModal()"
+          >
+            <div class="text-body2 text-700">Data Diri</div>
+            <div class="flex items-center">
+              <ion-badge
+                class="rounded-md"
+                [class]="isVerified() ? 'bg-green-400' :  'bg-error-400'"
+              >
+                <span class="p-1 text-body3 text-white !text-[10px]">
+                  {{ isVerified() ? 'Terverifikasi' : 'Belum Terverifikasi'}}
+                </span>
+              </ion-badge>
+              <app-common-icon-component
+                *ngIf="!screenSizeService.isDesktopResolution()"
+                name="chevron-right-normal"
+                nativeClass="w-7 h-7 text-800 opacity-[.6] ml-[2px]"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="md-max:bg-[#f6f9ff] h-3"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+        ></div>
+
+        <div class="mb-6 md-max:px-4 md-max:pt-4">
+          <div class="flex items-center mb-4">
+            <div class="text-h4 text-800">Ubah Kontak</div>
+          </div>
+
+          <div class="flex flex-col space-y-4">
+            <div
+              class="md:grid md:grid-cols-3 md:gap-3 content-start flex items-center justify-between"
+              (click)="handleOpenContactEmailModal()"
+            >
+              <div class="text-body2 text-700 no-wrap">Email</div>
+              <div class="col-span-2 flex items-center justify-between">
+                <span
+                  class="text-body2 text-700 overflow-text-email"
+                  *ngIf="screenSizeService.isDesktopResolution()"
+                >
+                  {{(response$ | async)?.email}}
+                </span>
+                <ion-badge
+                  *ngIf="!screenSizeService.isDesktopResolution()"
+                  class="rounded-md"
+                  [class]="isVerified('email') ? 'bg-green-400' :  'bg-error-400'"
+                >
+                  <span class="p-1 text-body3 text-white !text-[10px]">
+                    {{ isVerified('email') ? 'Terverifikasi' : 'Belum
+                    Terverifikasi'}}
+                  </span>
+                </ion-badge>
+
+                <ion-button
+                  *ngIf="screenSizeService.isDesktopResolution()"
+                  mode="ios"
+                  fill="clear"
+                  class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+                  ><b>Ubah</b></ion-button
+                >
+                <app-common-icon-component
+                  *ngIf="!screenSizeService.isDesktopResolution()"
+                  name="chevron-right-normal"
+                  nativeClass="w-7 h-7 text-800 opacity-[.6] ml-[2px]"
+                />
+
+                <!-- <common-icon-component
+                  *ngIf="(response$ | async)?.statusVerify === 'Y'"
+                  name="radio-checked-outline"
+                  nativeClass="w-7 h-7 text-success-400 opacity-[.6]"
+                /> -->
+              </div>
+              <div
+                class="flex items-center space-x-2 !mt-0"
+                *ngIf="isVerified('email') && screenSizeService.isDesktopResolution()"
+              >
+                <ion-badge class="rounded-md" class="bg-green-400 mt-[-10px]">
+                  <span class="p-1 text-body-3 text-white">Terverifikasi</span>
+                </ion-badge>
+              </div>
+            </div>
+
+            <hr
+              class="border-b border-neutral-200 my-8 flex !mb-0"
+              *ngIf="!screenSizeService.isDesktopResolution()"
+            />
+            <div
+              class="md:grid md:grid-cols-3 md:gap-3 content-start flex items-center justify-between"
+              (click)="handleOpenContactPhoneModal()"
+            >
+              <div class="text-body2 text-700 no-wrap">Nomor Ponsel</div>
+              <div class="col-span-2 flex items-center justify-between">
+                <span
+                  class="text-body2 text-700 overflow-text"
+                  *ngIf="screenSizeService.isDesktopResolution()"
+                >
+                  {{(response$ | async)?.noHp}}
+                </span>
+
+                <ion-badge
+                  *ngIf="isVerified('phone') && !screenSizeService.isDesktopResolution()"
+                  noHp
+                  class="rounded-md"
+                  class="bg-green-400"
+                >
+                  <span class="p-1 text-body-3 text-white !text-[10px]"
+                    >Terverifikasi</span
+                  >
+                </ion-badge>
+
+                <ion-button
+                  *ngIf="screenSizeService.isDesktopResolution()"
+                  mode="ios"
+                  fill="clear"
+                  class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+                  ><b>Ubah</b></ion-button
+                >
+                <app-common-icon-component
+                  *ngIf="!screenSizeService.isDesktopResolution()"
+                  name="chevron-right-normal"
+                  nativeClass="w-7 h-7 text-800 opacity-[.6] ml-[2px]"
+                />
+                <!-- <common-icon-component
+                  *ngIf="(response$ | async)?.statusVerify === 'Y'"
+                  name="radio-checked-outline"
+                  nativeClass="w-7 h-7 text-success-400 opacity-[.6]"
+                /> -->
+              </div>
+              <div
+                class="flex items-center space-x-2 !mt-0"
+                *ngIf="isVerified('phone') && screenSizeService.isDesktopResolution()"
+              >
+                <ion-badge class="rounded-md" class="bg-green-400 mt-[-10px]">
+                  <span class="p-1 text-body-3 text-white">Terverifikasi</span>
+                </ion-badge>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="md-max:bg-[#f6f9ff] h-3"
+        *ngIf="!screenSizeService.isDesktopResolution()"
+      ></div>
+
+      <div
+        class="md:px-0 px-4 mb-10"
+        *ngIf="!screenSizeService.isDesktopResolution()"
+      >
+        <div class="flex items-center mb-4 mt-4">
+          <div class="text-h4 text-800">Kontak Kerabat</div>
+        </div>
+
+        <div class="flex flex-col space-y-4">
+          <div
+            class="md:grid md:grid-cols-3 md:gap-3 content-start flex items-center justify-between"
+            (click)="handleOpenRelativeContactModal()"
+          >
+            <div class="text-body2 text-700 no-wrap">Kerabat Dekat</div>
+            <div class="col-span-2 flex items-center justify-between">
+              <app-common-icon-component
+                name="chevron-right-normal"
+                nativeClass="w-7 h-7 text-800 opacity-[.6]"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-6" *ngIf="screenSizeService.isDesktopResolution()">
+        <div class="flex justify-between items-center">
+          <div class="text-h4 text-800">Kontak Kerabat</div>
+          <ion-button
+            (click)="handleOpenRelativeContactModal()"
+            mode="ios"
+            fill="clear"
+            class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+          >
+            <span class="p-0"
+              ><b>
+                {{ (response$ | async)?.namaKerabat || (response$ |
+                async)?.noHpKerabat || (response$ | async)?.hubunganKerabat ?
+                'Ubah' : 'Isi Kontak Kerabat'}}</b
+              ></span
+            >
+          </ion-button>
+        </div>
+
+        <div class="flex flex-col space-y-4">
+          <div class="grid grid-cols-3 gap-3">
+            <div class="text-body2 text-700 no-wrap">Nama</div>
+            <div class="col-span-2 text-body2 text-700">
+              {{(response$ | async)?.namaKerabat || "-"}}
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="text-body2 text-700 no-wrap">Hubungan</div>
+            <div class="col-span-2 text-body2 text-700">
+              {{(response$ | async)?.hubunganKerabat ?
+              getHubunganName((response$ | async)?.hubunganKerabat) : "-"}}
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="text-body2 text-700 no-wrap">Nomor Ponsel</div>
+            <div class="col-span-2 text-body2 text-700">
+              {{(response$ | async)?.noHpKerabat || "-"}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 gap-y-9 md:gap-y-0 gap-9 md-max:gap-0 md-max:py-0 md-max:flex md-max:px-3 md-max:pr-4 md-max:w-full md-max:flex-col md-max:mb-10"
+  >
+    <ion-button
+      *ngIf="screenSizeService.isDesktopResolution()"
+      (click)="handleOpenOcrModal()"
+      mode="ios"
+      color="blank"
+      class="w-full text-h7 text-neutral-0 h-11 mb-7 rounded-xl bg-lazuli-50"
+    >
+      <span class="px-4 text-lazuli-500">Upload KTP</span>
+    </ion-button>
+    <ion-button
+      (click)="onOpenDeleteAkun()"
+      mode="ios"
+      color="blank"
+      class="w-full text-h7 text-neutral-0 p-0 h-11 mb-7 rounded-xl bg-lazuli-50"
+    >
+      <span class="px-4 text-lazuli-500">Hapus Profil</span>
+    </ion-button>
+  </div>
+</div>
+
+<app-common-alert-component
+  *ngIf="errorFile"
+  [duration]="3000"
+  type="danger"
+  [desc]="errorFile"
+  [isMobile]="isMobile"
+>
+</app-common-alert-component>

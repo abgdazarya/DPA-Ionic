@@ -1,0 +1,16 @@
+<div class="pilih-quiz mx-auto relative max-w-xs md:max-w-sm">
+  <img class="hidden md:block max-w-xs md:max-w-sm" src="images/poin-kamu.svg" alt="" srcset="" />
+  <img class="block md:hidden max-w-xs md:max-w-sm" src="images/poin-kamu-mobile.svg" alt="" srcset="" />
+  <a class="absolute hidden md:block w-[50px] h-[60px] top-0 right-[30px] z-2 cursor-pointer" (click)="closeModal()"></a>
+  <a class="absolute w-[70px] h-[40px] md:w-10 md:h-10 mx-auto bottom-[50px] right-0 left-0 z-2 cursor-pointer"
+    (click)="closeModal()"></a>
+  <div class="absolute top-0 bottom-0 flex items-center justify-center left-[15px] md:left-0 right-0">
+    <div class="flex-col text-white text-center mt-2 md:mt-10 ml-[-20px]">
+      <h1 class="text-[100px] md:text-[150px] md:leading-[150px] font-bold"
+        [class]="point>=100 ? 'text-[70px] md:text[120px] md:leading-[120px]': ''">
+        {{point}}
+      </h1>
+      <p class="text-[16px] mt-[-10px] md:mt-0 md:text-2xl font-semibold">Waktu {{waktu}}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<section>
+  <ng-container *ngIf="(loading$ | async) else dataTpl">
+    <div class="block">
+      <div class="grid grid-cols-3 md:grid-cols-4 gap-y-16 gap-x-4 mb-10">
+        <ng-container *ngFor="let item of [].constructor(9); let index = index">
+          <app-news-list-web-card [loading]="true"></app-news-list-web-card>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="(news$ | async) as news else noDataTpl">
+      <div
+        class="hidden md:block overflow-hidden container-box-shadow rounded-[24px] bg-white p-8"
+      >
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-2 mb-8">
+          <ng-container *ngFor="let item of news; let index = index">
+            <div
+              class="overflow-hidden rounded-xl p-3 {{ item?.flagRead == 1 ? 'bg-white' : 'bg-lazuli-50'}}"
+            >
+              <app-news-list-web-card
+                nativeClass="min-h-full cursor-pointer"
+                [news]="item"
+                (click)="handleNavigateToNewsDetail(item)"
+              ></app-news-list-web-card>
+            </div>
+          </ng-container>
+        </div>
+
+        <ng-container *ngIf="pagination$ | async as pagination">
+          <div
+            class="flex justify-center"
+            *ngIf="screenSizeService.isDesktopResolution()"
+          >
+            <app-common-pagination-component
+              [pagination]="pagination"
+              (onClick)="handlePageChange($event)"
+            ></app-common-pagination-component>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <div
+      class="target children-scroll"
+      [id]="targetScrollPos"
+      #targetScrollPos
+    ></div>
+
+    <ng-template #noDataTpl>
+      <div
+        class="flex justify-center items-center overflow-hidden container-box-shadow rounded-[24px] bg-white min-h-[494px]"
+      >
+        <div class="text-center">
+          <img
+            src="images/news-not-found.png"
+            class="mb-8 w-[180px] h-[152px] mx-auto"
+            alt=""
+          />
+          <div class="text-h3 text-800 font-semibold mb-1.5">
+            Hasil Pencarian Tidak Ditemukan
+          </div>
+          <div class="text-h4 text-700 font-normal">
+            Silakan coba lagi atau kembali lagi nanti.
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
+</section>

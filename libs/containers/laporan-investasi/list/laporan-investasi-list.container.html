@@ -1,0 +1,63 @@
+<section>
+  <ng-container *ngIf="loading$ | async else dataTpl">
+    <ng-container *ngFor="let item of [].constructor(9); let last = last">
+      <app-laporan-investasi-list-web-item
+        [loading]="true"
+      ></app-laporan-investasi-list-web-item>
+      <hr class="my-4 border-b border-neutral-400" *ngIf="!last" />
+    </ng-container>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container
+      *ngIf="(laporanInvestasi$ | async) as laporanInvestasi else noDataTpl"
+    >
+      <ng-container *ngFor="let item of laporanInvestasi; let last = last">
+        <app-laporan-investasi-list-web-item
+          [laporanInvestasi]="item"
+          (onTitleClick)="handleNavigateToLaporanInvestasiDetail(item)"
+          (onClick)="handleDownloadLaporanInvestasiDetail(item)"
+        ></app-laporan-investasi-list-web-item>
+        <hr class="my-4 border-b border-neutral-400" *ngIf="!last" />
+      </ng-container>
+    </ng-container>
+
+    <ng-template #noDataTpl>
+      <div class="md:hidden">
+        <div class="mb-5 mt-10">
+          <div class="text-center">
+            <img
+              src="images/news-not-found.png"
+              class="mb-8 w-[180px] h-[152px] mx-auto"
+              alt=""
+            />
+            <div class="text-h5 text-800 font-semibold mb-1.5">
+              Tidak ada data laporan investasi
+            </div>
+            <div class="text-body2 text-700">
+              Silakan coba lagi atau kembali lagi nanti.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="hidden md:flex justify-center items-center overflow-hidden container-box-shadow rounded-[24px] bg-white min-h-[494px]"
+      >
+        <div class="text-center">
+          <img
+            src="images/news-not-found.png"
+            class="mb-8 w-[180px] h-[152px] mx-auto"
+            alt=""
+          />
+          <div class="text-h3 text-800 font-semibold mb-1.5">
+            Tidak ada data laporan investasi
+          </div>
+          <div class="text-h4 text-700 font-normal">
+            Silakan coba lagi atau kembali lagi nanti.
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
+</section>

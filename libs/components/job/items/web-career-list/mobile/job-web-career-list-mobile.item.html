@@ -1,0 +1,88 @@
+<div class="overflow-hidden">
+  <ng-container *ngIf="loading else dataTpl">
+    <div class="flex space-x-3 items-center">
+      <div class="flex-shrink-0">
+        <ion-skeleton-text
+          [animated]="true"
+          class="h-[58px] w-[58px] overflow-hidden rounded-2xl"
+        ></ion-skeleton-text>
+      </div>
+
+      <div class="flex-1 flex items-center justify-between space-x-10">
+        <div class="flex-1">
+          <div class="mb-1">
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-8 w-2/3"
+            ></ion-skeleton-text>
+          </div>
+
+          <div class="mb-2">
+            <ion-skeleton-text
+              [animated]="true"
+              class="h-5 w-1/2"
+            ></ion-skeleton-text>
+          </div>
+        </div>
+        <div>
+          <ion-skeleton-text
+            [animated]="true"
+            class="h-5 w-20"
+          ></ion-skeleton-text>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="job">
+      <div class="flex p-6 items-center">
+        <div class="flex-shrink-0 overflow-hidden rounded-2xl">
+          <ion-skeleton-text
+            *ngIf="imageStatus === 'onload'"
+            [animated]="true"
+            class="h-[58px] w-[58px] overflow-hidden rounded-2xl"
+          ></ion-skeleton-text>
+
+          <ion-img
+            *ngIf="job.iconPerusahaan"
+            [src]="job.iconPerusahaan"
+            (ionError)="imageStatus = 'error';"
+            (ionImgDidLoad)="imageStatus = 'succeed';"
+            (ionImgWillLoad)="imageStatus = 'onload';"
+            class="h-[58px] w-[58px] object-cover object-center overflow-hidden overflow-hidden rounded-2xl mr-3"
+            alt="News Image"
+            [class.hidden]="imageStatus === 'error' || imageStatus === 'onload'"
+          ></ion-img>
+
+          <div
+            *ngIf="!job.iconPerusahaan || imageStatus === 'error'"
+            class="h-[58px] w-[58px] overflow-hidden rounded-2xl bg-neutral-800 text-neutral-900 flex items-center justify-center text-body1"
+          >
+            ☒
+          </div>
+        </div>
+
+        <div class="flex-1 flex items-center justify-between space-x-10">
+          <div class="flex-1">
+            <div class="mb-[2px] text-body-3 text-900 font-semibold leading-3">
+              {{job.company}}
+            </div>
+            <div class="mb-0 text-body3 text-600">
+              {{job.locationPlacement}}
+            </div>
+          </div>
+          <div>
+            <app-common-button-component
+              color="blank"
+              class="text-body1 font-semibold ion-no-margin ion-no-padding"
+              (onClick)="onClick.emit(job)"
+            >
+              <span class="text-lazuli-500">Kunjungi Website</span>
+            </app-common-button-component>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</div>

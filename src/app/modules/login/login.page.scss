@@ -1,0 +1,7 @@
+.liner::before,
+.liner::after {
+  content: "";
+  height: 1px;
+  background-color: #e6e8f0;
+  display: block;
+}

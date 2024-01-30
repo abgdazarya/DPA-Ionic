@@ -1,0 +1,36 @@
+:host {
+  .overlay {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  ::ng-deep {
+    .custom-detail {
+      ul li {
+        list-style: disc;
+        margin: 0;
+        padding: 0;
+        margin-left: 34px;
+      }
+  
+      ol li {
+        list-style: decimal;
+        margin: 0;
+        padding: 0;
+        margin-left: 34px;
+      }
+  
+      p {
+        white-space: pre-line;
+      }
+    }
+  }
+}
+
+ion-content {
+  --offset-bottom: auto!important;
+  --overflow: hidden;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

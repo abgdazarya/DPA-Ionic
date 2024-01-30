@@ -1,0 +1,32 @@
+ion-header {
+  height: 60px;
+  background: #fefefe;
+
+  ion-toolbar {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    --background: #fefefe;
+    --border-color: transparent;
+    margin: 0;
+    --color: #474d66;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+::ng-deep ion-header.transparent {
+  background: transparent !important;
+  .header-background {
+    backdrop-filter: none;
+  }
+
+  ion-title {
+    padding-inline: 5px;
+    font-family: "SourceSansPro" !important;
+  }
+
+  ion-toolbar {
+    --background: transparent !important;
+  }
+}

@@ -1,0 +1,28 @@
+<app-bottom-sheet>
+  <div
+    class="bg-white  w-full {{
+      screenSizeService.isDesktopResolution() ? 'rounded-2xl' : ''
+    }}"
+  >
+    <img
+      class="mx-auto mt-8 mb-4"
+      width="180"
+      src="images/password-succeed.png"
+      alt=""
+    />
+    <p class="text-lg text-center font-semibold text-neutral-800 mt-4 mb-2">
+      PIN kamu berhasil dibuat
+    </p>
+    <p class="text-700 text-sm text-center w-10/12 mb-[30px] mx-auto">
+      Sekarang kamu dapat menikmati produk dan layanan dari Dana Pensiun Astra.
+    </p>
+    <ion-button
+      (click)="onDismiss()"
+      mode="ios"
+      color="primary"
+      class="w-full md:w-auto text-h7 h-10 mb-12 rounded-xl text-neeutral-0"
+    >
+      <span class="px-4">Oke</span>
+    </ion-button>
+  </div>
+</app-bottom-sheet>

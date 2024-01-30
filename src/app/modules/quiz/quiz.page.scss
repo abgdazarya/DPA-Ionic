@@ -1,0 +1,66 @@
+ion-content {
+  font-family: "BalooCustom" !important;
+  font-weight: 800;
+  line-height: 31px;
+  word-wrap: break-word;
+}
+
+h1 {
+  color: white;
+}
+
+span.capitalize {
+  text-transform: capitalize;
+}
+
+.card-quiz {
+  background: url("/images/bg-quiz.svg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  z-index: 0;
+}
+
+@media (max-width: 640px) {
+  .card-quiz {
+    background: url("/images/bg-quiz.svg") no-repeat center center fixed;
+    height: 100vh;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index: 0;
+  }
+}
+
+.card-mulai-quiz {
+  background: url("/images/mulai-bg.svg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.main-button {
+  background: url("/images/bg-btn-quiz.svg") no-repeat center center fixed;
+  background-size: contain;
+  padding: 30px;
+  &.second {
+    background: url("/images/bg-btn-quiz-1.svg") no-repeat center center fixed;
+    background-size: contain;
+  }
+}
+
+.growing {
+  animation: fadein 1.5s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,9 @@
+ion-button.custom-floating {
+  --background: transparent;
+  background: none;
+  ::ng-deep {
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}

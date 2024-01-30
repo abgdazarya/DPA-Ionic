@@ -1,0 +1,33 @@
+<ion-content [fullscreen]="true" class="ion-padding bg-neutral-800">
+  <div class="justify-end button-close mb-2 flex">
+    <div class="flex flex-col space-y-6 bg-white rounded-full mr-5">
+      <div class="flex space-x-3 items-center text-800 cursor-pointer p-1">
+        <app-common-icon-component
+        name="arrow-bottom-normal"
+        nativeClass="w-6 h-6 text-lazuli-500"
+        (click)="handleClose('download')"
+        >
+        </app-common-icon-component>
+        <div
+          style="margin-left: -2px; margin-right: 5px;"
+          class="text-body-2 text-800 items-center justify-between font-semibold"
+        >
+          Unduh
+        </div>
+      </div>
+    </div>
+
+    <app-common-icon-component
+      name="close"
+      (click)="handleClose('close')"
+      nativeClass="w-6 h-6 text-lazuli-500 rounded-full bg-white mt-1"
+    />
+  </div>
+  <div *ngIf="isLoading">
+    <ion-skeleton-text
+      [animated]="true"
+      class="h-[900px] w-full"
+    ></ion-skeleton-text>
+  </div>
+  <pdf-viewer [src]="urlPDF" [original-size]="false" style="width: 100%; height: 100%" (on-progress)="onProgress($event)"></pdf-viewer>
+</ion-content>

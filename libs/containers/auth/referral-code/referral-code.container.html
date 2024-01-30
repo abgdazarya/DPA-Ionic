@@ -1,0 +1,107 @@
+<section>
+  <ion-modal
+    [backdropDismiss]="false"
+    class="modal-web ion-background-white"
+    [isOpen]="isOpenModal && isModalVisible"
+  >
+    <ng-template>
+      <ng-container *ngTemplateOutlet="sectionTpl"> </ng-container>
+    </ng-template>
+  </ion-modal>
+
+  <div
+    [class.hidden]="isModalVisible"
+    class="fixed top-0 right-0 left-0 h-screen bg-white"
+    *ngIf="!isModalVisible"
+    style="z-index: 99999 !important"
+  >
+    <div class="overflow-y-auto relative">
+      <ng-container *ngTemplateOutlet="sectionTpl"> </ng-container>
+    </div>
+  </div>
+
+  <ng-template #sectionTpl>
+    <div
+      class="p-4 md:p-8 overflow-y-auto mx-auto md:mx-0 w-full md:w-[407px] mt-10 md:mt-0"
+    >
+      <!-- <div class="flex w-full justify-between z-10 mb-8">
+        <ion-button
+          mode="ios"
+          color="blank"
+          size="small"
+          class="shadow-none p-0 m-0"
+          (click)="handleBack()"
+        >
+          <app-common-icon-component name="arrow-left-large" />
+        </ion-button>
+        <ion-button
+          mode="ios"
+          color="blank"
+          size="small"
+          class="shadow-none p-0 m-0"
+          (click)="handleClose()"
+        >
+          <app-common-icon-component name="close" />
+        </ion-button>
+      </div> -->
+
+      <div class="flex flex-col justify-center">
+        <img
+          src="images/voucher-blue.png"
+          class="md:hidden mb-4 w-12 h-12 mx-auto"
+          alt=""
+        />
+
+        <div
+          class="text-center md:text-left text-h4 md:text-h3 text-800 md:text-900 font-bold mb-12 md:mb-6"
+        >
+          Tukar Kode Referralmu
+        </div>
+
+        <div class="mb-6">
+          <app-auth-referral-code-form
+            #form
+            [formGroup]="formGroup"
+            (submitted)="handleSubmit()"
+            (submitCode)="handleUseReferral()"
+            [loading]="(interactRes$ | async)?.isLoading"
+            [isError]="isError"
+          ></app-auth-referral-code-form>
+        </div>
+
+        <div
+          class="flex flex-col md:flex-row justify-end items-center space-x-0 md:space-x-4"
+        >
+          <app-common-button-component
+            color="lazuli-50"
+            [disabled]="(interactRes$ | async)?.isLoading"
+            [isLoading]="(interactRes$ | async)?.isLoading"
+            class="hidden md:block text-heading-7 leading-heading-7 h-11 w-full md:w-28 mb-7 md:mb-0 font-semibold rounded-lg"
+            loadingClass="w-5 h-5 text-lazuli-500"
+            (onClick)="handleUseReferral(true)"
+          >
+            <span class="text-lazuli-500">Lewati</span>
+          </app-common-button-component>
+          <app-common-button-component
+            [disabled]="isError === null || isError || (interactRes$ | async)?.isLoading"
+            [isLoading]="(interactRes$ | async)?.isLoading"
+            class="text-heading-7 leading-heading-7 h-11 w-full md:w-28 mb-7 md:mb-0 font-semibold rounded-lg"
+            (onClick)="handleSubmit()"
+          >
+            <span>Lanjut</span>
+          </app-common-button-component>
+          <app-common-button-component
+            color="lazuli-50"
+            [disabled]="(interactRes$ | async)?.isLoading"
+            [isLoading]="(interactRes$ | async)?.isLoading"
+            class="md:hidden text-heading-7 leading-heading-7 h-11 w-full md:w-28 mb-7 md:mb-0 font-semibold rounded-lg"
+            loadingClass="w-5 h-5 text-lazuli-500"
+            (onClick)="handleUseReferral(true)"
+          >
+            <span class="text-lazuli-500">Lewati</span>
+          </app-common-button-component>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</section>

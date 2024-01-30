@@ -1,0 +1,116 @@
+<ion-popover
+  mode="ios"
+  side="bottom"
+  *ngIf="screenSizeService.isDesktopResolution()"
+  alignment="end"
+  class="rounded-xl ion-background-white"
+  arrow="false"
+  style="
+    position: absolute;
+    --width: 350px;
+    --max-width: 350px;
+    --min-width: 350px;
+    --min-height: 300px;
+    --border-radius: 20px;
+    --backdrop-opacity: var(--ion-backdrop-opacity, 0.5);
+  "
+  trigger="bottom-start"
+  triggerAction="click"
+  [isOpen]="isOpenProfile"
+>
+  <ng-template>
+    <ion-content class="ion-no-padding rounded-xl p-4">
+      <div class="flex p-4 relative flex-col">
+        <div
+          class="flex w-full rounded-xl"
+          style="
+            background: linear-gradient(
+              90deg,
+              rgba(133, 141, 186, 1) 0%,
+              rgba(216, 218, 229, 1) 89%
+            );
+          "
+        >
+          <img class="w-full" src="/images/user-card.png" alt="" />
+          <div class="flex absolute p-2">
+            <div class="h-16 w-16">
+              <ng-container
+                *ngIf="
+                  (profileDetail$ | async)?.photo as photo;
+                  else noPhotoTpl
+                "
+              >
+                <img
+                  *ngIf="photo"
+                  class="h-16 w-16 object-cover rounded-[1.5rem]"
+                  [src]="photo"
+                  alt=""
+                />
+              </ng-container>
+              <ng-template #noPhotoTpl>
+                <div
+                  class="bg-havertz-400 rounded-[1.5rem] h-16 w-16 flex justify-center items-center mb-3"
+                >
+                  <div class="text-h1 text-white">
+                    {{ generateNickName((profile$ | async)?.namaPeserta) }}
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+
+            <div class="text-heading-6 text-800 mb-1 px-3 py-1">
+              <div class="font-semibold flex">
+                <span class="text-800 font-semibold">
+                  {{ (profile$ | async)?.namaPeserta || "Nama Kamu" }}</span
+                >
+                <div class="ml-2 pt-1">
+                  <ion-badge
+                    class="rounded-md"
+                    [class]="
+                      (profile$ | async)?.statusVerify === 'Y'
+                        ? 'bg-green-400'
+                        : 'bg-error-400'
+                    "
+                  >
+                    <span class="p-1 text-body-3 !font-normal text-white">
+                      {{
+                        (profile$ | async)?.statusVerify === "Y"
+                          ? "Terverifikasi"
+                          : "Belum Terverifikasi"
+                      }}
+                    </span>
+                  </ion-badge>
+                </div>
+              </div>
+              <div class="text-body1 !font-normal mt-[2px]">
+                {{ (profile$ | async)?.email || "your@email.com" }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="flex flex-col space-y-6 mt-6">
+            <a
+              *ngFor="let item of renderActionButton()"
+              [href]="item.href || undefined"
+              (click)="item.action?.()"
+              routerLinkActive="text-lazuli-400"
+              class="flex space-x-3 items-center text-800 cursor-pointer"
+            >
+              <app-common-icon-component
+                [name]="item.icon"
+                nativeClass="w-6 h-6  text-neutral-800"
+              >
+              </app-common-icon-component>
+              <div
+                class="text-body-2 text-800 flex flex-1 items-center justify-between font-semibold"
+              >
+                {{ item.label }}
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-popover>

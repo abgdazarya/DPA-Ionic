@@ -1,0 +1,53 @@
+<div class="overflow-y-auto mx-auto md:mx-0 w-full md:w-[30rem]">
+  <div class="flex justify-between px-8 pt-8 pb-4">
+    <div class="text-h3 text-900">Kartu Peserta DPA</div>
+    <app-common-icon-component
+      name="close"
+      nativeClass="h-6 w-6 text-neutral-800 cursor-pointer"
+      (click)="handleClose()"
+    ></app-common-icon-component>
+  </div>
+  <div class="py-2.5">
+    <div class="kartu-peserta relative w-[360px] md:w-[380px] mx-auto">
+      <img
+        class="w-[360px] md:w-[380px] mx-auto rounded-xl"
+        src="images/kartu-peserta.jpg"
+        alt=""
+        srcset=""
+      />
+      <span
+        class="text-lazuli-500 absolute md:top-[50px] md:left-16 top-[45px] left-14"
+      >
+        {{kartuPesertaData?.namaPeserta }}
+      </span>
+      <span
+        class="text-lazuli-500 absolute md:top-[87px] md:left-[155px] text-[10px] md:text-xs top-[82px] left-[145px]"
+      >
+        {{decryptNoPes(kartuPesertaData?.noPeserta)}}
+      </span>
+      <span
+        class="text-lazuli-500 absolute md:top-[106px] md:left-[155px] text-[10px] md:text-xs top-[101px] left-[145px]"
+      >
+        {{getDate(kartuPesertaData?.tanggalLahir) }}
+      </span>
+      <span
+        class="text-lazuli-500 absolute md:top-[126px] md:left-[155px] text-[10px] md:text-xs top-[121px] left-[145px]"
+      >
+        {{getDate(kartuPesertaData?.dtMulaiKerja) }}
+      </span>
+      <span
+        class="text-lazuli-500 absolute md:top-[146px] md:left-[155px] text-[10px] md:text-xs top-[141px] left-[145px]"
+      >
+        {{getDate(kartuPesertaData?.dtPeserta) }}
+      </span>
+      <img
+        [src]="isProduction
+        ? 'images/qrcode-prod.png'
+        : 'images/qrcode-dev.png'"
+        class="w-[76px] md-max:w-[65px] absolute bottom-[40px] md:bottom-[52px] right-2"
+        alt=""
+        srcset=""
+      />
+    </div>
+  </div>
+</div>

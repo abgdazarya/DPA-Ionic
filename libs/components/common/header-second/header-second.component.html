@@ -1,0 +1,51 @@
+<ion-header
+  class="ion-no-border"
+  [translucent]="true"
+  [class]="transparent ? 'transparent' : ''"
+>
+  <ion-toolbar>
+    <ion-buttons
+      slot="start"
+      *ngIf="screenSize.isMobileNativeResolution() || isShowBack"
+    >
+      <ion-button
+        mode="ios"
+        color="blank"
+        size="small"
+        class="shadow-none p-0 m-0"
+        (click)="handleBack()"
+      >
+        <app-common-icon-component
+          name="arrow-left-large"
+          [nativeClass]="
+            transparent && !darkColor
+              ? 'text-white w-6 h-6'
+              : 'text-neutral-800 w-6 h-6'
+          "
+        />
+      </ion-button>
+    </ion-buttons>
+    <ion-title
+      *ngIf="title"
+      [class]="
+        transparent && !darkColor
+          ? 'text-white text-left'
+          : transparent
+          ? 'text-left'
+          : ''
+      "
+      class="text-lg font-semibold !pl-[43px]"
+      >{{ title }}</ion-title
+    >
+    <ion-buttons *ngIf="showClose" slot="end" (click)="handleClose()">
+      <ion-button
+        mode="ios"
+        color="blank"
+        size="small"
+        class="shadow-none p-0 m-0"
+      >
+        <app-common-icon-component name="close" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

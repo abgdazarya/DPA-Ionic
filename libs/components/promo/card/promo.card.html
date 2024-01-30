@@ -1,0 +1,82 @@
+<ng-container [ngSwitch]="size">
+  <ng-container *ngSwitchCase="type.SMALL">
+    <div>
+      <div>
+        <ng-container *ngIf="promo.banner">
+          <img
+            [src]="promo.banner"
+            class="rounded-xl w-full h-[180px] object-cover object-center rounded-xl"
+            alt=""
+          />
+        </ng-container>
+
+        <ng-container *ngIf="!promo.banner">
+          <div
+            class="rounded-xl bg-neutral-600 h-[180px] rounded-xl w-full text-neutral-700 flex items-center justify-center text-h3"
+          >
+            No Thumbnail
+          </div>
+        </ng-container>
+
+        <div class="mt-1.5">
+          <div class="text-body3 text-800 font-semibold mb-1 truncate">
+            {{promo.judul}}
+          </div>
+          <div class="text-body3 text-800">{{promo.namaKategori}}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="type.MEDIUM">
+    <div class="max-w-[280px]">
+      <div>
+        <ng-container *ngIf="promo.banner">
+          <img
+            [src]="promo.banner"
+            class="rounded-xl w-full h-[140px] object-cover object-center rounded-xl"
+            alt=""
+          />
+        </ng-container>
+
+        <ng-container *ngIf="!promo.banner">
+          <div
+            class="rounded-xl bg-neutral-600 h-[140px] rounded-xl w-full text-neutral-700 flex items-center justify-center text-h3"
+          >
+            No Thumbnail
+          </div>
+        </ng-container>
+
+        <div class="mt-3">
+          <div class="text-h7 text-800 mb-1.5 truncate">{{promo.judul}}</div>
+          <div class="text-body3 text-800">{{promo.namaKategori}}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <div class="max-w-[380px]">
+      <div>
+        <ng-container *ngIf="promo.banner">
+          <img
+            [src]="promo.banner"
+            class="rounded-xl w-full h-[192px] object-cover object-center rounded-xl"
+            alt=""
+          />
+        </ng-container>
+
+        <ng-container *ngIf="!promo.banner">
+          <div
+            class="rounded-xl bg-neutral-600 h-[192px] rounded-xl w-full text-neutral-700 flex items-center justify-center text-h3"
+          >
+            No Thumbnail
+          </div>
+        </ng-container>
+
+        <div class="mt-3">
+          <div class="text-h5 text-800 mb-1.5 truncate">{{promo.judul}}</div>
+          <div class="text-body2 text-800">{{promo.namaKategori}}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

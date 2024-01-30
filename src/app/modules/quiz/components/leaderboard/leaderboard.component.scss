@@ -1,0 +1,12 @@
+.leaderboard {
+  transition: all 0.7s;
+  transform: scale(1);
+}
+
+span {
+  --ion-font-family: "BalooCustom";
+  font-family: "BalooCustom";
+  font-weight: 800;
+  line-height: 19px;
+  color: white;
+}

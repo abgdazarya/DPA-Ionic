@@ -1,0 +1,214 @@
+<div
+  class="h-[{{
+    !(profile$ | async) ? '88px' : '108px'
+  }}] md:h-[76px] bg-gradient-to-t from-lazuli-400 to-lazuli-200 w-full flex justify-center rounded-bl-2xl rounded-br-2xl md:rounded-none"
+>
+  <div
+    *ngIf="!useSecondaryHeader"
+    class="container mx-4 md:mx-0 mt-5 md:my-auto"
+  >
+    <div class="flex items-center justify-between">
+      <a href="/home" class="flex justify-end md:hidden">
+        <img src="logos/mobile-logo-white.png" class="h-10 w-auto" alt="" />
+      </a>
+      <a href="/home" class="flex justify-end hidden md:block">
+        <img src="logos/logo-white.png" height="238" width="40" class="h-10 w-auto" alt="" />
+      </a>
+
+      <div class="flex items-center space-x-6" *ngIf="profile$ | async">
+        <ion-button fill="clear" (click)="openNotif()" id="bottom-start">
+          <img
+            *ngIf="!screenSizeService.isMobileResolution()"
+            src="logos/notification.png"
+            id="notification-trigger"
+            class="h-8 w-8"
+            alt=""
+          />
+          <div class="" *ngIf="screenSizeService.isMobileResolution()">
+            <a href="/profile/notification" class="flex items-center space-x-1">
+              <img
+                href="/profile/notification"
+                src="logos/notification.png"
+                class="h-8 w-8"
+                alt=""
+              />
+            </a>
+          </div>
+        </ion-button>
+
+        <div class="">
+          <a
+            (click)="handleNavigateProfile()"
+            class="flex items-center space-x-1"
+          >
+            <img
+              href="/profile"
+              [src]="
+                (profile$ | async)?.statusVerify === 'Y'
+                  ? 'images/user-verified.png'
+                  : 'images/user-unverified.png'
+              "
+              class="h-8 w-8"
+              alt=""
+            />
+
+            <div
+              *ngIf="profile$ | async as profile"
+              class="text-h7 text-neutral-0 hidden md:block"
+            >
+              Hi, {{ profile.namaPeserta }}
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="flex items-center space-x-6" *ngIf="!(profile$ | async)">
+        <a
+          (click)="handleNavigateProfile()"
+          class="flex items-center space-x-1"
+        >
+          <img href="/login" src="logos/user-idle.png" class="h-8 w-8" alt="" />
+
+          <div class="text-h7 text-neutral-0 block">Masuk</div>
+        </a>
+      </div>
+    </div>
+    <div
+      *ngIf="profile$ | async as profile"
+      class="text-center text-h7 text-neutral-0 md:hidden"
+    >
+      Hi, {{ profile.namaPeserta }}
+    </div>
+  </div>
+
+  <div
+    *ngIf="useSecondaryHeader"
+    class="container px-0 mx-0 md:mx-0 mb-2 md:my-auto"
+    [ngClass]="!(profile$ | async) ? 'mt-2' : 'mt-9'"
+  >
+    <ion-button
+      mode="ios"
+      color="blank"
+      class="ion-no-ripple ion-no-box-shadow !px-0"
+      (click)="onClickBack()"
+    >
+      <img src="images/arrow-left.png" class="w- h-7 mr-3" alt="" />
+      <span class="text-h5 text-100">{{ pageTitle }}</span>
+    </ion-button>
+  </div>
+</div>
+
+<ion-popover
+  mode="ios"
+  side="bottom"
+  *ngIf="screenSizeService.isDesktopResolution()"
+  alignment="end"
+  class="rounded-xl ion-background-white"
+  arrow="false"
+  style="
+    position: absolute;
+    --width: 350px;
+    --max-width: 350px;
+    --min-width: 350px;
+    --max-height: 400px;
+    --min-height: 400px;
+    --border-radius: 20px;
+    --backdrop-opacity: var(--ion-backdrop-opacity, 0.5);
+  "
+  trigger="bottom-start"
+  triggerAction="click"
+  [isOpen]="isOpenNotif"
+>
+  <ng-template>
+    <div class="flex justify-between py-4 px-8">
+      <div class="text-h3 text-900">Notifikasi</div>
+      <ion-button
+        mode="ios"
+        fill="clear"
+        class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+      >
+        <span class="p-0 font-semibold">Lihat Semua</span>
+      </ion-button>
+    </div>
+    <ion-content class="ion-no-padding rounded-xl">
+      <div
+        class="cursor-pointer"
+        *ngFor="let notif of response$ | async | slice : 0 : 3"
+        [class]="notif?.flagRead === 0 ? 'bg-lazuli-100' : ''"
+        (click)="readNotif(notif)"
+      >
+        <div class="p-6">
+          <div class="flex items-center space-x-2 mb-2">
+            <img src="images/voucher.png" class="h-5 w-5" alt="" />
+            <div class="flex items-center space-x-1">
+              <span class="text-body3 font-semibold text-900">
+                {{ notif.kategori }}
+              </span>
+              <span class="text-body3 text-600">
+                • {{ notif.dtNotif | date : "d MMMM yyyy" }}</span
+              >
+            </div>
+          </div>
+          <div class="text-body1 text-900 font-semibold mb-0.5">
+            {{ notif.judulNotif }}
+          </div>
+          <div class="text-body3 text-700">
+            {{ notif.contentNotif }}
+          </div>
+        </div>
+      </div>
+    </ion-content>
+    <div class="flex justify-center py-4 px-8">
+      <ion-button
+        (click)="readNotifAll()"
+        mode="ios"
+        fill="clear"
+        class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+      >
+        <span class="p-0 font-semibold">Tandai semua dibaca</span>
+      </ion-button>
+    </div>
+  </ng-template>
+</ion-popover>
+
+<ion-popover
+  trigger="profile-trigger"
+  mode="ios"
+  side="bottom"
+  alignment="end"
+  class="rounded-xl ion-background-white"
+  arrow="false"
+  style="
+    --width: 350px;
+    --max-width: 350px;
+    --min-width: 350px;
+    --max-height: 350px;
+    --min-height: 350px;
+    --offset-y: 8px;
+    --border-radius: 20px;
+    --backdrop-opacity: var(--ion-backdrop-opacity, 0.5);
+  "
+  triggerAction="click"
+>
+  <ng-template>
+    <div class="flex justify-between py-4 px-8">
+      <div class="text-h3 text-900">Notifikasi</div>
+      <ion-button
+        mode="ios"
+        fill="clear"
+        class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+      >
+        <span class="p-0 font-semibold">Lihat Semua</span>
+      </ion-button>
+    </div>
+    <ion-content class="ion-no-padding rounded-xl"> Hello </ion-content>
+    <div class="flex justify-center py-4 px-8">
+      <ion-button
+        mode="ios"
+        fill="clear"
+        class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+      >
+        <span class="p-0 font-semibold">Tandai semua dibaca</span>
+      </ion-button>
+    </div>
+  </ng-template>
+</ion-popover>

@@ -1,0 +1,78 @@
+<div class="flex flex-col justify-items-center modal-content">
+  <div
+    class="p-8 overflow-y-auto mx-auto md:mx-0 w-full md:w-[60vw] mx-auto ion-no-scrollbar h-full"
+  >
+    <div class="flex w-full justify-between z-10 mb-2">
+      <!-- <app-common-button-component
+          color="blank"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+          class="m-0 p-0 ion-no-padding h-7 w-7 rounded-full bg-white"
+          (click)="handleBack()"
+        >
+          <app-common-icon-component name="arrow-left-large"/>
+      </app-common-button-component> -->
+
+      <div *ngIf="!screenSizeService.isDesktopResolution()">
+        <div class="flex items-center space-x-3 p-4">
+          <app-common-icon-component
+            (click)="handleBack()"
+            name="arrow-left-large"
+          />
+          <div class="text-h4 text-700">
+            {{isCreated ? 'Buat':'Perbarui'}} Penjualan
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="screenSizeService.isDesktopResolution()">
+        <div class="text-h3 text-900 mb-1">
+          {{isCreated ? 'Buat':'Perbarui'}} Penjualan
+        </div>
+        <div class="text-700 text-h7 font-normal">Jual barangmu disini</div>
+      </div>
+
+      <app-common-button-component
+        color="white"
+        *ngIf="screenSizeService.isDesktopResolution()"
+        class="m-0 p-0 ion-no-padding h-7 w-7 rounded-full bg-white"
+        (click)="handleClose()"
+      >
+        <app-common-icon-component
+          name="close"
+          nativeClass="w-6 h-6 text-neutral-700"
+        />
+      </app-common-button-component>
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <div class="mb-1">
+        <app-ruang-pensiun-jual-beli-form
+          #form
+          [formGroup]="formGroup"
+          [dataKategori]="dataKategori"
+          [dataError]="dataError"
+          [dataJualBeli]="dataJualBeli"
+          [arrayJumlahGambar]="arrayJumlahGambar"
+          [listKategori]="listKategori"
+          (submitted)="handleSubmit($event)"
+        ></app-ruang-pensiun-jual-beli-form>
+      </div>
+
+      <div class="flex justify-end mb-1 mt-10">
+        <div
+          [ngClass]="{'w-1/2': screenSizeService.isDesktopResolution(), 'w-full' : !screenSizeService.isDesktopResolution() }"
+        >
+          <app-common-button-component
+            color="primary"
+            class="m-0 p-0 h-11 text-h7 font-semibold rounded-lg w-full"
+            (onClick)="form.submit()"
+            [disabled]="formGroup.invalid || !haveImage || loadingPost"
+          >
+            <span>Jual Sekarang</span>
+            <ion-spinner *ngIf="loadingPost" name="circular"></ion-spinner>
+          </app-common-button-component>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<section>
+  <app-news-list-part-mobile
+    *ngIf="screenSizeService.isMobileNativeResolution()"
+  />
+  <app-news-list-part-web
+    *ngIf="!screenSizeService.isMobileNativeResolution()"
+  />
+</section>

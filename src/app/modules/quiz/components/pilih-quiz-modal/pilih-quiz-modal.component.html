@@ -1,0 +1,21 @@
+<div class="pilih-quiz mx-auto relative max-w-xs md:max-w-md">
+  <img class="max-w-sm md:max-w-md" src="images/pilih-bg.svg" alt="" srcset="" />
+  <a class="absolute w-5 h-5 md:w-10 md:h-10 top-0 right-0 z-2 cursor-pointer" (click)="closeModal()"></a>
+  <div class="absolute w-full h-full flex flex-col space-y-4 items-center justify-center top-8">
+    <div class="data-container">
+      <div class="button-pilihan">
+        <div *ngFor="let item of quiz" class="btn-pilih relative" [ngClass]="{ 'cursor-pointer': item.userPlayed != 'Y'}">
+          <ion-button
+            (click)="pilihQuiz(item.idQuiz)"
+            mode="ios"
+            color="blank"
+            [disabled]="item.userPlayed == 'Y'"
+            class="text-neutral-0 h-11 rounded-xl bg-lazuli-500 text-center items-center justify-center max-w-xs md:max-w-md"
+          >
+            <span class="text-[14px] limit-text">{{item.label | shorten:50}}</span>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,149 @@
+<div
+  class="md:shadow-xl md-max:pt-4 rounded-xl relative"
+>
+  <div class="md:p-8 px-4">
+    <div class="flex justify-between items-center">
+      <div
+        class="relative flex items-center rounded-xl md:w-80 w-full mb-6 h-[44px]"
+      >
+        <app-common-icon-component
+          name="magnifier-search-1"
+          class="absolute left-3 top-[14px]"
+          nativeClass="w-5 h-5 text-neutral-600"
+        ></app-common-icon-component>
+        <ion-input
+          placeholder="Cari topik yang kamu inginkan"
+          class="text-body2 ion-no-padding text-800"
+          class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+          style="--padding-start: 40px"
+          [ngModel]="pageService.keyword$ | async"
+          (ionInput)="pageService.handleChangeKeyword($event)"
+          (ionCancel)="pageService.handleChangeKeyword($event)"
+          (ionClear)="pageService.handleChangeKeyword($event)"
+          fill="outline"
+          (input)="onSearchChange($event)"
+        ></ion-input>
+      </div>
+    </div>
+    <div class="mb-16">
+      <div *ngIf="haveAnyCategory">
+        <ng-container *ngFor="let item of responseKategori$ | async">
+          <div *ngIf="item?.judulKategori != 'Jual Beli' && item?.judulKategori != 'Aktifitas Pensiun' && item?.judulKategori != 'Aktivitas Pensiun'">
+            <div class="mobile-wrapper md-max:bg-0 md-max:py-0 md-max:px-5" (click)="handleNavigate(item.templateRuangPensiun, item.judulKategori, item.idKategori)">
+              <hr class="border-b border-neutral-200 my-8 hidden md:flex !mb-0" />
+      
+              <div class="flex flex-col space-y-10 md-max:py-0">
+                <div
+                  class="flex space-x-3 items-center text-800 md-max:!my-0 md-max:py-4 md-max:pt-4"
+                >
+                  <ion-img
+                    *ngIf="item?.iconKategori && item.iconKategori != ''"
+                    [src]="item?.iconKategori"
+                    class="h-14 w-14 rounded-3xl object-cover object-center overflow-hidden"
+                    alt="item Image"
+                  ></ion-img>
+    
+                  <div
+                    *ngIf="!item?.iconKategori || item.iconKategori == ''"
+                    style="color: white;"
+                    class="h-14 w-14 rounded-3xl bg-neutral-800 text-neutral-900 flex items-center justify-center text-body3"
+                  >
+                    Icon
+                  </div>
+                  
+                  <div
+                    class="font-normal text-[16px] lg:text-[18px] flex flex-1 items-center justify-between"
+                  >
+                    <span style="text-align: left;">{{item?.judulKategori}}</span>
+                    <app-common-icon-component
+                      *ngIf="!screenSizeService.isDesktopResolution()"
+                      name="chevron-right-normal"
+                      nativeClass="w-7 h-7 text-800 opacity-[.6]"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-2 border-b border-neutral-200" />
+          </div>
+        </ng-container>
+      </div>
+  
+      <ng-template #noDataTpl>
+        <div class="md:hidden">
+          <div class="mb-5 mt-10">
+            <div class="text-center">
+              <img
+                src="images/news-not-found.png"
+                class="mb-8 w-[180px] h-[152px] mx-auto"
+                alt=""
+              />
+              <div class="text-h5 text-800 font-semibold mb-1.5">
+                Hasil Pencarian Tidak Ditemukan
+              </div>
+              <div class="text-body2 text-700">
+                Silakan coba lagi atau kembali lagi nanti.
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div
+          class="hidden md:flex justify-center items-center overflow-hidden container-box-shadow rounded-[24px] bg-white min-h-[494px]"
+        >
+          <div class="text-center">
+            <img
+              src="images/news-not-found.png"
+              class="mb-8 w-[180px] h-[152px] mx-auto"
+              alt=""
+            />
+            <div class="text-h3 text-800 font-semibold mb-1.5">
+              Hasil Pencarian Tidak Ditemukan
+            </div>
+            <div class="text-h4 text-700 font-normal">
+              Silakan coba lagi atau kembali lagi nanti.
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      
+      <div *ngIf="!haveAnyCategory">
+        <div class="md:hidden">
+          <div class="mb-5 mt-10">
+            <div class="text-center">
+              <img
+                src="images/news-not-found.png"
+                class="mb-8 w-[180px] h-[152px] mx-auto"
+                alt=""
+              />
+              <div class="text-h5 text-800 font-semibold mb-1.5">
+                Hasil Pencarian Tidak Ditemukan
+              </div>
+              <div class="text-body2 text-700">
+                Silakan coba lagi atau kembali lagi nanti.
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div
+          class="hidden md:flex justify-center items-center overflow-hidden container-box-shadow rounded-[24px] bg-white min-h-[494px]"
+        >
+          <div class="text-center">
+            <img
+              src="images/news-not-found.png"
+              class="mb-8 w-[180px] h-[152px] mx-auto"
+              alt=""
+            />
+            <div class="text-h3 text-800 font-semibold mb-1.5">
+              Hasil Pencarian Tidak Ditemukan
+            </div>
+            <div class="text-h4 text-700 font-normal">
+              Silakan coba lagi atau kembali lagi nanti.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "dpa-dana-pensiun-astra": {
+      "hosting": {
+        "app": [
+          "dpa-dana-pensiun-astra"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "dpa-dana-pensiun-astra"
+  }
+}

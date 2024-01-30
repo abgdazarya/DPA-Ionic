@@ -1,0 +1,19 @@
+<div>
+  <ion-searchbar
+    class="p-0 border-b-2 text-800"
+    placeholder="Custom Placeholder"
+    (ionInput)="onSearch($event)"
+  ></ion-searchbar>
+
+  <ion-content
+    class="ion-nopadding overflow-hidden overflow-x-auto max-h-[30vh]"
+  >
+    <div
+      *ngFor="let opt of getOptions()"
+      class="text-body-2 text-800 p-3 border-b-2 cursor-pointer"
+      (click)="onChanges(opt)"
+    >
+      {{ opt.label }}
+    </div>
+  </ion-content>
+</div>

@@ -1,0 +1,20 @@
+ion-datetime {
+  --background: #ffffff;
+  --background-rgb: #ffffff;
+  color: #a1aab7;
+  --ion-color-base: #000000 !important;
+  font-weight: bold;
+  --highlight-color: transparent !important;
+}
+
+.custom-date-picker {
+  --wheel-highlight-background: rgb(230, 232, 240);
+}
+
+::ng-deep .picker-highlight {
+  background: transparent !important;
+}
+
+:host .picker-item {
+  text-align: center !important;
+}

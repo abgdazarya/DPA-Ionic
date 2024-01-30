@@ -1,0 +1,79 @@
+<!-- <div class="overflow-hidden flex space-x-4">
+  <ng-container *ngIf="loading else dataTpl">
+    <div class="flex-1">
+      <div class="mb-1">
+        <ion-skeleton-text
+          [animated]="true"
+          class="h-10 w-full"
+        ></ion-skeleton-text>
+      </div>
+      <div class="mb-1.5">
+        <ion-skeleton-text
+          [animated]="true"
+          class="h-8 w-full"
+        ></ion-skeleton-text>
+      </div>
+      <div>
+        <ion-skeleton-text
+          [animated]="true"
+          class="w-3/4 h-4"
+        ></ion-skeleton-text>
+      </div>
+    </div>
+
+    <div class="flex-shrink-0">
+      <ion-skeleton-text
+        [animated]="true"
+        class="h-24 w-24 rounded-3xl"
+      ></ion-skeleton-text>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="news">
+      <div class="flex-1">
+        <div
+          class="text-body1 text-800 font-semibold mb-1 truncated-title"
+          [innerHTML]="news.judulBerita"
+        ></div>
+        <div
+          class="text-body3 text-700 mb-1.5 truncated-headline"
+          [innerHTML]="news.headlineBerita"
+        ></div>
+
+        <div class="text-body3 text-500 items-center space-x-2">
+          <div class="inline">Tag: {{news.tag}}</div>
+          <div class="inline">{{news.tanggalPost | date:'dd MMMM YYYY'}}</div>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0">
+        <ion-skeleton-text
+          *ngIf="imageStatus === 'onload'"
+          [animated]="true"
+          class="h-24 w-24 rounded-3xl"
+        ></ion-skeleton-text>
+
+        <ion-img
+          *ngIf="news.picture"
+          [src]="news.picture"
+          (ionError)="imageStatus = 'error';"
+          (ionImgDidLoad)="imageStatus = 'succeed';"
+          (ionImgWillLoad)="imageStatus = 'onload';"
+          class="h-24 w-24 rounded-3xl object-cover object-center overflow-hidden"
+          alt="News Image"
+          [class.hidden]="imageStatus === 'error' || imageStatus === 'onload'"
+        ></ion-img>
+
+        <div
+          *ngIf="!news.picture || imageStatus === 'error'"
+          class="h-24 w-24 rounded-3xl bg-neutral-800 text-neutral-900 flex items-center justify-center text-body3"
+        >
+          No Thumbnail
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</div> -->
+
+<div>Item Mobile</div>

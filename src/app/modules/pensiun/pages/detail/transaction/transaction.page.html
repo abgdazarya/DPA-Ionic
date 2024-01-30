@@ -1,0 +1,464 @@
+<section>
+  <div
+    class="flex items-center space-x-3 mb-7"
+    *ngIf="screenSizeService.isDesktopResolution()"
+  >
+    <div class="mb-8 hidden md:block">
+      <app-common-breadcrumb-component
+        [breadcrumbs]="breadcrumbs"
+        activeClass="text-neutral-800"
+        (onClick)="handleSelectBreadcrumb($event)"
+      >
+      </app-common-breadcrumb-component>
+    </div>
+  </div>
+
+  <!-- <profile-header-component
+    *ngIf="!screenSizeService.isDesktopResolution()"
+    [headerTitle]="'Detail Jual Beli'"
+  ></profile-header-component> -->
+
+  <ng-container *ngIf="jualBeli$ | async as jualBeli">
+    <div
+      [ngClass]="screenSizeService.isDesktopResolution() ? 'grid grid-cols-3 gap-10':'md:container px-6 md:px-auto z-10 relative pt-6 md:pt-16'"
+    >
+      <div class="col-span-2" *ngIf="screenSizeService.isDesktopResolution()">
+        <div class="relative">
+          <ion-button
+            (click)="handleSlide('next')"
+            color="none"
+            class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -right-7 z-20"
+          >
+            <img
+              src="logos/chevron-right-circle.png"
+              class="w-10 h-10"
+              alt=""
+            />
+          </ion-button>
+          <ion-button
+            (click)="handleSlide('prev')"
+            color="none"
+            class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -left-7 z-20"
+          >
+            <img src="logos/chevron-left-circle.png" class="w-10 h-10" alt="" />
+          </ion-button>
+
+          <swiper
+            #imageSlides
+            [loop]="true"
+            [slidesPerView]="1"
+            *ngIf="arrayJumlahGambar.length > 1"
+          >
+            <ng-container *ngFor="let i of arrayJumlahGambar">
+              <ng-template swiperSlide *ngIf="jualBeli?.gambarJualBeli">
+                <ng-container *ngIf="jualBeli?.gambarJualBeli['IMAGE_' + i]">
+                  <img
+                    [src]="jualBeli?.gambarJualBeli['IMAGE_' + i]"
+                    (click)="openImage(jualBeli?.gambarJualBeli['IMAGE_' + i])"
+                    class="mb-8 rounded-xl w-full h-[350px] object-cover object-center rounded-xl"
+                    alt=""
+                  />
+                </ng-container>
+
+                <ng-container
+                  *ngIf="!jualBeli?.gambarJualBeli['IMAGE_' + i] && jualBeli?.gambarJualBeli['MAIN_IMAGE']"
+                >
+                  <img
+                    [src]="jualBeli?.gambarJualBeli['MAIN_IMAGE']"
+                    (click)="openImage(jualBeli?.gambarJualBeli['MAIN_IMAGE'])"
+                    class="mb-8 rounded-xl w-full h-[350px] object-cover object-center rounded-xl"
+                    alt=""
+                  />
+                </ng-container>
+
+                <ng-container
+                  *ngIf="!jualBeli?.gambarJualBeli['IMAGE_' + i] && !jualBeli?.gambarJualBeli['MAIN_IMAGE']"
+                >
+                  <div
+                    class="mb-8 rounded-xl bg-neutral-600 h-[350px] rounded-xl w-full text-neutral-700 flex items-center justify-center text-h3"
+                  >
+                    No Thumbnail
+                  </div>
+                </ng-container>
+              </ng-template>
+              <ng-template swiperSlide *ngIf="!jualBeli?.gambarJualBeli">
+                <ng-container>
+                  <div
+                    class="mb-8 rounded-xl bg-neutral-600 h-[350px] rounded-xl w-full text-neutral-700 flex items-center justify-center text-h3"
+                  >
+                    No Thumbnail
+                  </div>
+                </ng-container>
+              </ng-template>
+            </ng-container>
+          </swiper>
+
+          <ng-container
+            *ngIf="jualBeli?.gambarJualBeli['MAIN_IMAGE'] && !jualBeli?.gambarJualBeli['IMAGE_1']"
+          >
+            <img
+              [src]="jualBeli?.gambarJualBeli['MAIN_IMAGE']"
+              (click)="openImage(jualBeli?.gambarJualBeli['MAIN_IMAGE'])"
+              class="mb-8 rounded-xl w-full h-[350px] object-cover object-center rounded-xl"
+              alt=""
+            />
+          </ng-container>
+        </div>
+      </div>
+
+      <div>
+        <div
+          class="text-500 text-h6 mb-4"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+        >
+          Jual Beli
+
+          <ion-chip *ngIf="jualBeli.isMe && isPensiunan" color="{{jualBeli.statusApproval | statusApprovalEnum:'chipColor'}}">{{jualBeli.statusApproval | statusApprovalEnum:'text'}}</ion-chip>
+
+        </div>
+
+        <!-- Mobile Web -->
+        <div
+          class="flex space-x-6 items-center mb-4"
+          *ngIf="screenSizeService.isDesktopResolution()"
+        >
+          <div
+            *ngIf="!decryptUser(jualBeli.photoUser)"
+            class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl mr-2"
+          >
+            {{ decryptUser(jualBeli.namaUser)?.toUpperCase() | nickName }}
+          </div>
+
+          <div *ngIf="decryptUser(jualBeli.photoUser)" class="h-[52px] w-[52px] mr-2">
+            <ng-container>
+              <img
+                class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl"
+                [src]="decryptUser(jualBeli.photoUser)"
+                alt=""
+              />
+            </ng-container>
+          </div>
+          <div>
+            <div class="text-h3 text-900 mb-3">
+              {{decryptUser(jualBeli.namaUser) || 'Tidak ada nama'}}
+            </div>
+            <div class="flex space-x-1 items-center text-600 text-body2">
+              <app-common-icon-component
+                name="bag-1"
+                nativeClass="w-6 h-6 text-600"
+              />
+              <span>{{jualBeli.namaPerusahaan || '-'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile App -->
+        <div
+          class="flex space-x-6 items-center mb-1"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+        >
+          <div
+            *ngIf="!decryptUser(jualBeli.photoUser)"
+            class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl mr-2"
+          >
+            {{ decryptUser(jualBeli.namaUser)?.toUpperCase() | nickName }}
+          </div>
+
+          <div *ngIf="decryptUser(jualBeli.photoUser)" class="h-[52px] w-[52px] mr-2">
+            <ng-container>
+              <img
+                class="h-[52px] w-[52px] flex items-center justify-center bg-havertz-400 text-white rounded-4xl"
+                [src]="decryptUser(jualBeli.photoUser)"
+                alt=""
+              />
+            </ng-container>
+          </div>
+          
+          <div>
+            <div class="text-[12px] text-900 mb-1">
+              <b>{{decryptUser(jualBeli.namaUser) || 'Tidak ada nama'}}</b>
+            </div>
+            <div
+              class="flex space-x-1 items-center text-[12px] text-600 text-body3"
+            >
+              <app-common-icon-component
+                name="bag-1"
+                nativeClass="w-4 h-4 text-600"
+              />
+              <span>{{jualBeli.namaPerusahaan || '-'}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="cursor-pointer flex-1 flex space-x-2 items-center mb-5"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+        >
+          <app-common-icon-component
+            (click)="handleLikeContent(jualBeli)"
+            nativeClass="w-8 h-8 {{ jualBeli.isLike === 1 ? 'text-lazuli-500' : 'text-neutral-200'}}"
+            name="heart-filled"
+          />
+          <span class="text-700 text-[12px]"
+            >{{jualBeli.jumlahLike || '0'}} Suka</span
+          >
+
+          <span class="text-500 text-[12px]"
+            >{{jualBeli.createdOn | date: 'dd MMMM YYYY'}}
+          </span>
+
+          <div *ngIf="jualBeli.isMe && isPensiunan && jualBeli.statusApproval != 'WAITING-APPROVAL'" style="display: flex;">
+            <a
+              class="cursor-pointer text-lazuli-500 text-xs font-semibold flex items-center mx-5 md:text-sm"
+              (click)="updateData(jualBeli)"
+            >
+              Edit
+            </a>
+            <a
+              style="color: red;"
+              class="cursor-pointer text-lazuli-500 text-xs font-semibold flex items-center md:text-sm"
+              (click)="deleteData(jualBeli)"
+            >
+              Hapus
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Mobile View -->
+        <div
+          class="col-span-2"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+        >
+          <div class="relative">
+            <ion-button
+              (click)="handleSlide('next')"
+              color="none"
+              class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -right-7 z-20"
+            >
+              <img
+                src="logos/chevron-right-circle.png"
+                class="w-10 h-10"
+                alt=""
+              />
+            </ion-button>
+            <ion-button
+              (click)="handleSlide('prev')"
+              color="none"
+              class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[40%] -left-7 z-20"
+            >
+              <img
+                src="logos/chevron-left-circle.png"
+                class="w-10 h-10"
+                alt=""
+              />
+            </ion-button>
+
+            <!-- <div
+              class="rounded-4xl w-full flex items-center justify-center mb-2"
+            >
+              <img
+                *ngIf="jualBeli?.gambarJualBeli"
+                [src]="jualBeli?.gambarJualBeli"
+                class="rounded-xl w-full rounded-xl"
+                alt=""
+              />
+
+              <div
+                *ngIf="!jualBeli?.gambarJualBeli"
+                class="mb-8 rounded-xl bg-neutral-600 h-[140px] rounded-xl w-full text-neutral-700 flex items-center justify-center text-h3"
+              >
+                No Thumbnail
+              </div>
+            </div> -->
+
+            <swiper
+              #imageSlides
+              [loop]="true"
+              [slidesPerView]="1.05"
+              [spaceBetween]="10"
+              *ngIf="arrayJumlahGambar.length > 1"
+            >
+              <ng-container *ngFor="let i of arrayJumlahGambar">
+                <ng-template swiperSlide *ngIf="jualBeli?.gambarJualBeli">
+                  <ng-container *ngIf="jualBeli?.gambarJualBeli['IMAGE_' + i]">
+                    <img
+                      [src]="jualBeli?.gambarJualBeli['IMAGE_' + i]"
+                      (click)="openImage(jualBeli?.gambarJualBeli['IMAGE_' + i])"
+                      class="mb-8 rounded-xl w-full h-[300px] object-cover object-center rounded-xl"
+                      alt=""
+                    />
+                  </ng-container>
+
+                  <ng-container
+                    *ngIf="!jualBeli?.gambarJualBeli['IMAGE_' + i] && jualBeli?.gambarJualBeli['MAIN_IMAGE']"
+                  >
+                    <img
+                      [src]="jualBeli?.gambarJualBeli['MAIN_IMAGE']"
+                      (click)="openImage(jualBeli?.gambarJualBeli['MAIN_IMAGE'])"
+                      class="mb-8 rounded-xl w-full h-[350px] object-cover object-center rounded-xl"
+                      alt=""
+                    />
+                  </ng-container>
+
+                  <ng-container
+                    *ngIf="!jualBeli?.gambarJualBeli['IMAGE_' + i] && !jualBeli?.gambarJualBeli['MAIN_IMAGE']"
+                  >
+                    <div
+                      class="mb-8 rounded-xl bg-neutral-600 h-[300px] rounded-xl w-full text-neutral-700 flex items-center justify-center text-h3"
+                    >
+                      No Thumbnail
+                    </div>
+                  </ng-container>
+                </ng-template>
+                <ng-template swiperSlide *ngIf="!jualBeli?.gambarJualBeli">
+                  <ng-container>
+                    <div
+                      class="mb-8 rounded-xl bg-neutral-600 h-[300px] rounded-xl w-full text-neutral-700 flex items-center justify-center text-h3"
+                    >
+                      No Thumbnail
+                    </div>
+                  </ng-container>
+                </ng-template>
+              </ng-container>
+            </swiper>
+
+            <ng-container
+              *ngIf="jualBeli?.gambarJualBeli['MAIN_IMAGE'] && !jualBeli?.gambarJualBeli['IMAGE_1']"
+            >
+              <img
+                [src]="jualBeli?.gambarJualBeli['MAIN_IMAGE']"
+                (click)="openImage(jualBeli?.gambarJualBeli['MAIN_IMAGE'])"
+                class="mb-8 rounded-xl w-full h-[350px] object-cover object-center rounded-xl"
+                alt=""
+              />
+            </ng-container>
+            <!-- <swiper #imageSlides [loop]="true" [slidesPerView]="1">
+              <ng-container *ngFor="let i of [].constructor(5);">
+                <ng-template swiperSlide>
+                  <div
+                    class="mb-8 rounded-xl bg-neutral-600 h-[350px] rounded-xl w-full text-neutral-700 flex items-center justify-center text-h3"
+                  >
+                    No Thumbnail
+                  </div>
+                </ng-template>
+              </ng-container>
+            </swiper> -->
+          </div>
+        </div>
+        <hr class="mb-2 mt-5" />
+
+        <div
+          class="text-500 text-h6 mb-4"
+          style="display: flex; align-items: center;"
+          *ngIf="screenSizeService.isDesktopResolution()"
+        >
+          {{jualBeli.createdOn | date: 'dd MMMM YYYY'}}
+
+          <div *ngIf="jualBeli.isMe && isPensiunan && jualBeli.statusApproval != 'WAITING-APPROVAL'" style="display: flex;">
+            <ion-chip color="{{jualBeli.statusApproval | statusApprovalEnum:'chipColor'}}">{{jualBeli.statusApproval | statusApprovalEnum:'text'}}</ion-chip>
+
+            <a
+              class="cursor-pointer text-lazuli-500 text-xs font-semibold flex items-center mx-5 md:text-sm"
+              (click)="updateData(jualBeli)"
+            >
+              Edit
+            </a>
+            <a
+              style="color: red;"
+              class="cursor-pointer text-lazuli-500 text-xs font-semibold flex items-center md:text-sm"
+              (click)="deleteData(jualBeli)"
+            >
+              Hapus
+            </a>
+
+          </div>
+        </div>
+
+        <div class="text-h5 text-900">{{jualBeli.judulThread}}</div>
+        <div class="text-[15px] text-900 mb-3">
+          <b>{{jualBeli.hargaBarang | currency:'IDR':'symbol-narrow'}}</b>
+        </div>
+
+        <div class="text-h5 text-900">Situs Pembelian:</div>
+        <div class="mb-3 text-700 text-lazuli-500 font-bold">
+          <span
+            (click)="handleLinkPembelian(jualBeli)"
+            class="ion-text-wrap"
+            style="text-align: left"
+            >{{jualBeli.linkPenjualan || '-' | shorten:100}}</span
+          >
+        </div>
+        <!-- <ion-button
+          (click)="handleLinkPembelian(jualBeli)"
+          color="blank"
+          mode="ios"
+          class="ion-no-padding text-700 text-lazuli-500 font-bold"
+        >
+          <span class="ion-text-wrap" style="text-align: left;">{{jualBeli.linkPenjualan || '-' | shorten:100}}</span>
+        </ion-button> -->
+
+        <div
+          class="cursor-pointer flex-1 flex space-x-2 items-center mb-8"
+          *ngIf="screenSizeService.isDesktopResolution()"
+        >
+          <app-common-icon-component
+            (click)="handleLikeContent(jualBeli)"
+            nativeClass="w-8 h-8 {{ jualBeli.isLike === 1 ? 'text-lazuli-500' : 'text-neutral-200'}}"
+            name="heart-filled"
+          />
+          <span class="text-h5 text-700"
+            >{{jualBeli.jumlahLike || '0'}} Suka</span
+          >
+        </div>
+
+        <div class="mb-3">
+          <div class="text-h5 text-900">Deskripsi</div>
+          <div
+            class="custom-detail text-body1 text-700"
+            [innerHTML]="jualBeli.deskripsi"
+          ></div>
+        </div>
+        <div>
+          <div class="text-h5 text-900">Alamat</div>
+          <div
+            class="text-body1 text-700 mb-3"
+            [innerHTML]="jualBeli.alamat"
+          ></div>
+        </div>
+        <div>
+          <img
+            (click)="handleNavigateToLocation(jualBeli)"
+            src="images/mapsDPA.jpeg"
+            class="rounded-4xl w-full h-[152px] bg-neutral-700 flex items-center justify-center mb-2"
+            alt=""
+          />
+        </div>
+      </div>
+      <div *ngIf="screenSizeService.isMobileBrowser()">
+        <hr class="mb-10 mt-5" />
+        <app-common-footer-container></app-common-footer-container>
+      </div>
+    </div>
+  </ng-container>
+</section>
+
+<app-common-alert-component
+  *ngIf="errorLikeTOne"
+  [duration]="3000"
+  type="danger"
+  [desc]="errorLikeTOne"
+  transformShowClass="translate-y-24"
+  transformHideClass="-translate-y-24"
+>
+</app-common-alert-component>
+
+<app-common-alert-component
+  *ngIf="successLikeTOne"
+  [duration]="3000"
+  type="success"
+  [desc]="successLikeTOne"
+  transformShowClass="translate-y-24"
+  transformHideClass="-translate-y-24"
+>
+</app-common-alert-component>

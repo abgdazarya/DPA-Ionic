@@ -1,0 +1,175 @@
+<ion-header
+  *ngIf="screenSizeService.isMobileResolution()"
+  class="ion-background-white ion-no-border"
+>
+  <profile-header-component
+    [headerTitle]="'Kontak Kerabat'"
+    [onBack]="handleClose"
+  ></profile-header-component>
+</ion-header>
+<div
+  class="flex flex-col justify-between p-8 sm-max:px-4 sm-max:pt-0 overflow-y-auto mx-auto md:mx-0 w-full max-h-sm-modal h-full md:max-h-vh md:w-[30rem]"
+>
+  <div
+    class="w-full mb-8 sm-max:flex sm-max:flex-col sm-max:justify-between sm-max:min-h-full"
+  >
+    <div
+      class="flex justify-between mb-2"
+      *ngIf="!screenSizeService.isMobileResolution()"
+    >
+      <div class="text-h3 text-900">
+        {{kerabatData?.namaKerabat ? 'Perbarui':'Tambah'}} Kontak Kerabat
+      </div>
+      <app-common-icon-component
+        *ngIf="!screenSizeService.isMobileResolution()"
+        name="close"
+        nativeClass="h-6 w-6 text-neutral-800 cursor-pointer"
+        (click)="handleClose()"
+      ></app-common-icon-component>
+    </div>
+    <div
+      *ngIf="!screenSizeService.isMobileResolution()"
+      class="text-[18px] text-700 mb-7"
+    >
+      Kamu dapat mengisi kontak kerabat untuk kebutuhan keadaan darurat.
+    </div>
+
+    <form novalidate *ngIf="formGroup" [formGroup]="formGroup">
+      <div
+        *ngIf="screenSizeService.isMobileResolution()"
+        class="text-[18px] text-700 mb-7 p-4 flex bg-lazuli-50 border border-lazuli-500 rounded-2xl"
+      >
+        <app-common-icon-component
+          name="info"
+          nativeClass="w-5 h-5 bg-neutral-100 text-lazuli-400 mr-3"
+        >
+        </app-common-icon-component>
+        <div class="flex flex-col">
+          <span class="text-heading-6 text-lazuli-500 font-semibold"
+            >Kontak Kerabat</span
+          >
+          <span class="text-body-2 text-neutral-700"
+            >Kamu dapat mengisi kontak kerabat untuk kebutuhan darurat.</span
+          >
+        </div>
+      </div>
+      <div class="grid grid-cols-1 gap-y-6">
+        <div *ngIf="formGroup.controls['namaKerabat']; let formControl">
+          <div class="text-body2 text-neutral-800 mb-1">Nama Lengkap</div>
+          <ion-input
+            formControlName="namaKerabat"
+            placeholder="Nama Lengkap"
+            class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+            style="--padding-start: 12px; --padding-end: 12px"
+            fill="outline"
+          ></ion-input>
+          <small class="text-error-400">
+            <ng-container
+              *ngIf="formControl.errors?.['required'] && formControl.touched"
+            >
+              Nama Lengkap wajib diisi.
+            </ng-container>
+          </small>
+        </div>
+
+        <div *ngIf="formGroup.controls['hubunganKerabat']; let formControl">
+          <div class="text-body2 text-neutral-800 mb-1">Hubungan</div>
+          <app-select
+            controlName="hubunganKerabat"
+            placeholder="Hubungan"
+            class="border-neutral-400 rounded-xl text-body2 text-700"
+            style="--padding-start: 12px; --padding-end: 12px"
+            [options]="generateOptionHubungan(datahubunganKerabat)"
+          />
+          <small class="text-error-400">
+            <ng-container
+              *ngIf="formControl.errors?.['required'] && formControl.touched"
+            >
+              Hubungan wajib diisi.
+            </ng-container>
+          </small>
+        </div>
+
+        <div *ngIf="formGroup.get('hubunganKerabat')?.value === '0000'">
+          <div
+            *ngIf="formGroup.controls['hubunganKerabatLainnya']; let formControl"
+          >
+            <div class="text-body2 text-neutral-800 mb-1">Hubungan Lainnya</div>
+            <ion-input
+              formControlName="hubunganKerabatLainnya"
+              placeholder="Hubungan Lainnya"
+              required
+              class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+              style="--padding-start: 12px; --padding-end: 12px"
+              fill="outline"
+            ></ion-input>
+            <small class="text-error-400">
+              <ng-container
+                *ngIf="formControl.errors?.['required'] && formControl.touched"
+              >
+                Hubungan lainnya wajib diisi.
+              </ng-container>
+            </small>
+          </div>
+        </div>
+
+        <div *ngIf="formGroup.controls['noHpKerabat']; let formControl">
+          <div class="text-body2 text-neutral-800 mb-1">Nomor Ponsel</div>
+          <ion-input
+            formControlName="noHpKerabat"
+            placeholder="Nomor Ponsel"
+            class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+            style="--padding-start: 12px; --padding-end: 12px"
+            type="tel"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            fill="outline"
+            appNumberInput
+          ></ion-input>
+          <small class="text-error-400">
+            <ng-container
+              *ngIf="formControl.errors?.['required'] && formControl.touched"
+            >
+              Nomor Ponsel wajib diisi.
+            </ng-container>
+            <ng-container
+              *ngIf="formControl.errors?.['maxlength'] && formControl.touched"
+            >
+              Nomor Ponsel melebihi batas.
+            </ng-container>
+            <ng-container
+              *ngIf="(formControl.errors?.['pattern'] && formControl.touched) || (formControl.errors?.['minlength'] && formControl.touched)"
+            >
+              No Ponsel 10-14 karakter.
+            </ng-container>
+          </small>
+        </div>
+      </div>
+    </form>
+    <ion-button
+      class="w-full text-h7 h-11 rounded-lg mt-5"
+      (click)="submit()"
+      [disabled]="isDisabledButton || formGroup.invalid || (interactionResponse$ | async)?.type === interactionType.PROCESS"
+    >
+      Simpan
+      <ion-spinner
+        *ngIf="(interactionResponse$ | async)?.type === interactionType.PROCESS"
+        name="circular"
+      ></ion-spinner>
+    </ion-button>
+  </div>
+</div>
+<div class="px-6">
+  <app-common-alert-component
+    type="danger"
+    [desc]="errorResponse$ | async"
+    [duration]="3000"
+  ></app-common-alert-component>
+
+  <app-common-alert-component
+    type="success"
+    [title]="successMessage"
+    [duration]="3000"
+    [isOpen]="successMessage == '' ? false : true"
+  ></app-common-alert-component>
+</div>

@@ -1,0 +1,101 @@
+<!-- <ion-header class="ion-background-white ion-no-border">
+  <common-header-component *ngIf="screenSizeService.isDesktopResolution()"></common-header-component>
+  <profile-header-component
+    *ngIf="!screenSizeService.isDesktopResolution()"
+    [headerTitle]="'Baca'"
+  ></profile-header-component>
+</ion-header> -->
+
+<section>
+  <!-- <ion-content [ngClass]="screenSizeService.isDesktopResolution() ? 'ion-background-white-blur relative':'relative'"> -->
+  <div
+    class="flex md:hidden items-center text-center pt-5 px-4 border-b-2 border-neutral-400"
+  >
+    <div
+      (click)="handleNavigateUrl('/news/index')"
+      class="text-body1 font-semibold flex-1 -mb-0.5 py-3 border-b-2 border-lazuli-400 text-lazuli-400"
+    >
+      Berita
+    </div>
+    <div
+      (click)="handleNavigateUrl('/astramagazine/index')"
+      class="text-body1 font-semibold flex-1 -mb-0.5 py-3 border-b-2 border-neutral-400 text-800"
+    >
+      AstraMagz
+    </div>
+  </div>
+  <div class="md:container md:px-auto z-10 relative md:pt-16 growing">
+    <div>
+      <div class="hidden md:flex justify-between items-center mb-8">
+        <div>
+          <div class="text-h2 text-800 mb-1.5">Bacaan buat kamu</div>
+          <div class="text-[24px] text-700">
+            Temukan inspirasi dan informasi terbaru dari kami.
+          </div>
+        </div>
+
+        <div
+          class="cursor-pointer box-shadow-button flex items-center rounded-4xl overflow-hidden bg-white"
+        >
+          <div
+            routerLinkActive="border-b-4 border-lazuli-400"
+            class="text-h3 font-semibold text-900 py-[26px] px-[50px] border-b-4 border-lazuli-400"
+            (click)="handleNavigateUrl('/news/index')"
+          >
+            Berita
+          </div>
+          <hr class="border-r border-neutral-400 h-[80px]" />
+          <div
+            routerLinkActive="border-b-4 border-lazuli-400"
+            class="text-h3 font-normal text-700 py-[26px] px-[50px]"
+            (click)="handleNavigateUrl('/astramagazine/index')"
+          >
+            Astramagz
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col md:flex-row {{keyword ? 'md:justify-end' : 'md:justify-between'}} md:items-center mb-1 md:mb-8 mt-4 md:mt-0 px-4 md:px-0"
+      >
+        <div *ngIf="!keyword" class="hidden md:block text-h3 text-800">
+          Artikel Terbaru
+        </div>
+
+        <div>
+          <ion-searchbar
+            [(ngModel)]="keyword"
+            [debounce]="500"
+            mode="md"
+            class="searchbar-input text-700 ion-background-white w-full md:w-96 rounded-input ion-no-box-shadow border border-neutral-400 p-0 rounded-xl"
+            placeholder="Cari baca yang kamu inginkan"
+          ></ion-searchbar>
+        </div>
+      </div>
+
+      <div *ngIf="!keyword" class="hidden md:block">
+        <app-news-highlight-container></app-news-highlight-container>
+      </div>
+
+      <hr class="hidden md:block border-none mb-16" />
+
+      <div *ngIf="!keyword" class="hidden md:block text-h3 text-800 mb-7">
+        Berita Buat Kamu
+      </div>
+
+      <div *ngIf="keyword" class="hidden md:block text-h3 text-800 mb-7">
+        Hasil Pencarian "{{keyword}}"
+      </div>
+
+      <div class="mb-6">
+        <app-news-list-container 
+          [keyword]="keyword"
+          >
+        </app-news-list-container>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <wa-floating-button></wa-floating-button> -->
+<!-- </ion-content> -->

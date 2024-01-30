@@ -1,0 +1,10 @@
+<ion-button
+  *ngIf="link"
+  (click)="onClick.emit()"
+  class="h-10 custom-floating fixed bottom-2 right-4 z-50 rounded-full bg-transparent !p-0 ion-no-padding"
+  nativeClass="bg-transparent !p-0 ion-no-padding"
+>
+  <a target="_blank" [href]="link">
+    <img src="logos/wa.png" class="w-10 h-10 object-contain" alt="" />
+  </a>
+</ion-button>

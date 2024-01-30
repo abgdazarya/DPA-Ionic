@@ -1,0 +1,33 @@
+:host {
+  ::ng-deep {
+    .sc-ion-input-md-h:not(.legacy-input) {
+      min-height: 0px;
+      height: auto;
+      width: auto;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus {
+      transition: background-color 600000s 0s, color 600000s 0s !important;
+    }
+
+    .sc-ion-input-md-h {
+      --highlight-color-focused: none !important;
+      --highlight-color-valid: none !important;
+      --highlight-color-invalid: none !important;
+      --highlight-color: none !important;
+      --background: none !important;
+      --placeholder-color: #c1c4d6 !important;
+      color: #474d66;
+    }
+
+    .form-wrapper-input:focus-within {
+      // border-bottom: 4px solid linear-gradient(180deg, #005baa 0%, #0074d9 100%);
+      // border-bottom: 4px solid #005baa;
+    }
+
+    input:focus {
+      outline: none;
+    }
+  }
+}

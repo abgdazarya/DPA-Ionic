@@ -1,0 +1,54 @@
+<div class="card-quiz sm:h-screen bs:h-screen lg:h-max h-max w-full p-7 py-[75px] md:p-[180px] md:pb-[300px]">
+  <div class="bg-neutral-0 rounded-[20px] p-3 py-7 pb-12 md:p-16 relative z-2">
+    <div class="absolute top-[-30px] left-0 right-0 mx-auto md:mx-0 md:top-[-45px] md:left-[60px] md:right-auto">
+      <div class="relative">
+        <img src="images/btn-soal.svg" alt="" srcset="" class="w-[150px] md:w-auto mx-auto" />
+        <div class="absolute w-full h-full flex items-center justify-center top-0">
+          <span class="text-lg md:text-[28px] font-semibold text-white">SOAL NOMOR {{index}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-[-20px] md:bottom-[-35px] left-0 flex justify-center w-full">
+      <div class="relative w-fit">
+        <img src="images/point-bg.svg" class="w-[180px] md:w-auto" alt="" srcset="" />
+        <div class="absolute w-full h-full flex items-center justify-center top-0">
+          <div class="flex space-x-2 items-center">
+            <span class="text-[16px] md:text-[24px] font-semibold text-white">Poin Kamu:</span>
+            <span class="text-2xl md:text-4xl font-bold text-white">{{point}} pts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-center mb-2" *ngIf="soal?.gambar && soal?.gambar !== null && soal?.gambar !== ''">
+      <img [src]="soal.gambar" class="w-[96px] h-[96px] rounded-[20px] md:w-[160px] md:h-[160px] md:rounded-[28px]"
+        alt="" />
+    </div>
+    <h2 class="text-lazuli-600 font-semibold text-center md:text-left text-lg md:text-[32px] mb-4 md:mb-8">
+      {{ soal.pertanyaan }}
+    </h2>
+    <div class="grid grid-cols-1 bs:grid-cols-2 md:grid-cols-2 gap-1 px-0 md:px-10 items-center" style="justify-items: center;">
+      <div *ngFor="let item of pilihan" class="md:space-x-0 flex lg:flex-col bs:flex-col items-center justify-center space-x-4 w-full" (click)="onAnswerClick.emit(item.flagBenar)">
+        <div *ngIf="item?.gambar && item?.gambar !== null && item?.gambar !== ''" class="flex justify-center md:mb-4 w-[107px] md:w-full bs:mb-5">
+          <img class="w-[64px] h-[64px] rounded-[20px] md:w-[120px] md:h-[120px] md:rounded-[28px]" [src]="item?.gambar"
+            alt="" />
+        </div>
+        <!-- <div class="answer items-center justify-center min-w-[194px] md:min-w-auto h-fit py-1 px-10 md:py-3 md:px-10 md:h-[80px]">
+          <p class="text-neutral-0 md:text-[20px] leading-[18px] md:leading-7"
+            [class]="item?.gambar ? 'text-xs' : 'text-sm'">
+            {{ item?.jawaban }}
+          </p>
+        </div> -->
+        <div class="answer flex items-center justify-center top-0 bs:w-[380px] md:h-auto w-[320px] h-auto">
+          <span class="text-sm md:text-1xl md:text-[16px] text-[12px] font-bold" [class]="item?.gambar ? 'text-xs' : 'text-sm'">{{ item?.jawaban }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-7 md:mt-8 flex w-full items-center justify-center">
+      <span class="text-lazuli-600 tex-sm md:text-2xl font-semibold">Waktu {{minutes}}:{{seconds}}</span>
+    </div>
+  </div>
+  <!-- <div class="curve absolute top-[125px] left-0" style="z-index: -999">
+    <img src="images/curve.svg" alt="" srcset="" />
+  </div> -->
+</div>

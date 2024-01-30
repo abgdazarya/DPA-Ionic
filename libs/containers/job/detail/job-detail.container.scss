@@ -1,0 +1,28 @@
+:host {
+  ::ng-deep {
+    .truncated-title {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+
+    .truncated-headline {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+    }
+
+    .box-shadow-shared-button {
+      box-shadow: 0px 0px 20px 0px rgba(143, 149, 178, 0.2);
+    }
+    ul,
+    ol {
+      list-style: inherit !important;
+      padding-left: 30px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+  }
+}

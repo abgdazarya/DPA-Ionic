@@ -1,0 +1,37 @@
+<form
+  novalidate
+  *ngIf="formGroup"
+  [formGroup]="formGroup"
+  (ngSubmit)="submit()"
+>
+  <ng-container *ngIf="formGroup.controls['username']; let formControl">
+    <div class="form-wrapper mb-6">
+      <div class="text-body2 text-neutral-800 mb-1">Email/Nomor Ponsel</div>
+      <div
+        class="form-wrapper-input p-3 rounded-lg border h-11"
+        [class.border-error-400]="formControl.errors && formControl.dirty"
+        [class.border-neutral-400]="!formControl.errors"
+      >
+        <ion-input
+          mode="md"
+          formControlName="username"
+          placeholder="Masukkan Email atau Nomor Ponsel"
+          class="text-body2 text-700"
+        ></ion-input>
+      </div>
+      <small class="text-error-400">
+        <ng-container
+          *ngIf="formControl.errors?.['required'] && formGroup.dirty"
+        >
+          Email atau Nomor Ponsel wajib diisi.
+        </ng-container>
+        <ng-container
+          *ngIf="formControl.errors?.['loginPattern'] && formGroup.dirty"
+        >
+          Format email tidak valid.
+        </ng-container>
+      </small>
+    </div>
+  </ng-container>
+  <input type="submit" class="hidden" />
+</form>

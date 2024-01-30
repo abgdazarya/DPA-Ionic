@@ -1,0 +1,65 @@
+<div class="flex flex-col justify-items-center modal-content">
+  <div
+    class="overflow-y-auto md:mx-0 w-[100vw] md:w-[90vw] mx-auto ion-no-scrollbar h-fit"
+  >
+    <div class="flex flex-col justify-center h-[100vh]">
+      <div class="flex items-center justify-center">
+        <div class="relative">
+          <div
+            class="bg-neutral-0 rounded-4xl max-w-[381px] min-w-[381px] relative overflow-hidden"
+          >
+            <app-common-icon-component
+              *ngIf="!(loading$ | async)"
+              name="close-modal"
+              nativeClass="cursor-pointer absolute right-6 top-6 w-7 h-7 lg:w-9 lg:h-9 text-700"
+              (click)="handleClose()"
+            >
+            </app-common-icon-component>
+
+            <p
+              class="text-neutral-800 font-bold text-xl mx-auto text-center mt-16 mb-7"
+            >
+              Pernyataan Persetujuan
+            </p>
+            <p
+              class="flex flex-col text-neutral-700 font-semibold text-sm mx-12 mb-10"
+            >
+              <span class="mb-3"> Saya menyetujui ketentuan yang berlaku </span>
+              <span class="mb-6"> dalam penggunaan aplikasi ini. </span>
+
+              <span class="mb-3"> Detail ketentuan bisa dilihat pada </span>
+              <span> menu Profil saya - Kebijakan Privasi. </span>
+            </p>
+
+            <div
+              class="flex items-center justify-between space-x-10 mx-12 mb-8"
+            >
+              <ion-button
+                [disabled]="loading$ | async"
+                (click)="handleClose()"
+                mode="ios"
+                color="lazuli-50"
+                class="text-h7 h-11 rounded-sm text-lazuli-500 w-full"
+              >
+                <span class="px-4">Tidak Setuju</span>
+              </ion-button>
+              <ion-button
+                [disabled]="loading$ | async"
+                (click)="handleAcceptTerm()"
+                mode="ios"
+                color="lazuli-500"
+                class="text-h7 h-11 rounded-sm text-white w-full"
+              >
+                <span class="px-4" *ngIf="!(loading$ | async)">Setuju</span>
+                <ion-spinner
+                  *ngIf="loading$ | async"
+                  name="circular"
+                ></ion-spinner>
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+:host {
+  ::ng-deep {
+    .truncated-title {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+}

@@ -1,0 +1,240 @@
+<section>
+  <ng-container *ngIf="loading$ | async; else dataTpl">
+    <div
+      class="hidden md:grid grid-cols-1 md:grid-cols-4 md:gap-x-10 gap-y-2 md:gap-y-0"
+    >
+      <div>
+        <div class="mb-1">
+          <ion-skeleton-text [animated]="true" class="h-14 w-1/2">
+          </ion-skeleton-text>
+        </div>
+        <div class="mb-2">
+          <ion-skeleton-text [animated]="true" class="h-10 w-2/3">
+          </ion-skeleton-text>
+        </div>
+        <div class="mb-6">
+          <ion-skeleton-text [animated]="true" class="h-20 w-full">
+          </ion-skeleton-text>
+        </div>
+        <div>
+          <ion-skeleton-text [animated]="true" class="h-7 w-full">
+          </ion-skeleton-text>
+        </div>
+      </div>
+      <div class="col-span-3 relative">
+        <ion-button
+          *ngIf="showNextButton"
+          (click)="handleSlide('next')"
+          color="none"
+          class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[30%] lg:top-[24%] -right-7 z-20"
+        >
+          <img src="logos/chevron-right-circle.png" class="w-10 h-10" alt="" />
+        </ion-button>
+        <ion-button
+          *ngIf="showPrevButton"
+          (click)="handleSlide('prev')"
+          color="none"
+          class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[30%] lg:top-[24%] -left-7 z-20"
+        >
+          <img src="logos/chevron-left-circle.png" class="w-10 h-10" alt="" />
+        </ion-button>
+
+        <div>
+          <!-- <swiper
+            #slidesLoading
+            [initialSlide]="1"
+            [slidesPerView]="3"
+            [spaceBetween]="16"
+            [slidesOffsetAfter]="1"
+            [slidesOffsetBefore]="1"
+          > -->
+          <swiper
+            #slidesLoading
+            [slidesPerView]="3"
+            [spaceBetween]="16"
+            [slidesOffsetAfter]="1"
+            [slidesOffsetBefore]="1"
+            [centeredSlides]="false"
+          >
+            <ng-container *ngFor="let item of [].constructor(5)">
+              <ng-template swiperSlide>
+                <app-dpa-tv-common-web-card
+                  class="cursor-pointer"
+                  [loading]="true"
+                >
+                </app-dpa-tv-common-web-card>
+              </ng-template>
+            </ng-container>
+          </swiper>
+        </div>
+      </div>
+    </div>
+
+    <div class="md:hidden">
+      <div class="flex items-center justify-between px-4 mb-4">
+        <ion-skeleton-text [animated]="true" class="h-5 w-1/2">
+        </ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" class="h-5 w-1/4">
+        </ion-skeleton-text>
+      </div>
+      <div>
+        <div>
+          <swiper
+            [initialSlide]="1"
+            [slidesPerView]="1.7"
+            [spaceBetween]="16"
+            [slidesOffsetAfter]="16"
+            [slidesOffsetBefore]="16"
+          >
+            <ng-container *ngFor="let item of [].constructor(5)">
+              <ng-template swiperSlide>
+                <app-dpa-tv-common-mobile-card
+                  class="cursor-pointer"
+                  [loading]="true"
+                >
+                </app-dpa-tv-common-mobile-card>
+              </ng-template>
+            </ng-container>
+          </swiper>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="dpaTv$ | async as dpaTv">
+      <div
+        class="hidden md:grid grid-cols-1 md:grid-cols-4 md:gap-x-10 gap-y-2 md:gap-y-0"
+      >
+        <div>
+          <div class="mb-1">
+            <img src="logos/dpa-tv-logo.png" width="150" height="64" alt="" />
+          </div>
+          <div class="mb-2 text-h3 font-bold text-800">Tonton DPA TV, kuy!</div>
+
+          <div class="mb-6 text-body2 font-normal text-700">
+            DPA TV adalah tempat terbaik untuk menonton video atau show favorit
+            kamu.
+          </div>
+
+          <app-common-button-component
+            color="lazuli-50"
+            class="text-h7 text-neutral-0 rounded-2xl w-full hidden lg:block"
+            (onClick)="navigateClicked.emit()"
+          >
+            <span class="px-14 text-lazuli-500">Lihat Semua DPA TV</span>
+          </app-common-button-component>
+        </div>
+
+        <div class="col-span-3 relative mb-1 lg:mb-0">
+          <ion-button
+            *ngIf="showNextButton"
+            (click)="handleSlide('next')"
+            color="none"
+            class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[30%] lg:top-[24%] -right-7 z-20"
+          >
+            <img
+              src="logos/chevron-right-circle.png"
+              class="w-10 h-10"
+              alt=""
+            />
+          </ion-button>
+          <ion-button
+            *ngIf="showPrevButton"
+            (click)="handleSlide('prev')"
+            color="none"
+            class="hidden md:block ion-no-ripple ion-no-box-shadow ion-no-padding p-0 rounded-full absolute top-[30%] lg:top-[24%] -left-7 z-20"
+          >
+            <img src="logos/chevron-left-circle.png" class="w-10 h-10" alt="" />
+          </ion-button>
+
+          <div>
+            <!-- <swiper
+              #slidesLoading
+              [initialSlide]="1"
+              [slidesPerView]="3"
+              [spaceBetween]="16"
+              [slidesOffsetAfter]="1"
+              [slidesOffsetBefore]="1"
+            > -->
+            <swiper
+              #slidesLoading
+              [slidesPerView]="3"
+              [spaceBetween]="16"
+              [slidesOffsetAfter]="1"
+              [slidesOffsetBefore]="1"
+              [centeredSlides]="false"
+            >
+              <ng-container *ngFor="let item of dpaTv">
+                <ng-template swiperSlide>
+                  <app-dpa-tv-common-web-card
+                    class="cursor-pointer"
+                    [dpaTv]="item"
+                    (click)="dpaTvClicked.emit(item)"
+                  >
+                  </app-dpa-tv-common-web-card>
+                </ng-template>
+              </ng-container>
+            </swiper>
+          </div>
+        </div>
+
+        <div class="block lg:hidden col-span-2 flex justify-center">
+          <app-common-button-component
+            color="lazuli-50"
+            class="text-h7 text-neutral-0 rounded-2xl"
+            (onClick)="navigateClicked.emit()"
+          >
+            <span class="px-14 text-lazuli-500">Lihat Semua DPA TV</span>
+          </app-common-button-component>
+        </div>
+      </div>
+
+      <div class="md:hidden">
+        <div class="flex items-center justify-between px-4 mb-4">
+          <div class="flex items-center space-x-3">
+            <img src="logos/dpa-tv-logo.png" class="w-auto h-10" alt="" />
+            <span class="text-h6 text-800 font-bold">Tonton DPA TV, kuy!</span>
+          </div>
+
+          <app-common-button-component
+            color="blank"
+            class="text-body1 ion-no-padding ion-no-margin font-semibold text-neutral-0 rounded-2xl"
+            (onClick)="navigateClicked.emit()"
+          >
+            <span class="text-lazuli-500">Lihat Semua</span>
+          </app-common-button-component>
+        </div>
+        <div>
+          <div>
+            <!-- <swiper
+              [initialSlide]="1"
+              [slidesPerView]="1.7"
+              [spaceBetween]="16"
+              [slidesOffsetAfter]="16"
+              [slidesOffsetBefore]="16"
+            > -->
+            <swiper
+              [slidesPerView]="1.7"
+              [spaceBetween]="16"
+              [slidesOffsetAfter]="16"
+              [slidesOffsetBefore]="16"
+              [centeredSlides]="false"
+            >
+              <ng-container *ngFor="let item of dpaTv">
+                <ng-template swiperSlide>
+                  <app-dpa-tv-common-mobile-card
+                    class="cursor-pointer"
+                    [dpaTv]="item"
+                    (click)="dpaTvClicked.emit(item)"
+                  >
+                  </app-dpa-tv-common-mobile-card>
+                </ng-template>
+              </ng-container>
+            </swiper>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</section>

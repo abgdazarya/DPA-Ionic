@@ -1,0 +1,29 @@
+<div
+  style="z-index: 999999 !important; margin-top: 3%"
+  [ngStyle]="{ 'margin-left': isMobile ? '-8%' : '' }"
+  class="hidden fixed center w-full justify-center transition-all duration-500 top-0 right-0 left-0 {{
+    getCalss()
+  }} "
+>
+  <div
+    class="rounded-2xl p-4 border {{
+      backgroundClass
+    }} w-full mx-6 md:mx-0 md:max-w-lg"
+  >
+    <div class="flex space-x-4 items-start">
+      <app-common-icon-component
+        nativeClass="w-4 h-4 {{ iconClass }}"
+        [name]="type"
+      />
+
+      <div>
+        <div class="text-h7 {{ titleClass }} mb-1" style="line-height: 16px">
+          {{ title }}
+        </div>
+        <div class="text-body2 text-neutral-700" *ngIf="desc">
+          {{ desc }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

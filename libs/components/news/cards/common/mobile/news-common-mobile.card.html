@@ -1,0 +1,54 @@
+<div class="overflow-hidden card-shadow rounded-3xl" [ngClass]="nativeClass">
+  <ng-container *ngIf="loading else dataTpl">
+    <div>
+      <ion-skeleton-text
+        [animated]="true"
+        class="sm-max:h-[131px] h-[267px] w-full rounded-3xl"
+      ></ion-skeleton-text>
+    </div>
+
+    <div class="pt-2 pb-2">
+      <ion-skeleton-text
+        [animated]="true"
+        class="h-7 w-full"
+      ></ion-skeleton-text>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="news">
+      <div>
+        <ion-skeleton-text
+          *ngIf="imageStatus === 'onload'"
+          [animated]="true"
+          class="sm-max:h-[131px] h-[267px] w-full"
+        ></ion-skeleton-text>
+
+        <ion-img
+          *ngIf="news.picture"
+          [src]="news.picture"
+          (ionError)="imageStatus = 'error';"
+          (ionImgDidLoad)="imageStatus = 'succeed';"
+          (ionImgWillLoad)="imageStatus = 'onload';"
+          class="sm-max:h-[131px] h-[267px] w-full object-cover object-center overflow-hidden"
+          alt="News Image"
+          [class.hidden]="imageStatus === 'error' || imageStatus === 'onload'"
+        ></ion-img>
+
+        <div
+          *ngIf="!news.picture || imageStatus === 'error'"
+          class="sm-max:h-[131px] h-[267px] bg-neutral-800 w-full text-neutral-900 flex items-center justify-center text-h6"
+        >
+          No Thumbnail
+        </div>
+      </div>
+
+      <div class="pt-2 px-3 pb-2">
+        <div
+          class="text-body3 text-800 font-semibold truncated-title"
+          [innerHTML]="news.judulBerita"
+        ></div>
+      </div>
+    </ng-container>
+  </ng-template>
+</div>

@@ -1,0 +1,66 @@
+<section class="cursor-pointer">
+  <ng-container *ngIf="loading$ | async else dataTpl">
+    <div class="overflow-hidden rounded-[24px]">
+      <ion-skeleton-text
+        [animated]="true"
+        class="w-full md:h-[500px] md:h-[701px]"
+      ></ion-skeleton-text>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="news$ | async as news">
+      <div
+        (click)="handleNavigateToNewsDetail(news)"
+        class="relative overflow-hidden rounded-[24px]"
+      >
+        <div class="w-full md:h-[500px] md:h-[701px]">
+          <ion-skeleton-text
+            *ngIf="imageStatus === 'onload'"
+            [animated]="true"
+            class="w-full md:h-[500px] md:h-[701px] w-full"
+          ></ion-skeleton-text>
+
+          <ion-img
+            *ngIf="news.picture"
+            [src]="news.picture"
+            (ionError)="imageStatus = 'error';"
+            (ionImgDidLoad)="imageStatus = 'succeed';"
+            (ionImgWillLoad)="imageStatus = 'onload';"
+            class="w-full md:h-[500px] md:h-[701px] w-full object-cover object-center overflow-hidden"
+            alt="News Image"
+            [class.hidden]="imageStatus === 'error' || imageStatus === 'onload'"
+          ></ion-img>
+
+          <div
+            *ngIf="!news.picture || imageStatus === 'error'"
+            class="w-full md:h-[500px] md:h-[701px] bg-neutral-800 w-full text-neutral-900 flex items-center justify-center text-h4"
+          >
+            No Thumbnail
+          </div>
+        </div>
+
+        <div class="overlay absolute top-0 h-full w-full"></div>
+        <div
+          class="absolute md:mx-10 md:mx-14 top-0 left-0 rounded-b-3xl bg-success-500 text-white px-10 py-1 md:text-[24px] md:text-[32px]"
+        >
+          {{news?.kategori}}
+        </div>
+
+        <div class="absolute bottom-10 md:mx-10 md:mx-14">
+          <div
+            class="truncated-title md:text-[24px] md:text-[32px] text-white font-semibold mb-3"
+            [innerHtml]="news?.judulBerita"
+          ></div>
+          <div
+            class="truncated-headline text-h7 md:text-[24px] text-white mb-6 font-normal"
+            [innerHtml]="news?.headlineBerita"
+          ></div>
+          <div class="md:text-body1 md:text-h5 text-200">
+            {{news?.tanggalPost | date:'dd MMMM YYYY'}}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</section>

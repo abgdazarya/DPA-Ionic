@@ -1,0 +1,300 @@
+<div class="md:hidden">
+  <ion-refresher
+    #refesherHome
+    slot="fixed"
+    [pullFactor]="0.5"
+    [pullMin]="50"
+    [pullMax]="300"
+    (ionRefresh)="handleFetchInitData()"
+    class="text-500"
+    mode="ios"
+    style="color: black"
+  >
+    <ion-refresher-content
+      mode="ios"
+      style="color: black"
+      class="py-14 text-500"
+      pullingIcon="arrow-down-circle-outline"
+      pullingText="Tarik kebawah untuk refresh"
+      refreshingSpinner="circular"
+      refreshingText="Sedang Mengambil Data"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+</div>
+
+<section>
+  <div class="md:container md:mx-6 md:mx-auto ion-content-scroll-host">
+    <div>
+      <!-- Alert Status Verify Invalid -->
+      <div *ngIf="(homeService.profileRes$ | async)?.statusVerify === 'N'">
+        <div
+          (click)="handleNavigateUrl('/profile/bio')"
+          class="cursor-pointer mx-4 md:mx-auto mt-4 rounded-2xl p-4 border border-warning-400 bg-warning-50 w-full max-w-sm md:max-w-lg"
+        >
+          <div class="flex space-x-4 items-center">
+            <app-common-icon-component
+              nativeClass="w-7 h-7 text-warning-400"
+              name="warning"
+            />
+
+            <div class="text-h7 text-warning-600" style="line-height: 16px">
+              Mohon Lengkapi Data Diri Anda Terlebih Dahulu
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Alert Status Verify Invalid -->
+
+      <!-- Promo Section -->
+      <div class="md:mb-16 mt-4 md:mt-7 w-full">
+        <app-promotion-landing-container
+          (promotionClicked)="promotionHomeService.handleNavigateToPromotionDetail($event)"
+          (navigateClicked)="promotionHomeService.handleNavigateToPromotion()"
+          #promotionLandingContainer
+        ></app-promotion-landing-container>
+      </div>
+      <!-- Promo Section -->
+
+      <hr class="my-5 w-full border-none md:hidden" />
+
+      <!-- Menu Button Section -->
+      <div class="md:mb-20 px-1 md:px-0">
+        <div
+          class="grid grid-cols-3 md:grid-flow-col auto-cols-fr gap-y-10 justify-items-center md:mx-10"
+        >
+          <ng-container
+            *ngIf="(aksesButtonHomeService.aksesMenuInteraction$ | async)?.isLoading && (homeService.profileResInteraction$ | async)?.isLoading"
+          >
+            <div
+              *ngFor="let i of [].constructor(3)"
+              class="text-center items-center cursor-pointer"
+            >
+              <ion-skeleton-text
+                [animated]="true"
+                class="rounded-full w-[60px] h-[60px] md:w-[120px] md:h-[120px] mx-auto bg-white md:bg-lazuli-50 mb-4 flex items-center justify-items-center"
+              ></ion-skeleton-text>
+
+              <div class="text-800 text-body1 md:text-h5">
+                <ion-skeleton-text
+                  [animated]="true"
+                  class="h-5"
+                ></ion-skeleton-text>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container
+            *ngIf="!(aksesButtonHomeService.aksesMenuInteraction$ | async)?.isLoading"
+          >
+            <div
+              *ngIf="aksesButtonHomeService.accessRuangPensiunButton$ | async"
+              class="text-center items-center cursor-pointer"
+              (click)="handleNavigateUrl('/pensiun')"
+            >
+              <div
+                class="rounded-full w-[60px] h-[60px] md:w-[120px] md:h-[120px] mx-auto bg-white md:bg-lazuli-50 mb-4 flex items-center justify-items-center"
+              >
+                <img
+                  src="logos/menu-ruang-pensiun.png"
+                  class="w-2/3 h-2/3 mx-auto"
+                  alt=""
+                />
+              </div>
+              <div class="text-800 text-body1 md:text-h5">Ruang Pensiun</div>
+            </div>
+
+            <div
+              *ngIf="aksesButtonHomeService.accessAstraHubButton$ | async"
+              class="text-center items-center cursor-pointer"
+              (click)="handleNavigateUrl('/astra-hub')"
+            >
+              <div
+                class="rounded-full w-[60px] h-[60px] md:w-[120px] md:h-[120px] mx-auto bg-white md:bg-lazuli-50 mb-4 flex items-center justify-items-center"
+              >
+                <img
+                  src="logos/menu-astrahub.png"
+                  class="w-5/6 h-5/6 mt-2 md:mt-5 mx-auto"
+                  alt=""
+                />
+              </div>
+              <div class="text-800 text-body1 md:text-h5">Astra Hub</div>
+            </div>
+
+            <div
+              *ngIf="aksesButtonHomeService.accessSaldoButton$ | async"
+              class="text-center items-center cursor-pointer"
+              (click)="showPin('saldo')"
+            >
+              <div
+                class="rounded-full w-[60px] h-[60px] md:w-[120px] md:h-[120px] mx-auto bg-white md:bg-lazuli-50 mb-4 flex items-center justify-items-center"
+              >
+                <img
+                  src="logos/menu-saldo.png"
+                  class="w-2/3 h-2/3 mx-auto"
+                  alt=""
+                />
+              </div>
+              <div class="text-800 text-body1 md:text-h5">Saldo</div>
+            </div>
+
+            <div
+              *ngIf="aksesButtonHomeService.accessLaporanInvestasiButton$ | async"
+              class="text-center items-center cursor-pointer"
+              (click)="handleNavigateUrl('/investasi')"
+            >
+              <div
+                class="rounded-full w-[60px] h-[60px] md:w-[120px] md:h-[120px] mx-auto bg-white md:bg-lazuli-50 mb-4 flex items-center justify-items-center"
+              >
+                <img
+                  src="logos/menu-laporan-investasi.png"
+                  class="w-2/3 h-2/3 mx-auto"
+                  alt=""
+                />
+              </div>
+              <div class="text-800 text-body1 md:text-h5">Investasi</div>
+            </div>
+
+            <div
+              *ngIf="(aksesButtonHomeService.accessSimulasiMpButton$ | async)"
+              class="text-center items-center cursor-pointer"
+              (click)="showPin('simulasi-mp')"
+            >
+              <div
+                class="rounded-full w-[60px] h-[60px] md:w-[120px] md:h-[120px] mx-auto bg-white md:bg-lazuli-50 mb-4 flex items-center justify-items-center"
+              >
+                <img
+                  src="logos/menu-simulasi-manfaat-pensiun.png"
+                  class="w-2/3 h-2/3 mx-auto"
+                  alt=""
+                />
+              </div>
+              <div class="text-800 text-body1 md:text-h5">Simulasi MP</div>
+            </div>
+
+            <div
+              *ngIf="(aksesButtonHomeService.accessEklaimButton$ | async)"
+              class="text-center items-center cursor-pointer"
+              (click)="handleNavigateUrl('/e-klaim')"
+            >
+              <div
+                class="rounded-full w-[60px] h-[60px] md:w-[120px] md:h-[120px] mx-auto bg-white md:bg-lazuli-50 mb-4 flex items-center justify-items-center"
+              >
+                <img
+                  src="logos/menu-eklaim.png"
+                  class="w-2/3 h-2/3 mx-auto"
+                  alt=""
+                />
+              </div>
+              <div class="text-800 text-body1 md:text-h5">e-Klaim</div>
+            </div>
+
+            <div
+              *ngIf="aksesButtonHomeService.accessLowonganButton$ | async"
+              class="text-center items-center cursor-pointer"
+              (click)="handleNavigateUrl('/job')"
+            >
+              <div
+                class="rounded-full w-[60px] h-[60px] md:w-[120px] md:h-[120px] mx-auto bg-white md:bg-lazuli-50 mb-4 flex items-center justify-items-center"
+              >
+                <img
+                  src="logos/menu-jobs.png"
+                  class="w-2/3 h-2/3 mx-auto"
+                  alt=""
+                />
+              </div>
+              <div class="text-800 text-body1 md:text-h5">
+                Lowongan Pekerjaan
+              </div>
+            </div>
+
+            <div
+              *ngIf="aksesButtonHomeService.accessBacaButton$ | async"
+              class="text-center items-center cursor-pointer"
+              (click)="handleNavigateUrl('/news')"
+            >
+              <div
+                class="rounded-full w-[60px] h-[60px] md:w-[120px] md:h-[120px] mx-auto bg-white md:bg-lazuli-50 mb-4 flex items-center justify-items-center"
+              >
+                <img
+                  src="logos/menu-baca.png"
+                  class="w-2/3 h-2/3 mx-auto"
+                  alt=""
+                />
+              </div>
+              <div class="text-800 text-body1 md:text-h5">Baca</div>
+            </div>
+
+            <div
+              *ngIf="aksesButtonHomeService.accessQuizButton$ | async"
+              class="text-center items-center cursor-pointer"
+              (click)="navigateToQuiz()"
+            >
+              <div
+                class="rounded-full w-[60px] h-[60px] md:w-[120px] md:h-[120px] mx-auto bg-white md:bg-lazuli-50 mb-4 flex items-center justify-items-center"
+              >
+                <img
+                  src="logos/menu-quiz.png"
+                  class="w-2/3 h-2/3 mx-auto"
+                  alt=""
+                />
+              </div>
+              <div class="text-800 text-body1 md:text-h5">Quiz</div>
+            </div>
+
+            <div
+              *ngIf="aksesButtonHomeService.accessPromosiButton$ | async"
+              class="text-center items-center cursor-pointer"
+              (click)="handleNavigateUrl('/promotion')"
+            >
+              <div
+                class="rounded-full w-[60px] h-[60px] md:w-[120px] md:h-[120px] mx-auto bg-white md:bg-lazuli-50 mb-4 flex items-center justify-items-center"
+              >
+                <img
+                  src="logos/menu-promosi.png"
+                  class="w-2/3 h-2/3 mx-auto"
+                  alt=""
+                />
+              </div>
+              <div class="text-800 text-body1 md:text-h5">Promosi</div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <!-- Menu Button Section -->
+
+      <hr class="h-4 bg-neutral-50 my-5 w-full border-none md:hidden" />
+
+      <!-- News Section -->
+      <div class="md:mb-20">
+        <app-news-landing-container
+          (newsClicked)="newsHomeService.handleNavigateToNewsDetail($event)"
+          (navigateClicked)="newsHomeService.handleNavigateToNews()"
+          #newsLandingContainer
+        ></app-news-landing-container>
+      </div>
+      <!-- News Section -->
+
+      <hr class="h-4 bg-neutral-50 my-5 w-full border-none md:hidden" />
+
+      <!-- Dpa TV Section -->
+      <div class="mb-16">
+        <app-dpa-tv-landing-container
+          (dpaTvClicked)="dpaTvHomeService.handleNavigateToYoutube($event)"
+          (navigateClicked)="dpaTvHomeService.handleNavigateToDpaTv()"
+          #dpaTvLandingContainer
+        ></app-dpa-tv-landing-container>
+      </div>
+      <!-- Dpa TV Section -->
+
+      <hr class="h-4 bg-neutral-50 my-5 w-full border-none md:hidden" />
+    </div>
+  </div>
+</section>
+
+<app-common-alert-component
+  *ngIf="navigateError"
+  type="danger"
+  [desc]="navigateError"
+  [duration]="3000"
+></app-common-alert-component>

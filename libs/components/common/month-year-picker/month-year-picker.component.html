@@ -1,0 +1,31 @@
+<app-bottom-sheet>
+  <div class="flex justify-end">
+    <app-common-icon-component
+      nativeClass="w-6 h-6 text-neutral-700"
+      name="close"
+      (click)="handleClose()"
+    />
+  </div>
+  <p class="text-lg font-bold text-neutral-800 mt-4 mb-2">
+    Pilih Periode Bulan {{ activeDate }}
+  </p>
+  <p class="text-700 text-sm mb-10 mx-auto">
+    Pilih periode bulan yang kamu ingin cek
+  </p>
+
+  <ion-datetime
+    [min]="maxYear"
+    class="bg-white text-800 custom-date-picker"
+    presentation="month-year"
+    id="datetime"
+    mode="md"
+    (ionChange)="onChange($event)"
+  ></ion-datetime>
+  <ion-button
+    color="primary"
+    (click)="dismissModal()"
+    class="w-full md:w-auto text-h7 h-12 mb-12 rounded-xl text-lazuli-500"
+  >
+    <span class="px-4 capitalize">Pilih</span>
+  </ion-button>
+</app-bottom-sheet>

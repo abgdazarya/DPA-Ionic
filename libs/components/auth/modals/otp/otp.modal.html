@@ -1,0 +1,141 @@
+<ion-header
+  *ngIf="screenSizeService.isMobileResolution()"
+  class="ion-background-white ion-no-border"
+>
+  <profile-header-component
+    [headerTitle]="''"
+    [onBack]="handleBack"
+  ></profile-header-component>
+</ion-header>
+
+<div class="flex flex-col modal-content">
+  <div
+    class="p-8 sm-max:px-4 overflow-y-auto mx-auto md:mx-0 w-full md:w-[35rem]"
+  >
+    <div
+      class="flex w-full justify-between md:justify-end z-10 mb-8 sm-max:h-[0px] sm-max:opacity-0"
+    >
+      <!-- <app-common-button-component
+        *ngIf="screenSizeService.isMobileResolution()"
+        color="blank"
+        class="m-0 p-0 ion-no-padding h-7"
+        (click)="handleBack()"
+      >
+        <common-icon-component name="arrow-left-large" />
+      </app-common-button-component> -->
+      <app-common-button-component
+        *ngIf="!screenSizeService.isMobileResolution()"
+        color="blank"
+        class="m-0 p-0 ion-no-padding h-7"
+        (click)="handleClose()"
+      >
+        <app-common-icon-component name="close" />
+      </app-common-button-component>
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <img
+        src="logos/message-more.png"
+        class="md:hidden mb-6 w-10 h-10 mx-auto"
+        alt=""
+      />
+
+      <div class="text-h4 md:text-h3 text-900 mb-2 text-center">
+        Verifikasi OTP kamu
+      </div>
+      <div class="text-body3 md:text-body1 text-800 mb-7 mx-12 text-center">
+        <div>
+          Isi dengan kode OTP yang dikirim ke {{ type === 'email' ? 'email' :
+          'nomor ponsel'}} kamu:
+        </div>
+        <div class="font-bold" [innerHtml]="getEncryptedValue()"></div>
+      </div>
+
+      <div class="md:mx-10 mx-4">
+        <div class="mb-10">
+          <div class="mb-1 flex justify-between items-center space-x-5">
+            <ion-input
+              #firstInput
+              (ionInput)="handleChangeValue(0, $event)"
+              (keydown)="handleDeleteValue(0, $event)"
+              type="tel"
+              maxlength="1"
+              class="text-800 border-b-2 {{isError ? 'border-error-400' :'border-neutral-400'}}  text-h1 text-center"
+              style="--padding-start: 12px; --padding-end: 12px"
+            ></ion-input>
+            <ion-input
+              #secondInput
+              (ionInput)="handleChangeValue(1, $event)"
+              (keydown)="handleDeleteValue(1, $event)"
+              type="tel"
+              maxLength="1"
+              class="text-800 border-b-2 {{isError ? 'border-error-400' :'border-neutral-400'}}  text-h1 text-center"
+              style="--padding-start: 12px; --padding-end: 12px"
+            ></ion-input>
+            <ion-input
+              #thirdInput
+              (ionInput)="handleChangeValue(2, $event)"
+              (keydown)="handleDeleteValue(2, $event)"
+              type="tel"
+              maxLength="1"
+              class="text-800 border-b-2 {{isError ? 'border-error-400' :'border-neutral-400'}}  text-h1 text-center"
+              style="--padding-start: 12px; --padding-end: 12px"
+            ></ion-input>
+            <ion-input
+              #fourthInput
+              (ionInput)="handleChangeValue(3, $event)"
+              (keydown)="handleDeleteValue(3, $event)"
+              type="tel"
+              maxLength="1"
+              class="text-800 border-b-2 {{isError ? 'border-error-400' :'border-neutral-400'}}  text-h1 text-center"
+              style="--padding-start: 12px; --padding-end: 12px"
+            ></ion-input>
+          </div>
+          <div *ngIf="isError" class="text-error-400 text-center">
+            Masukkan kode yang baru dikirim.
+          </div>
+        </div>
+
+        <div
+          class="mb-5 text-body1 md:text-h7 {{ otpCounter > 0 ? 'text-800' : 'text-lazuli-500' }} text-800 mx-12 text-center"
+        >
+          <div class="w-full">
+            <span
+              class="cursor-pointer"
+              (click)="reRequest()"
+              *ngIf="this.otpCounter <= 0 && !isLoading"
+            >
+              Kirimkan kode OTP baru
+            </span>
+            <span class="cursor-pointer" *ngIf="isLoading">
+              Meminta ulang...
+            </span>
+            <span *ngIf="otpCounter > 0 && !isLoading">
+              Kirimkan kode OTP baru
+            </span>
+            <span *ngIf="otpCounter > 0"
+              >({{ minutes < 10 ? '0'+minutes : minutes}}:{{seconds < 10 ?
+              '0'+seconds : seconds}})</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-common-alert-component
+  type="success"
+  [desc]="verifyOtpSuccess$ | async"
+  [duration]="5000"
+></app-common-alert-component>
+<app-common-alert-component
+  type="danger"
+  [desc]="verifyOtpError$ | async"
+  [duration]="5000"
+></app-common-alert-component>
+
+<app-common-alert-component
+  type="danger"
+  [desc]="requestError$ | async"
+  [duration]="5000"
+></app-common-alert-component>

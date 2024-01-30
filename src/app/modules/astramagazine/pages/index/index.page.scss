@@ -1,0 +1,49 @@
+:host {
+  ::ng-deep {
+    .box-shadow-button {
+      box-shadow: 0px 0px 20px 0px rgba(143, 149, 178, 0.3);
+    }
+  }
+}
+
+ion-item {
+  --color: #474d66;
+  --background: none;
+  margin-top: 4px;
+  --border-color: #d8dae5;
+  border-radius: 8px;
+  --higlight-color-focused: #0b8dff;
+  --color-focused: #474d66;
+  :focus {
+    // box-shadow: 0px 0px 0px 2px #d1edf7;
+    --border-width: 1px;
+  }
+  --border-width: 1px;
+}
+
+::ng-deep ion-popover {
+  --offset-x: 81px;
+}
+
+ion-select::part(placeholder),
+ion-select::part(text) {
+  flex: 0 0 auto;
+}
+
+.alertError {
+  z-index: 999;
+  position: absolute;
+}
+
+.growing {
+  animation: fadein 1.5s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

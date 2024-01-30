@@ -1,0 +1,277 @@
+<div class="ion-padding">
+  <div
+    class="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-1 justify-items-center md:justify-items-start md:justify-items-center"
+  >
+    <div>
+      <div class="mb-3 md:mb-11">
+        <img
+          class="self-center text-center"
+          width="214"
+          height="36"
+          src="logos/logo.png"
+          alt=""
+        />
+      </div>
+
+      <div class="mb-8 items-center space-x-4 hidden md:flex">
+        <img src="logos/chat-conversation.png" class="w-8 h-8" alt="" />
+        <div>
+          <div class="text-body2 text-700">Email</div>
+          <div class="text-body2 text-900">
+            {{ dataEmailCS?.description ? dataEmailCS?.description : "-" }}
+          </div>
+        </div>
+      </div>
+      <div class="mb-8 items-center space-x-4 hidden md:flex">
+        <img src="logos/cell-phone.png" class="w-8 h-8" alt="" />
+        <div>
+          <div class="text-body2 text-700">Pusat Panggilan</div>
+          <div class="text-body2 text-900">
+            {{ dataCS?.description ? dataCS?.description : "-" }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-cols-2 md:grid-cols-1 hidden md:grid">
+      <div>
+        <div class="mb-6 text-h4 text-900">Menu Utama</div>
+        <div class="flex flex-col space-y-3">
+          <a
+            class="text-h7 text-700 cursor-pointer"
+            (click)="handleNavigateUrl('promotion')"
+            >Promosi</a
+          >
+          <a
+            class="text-h7 text-700 cursor-pointer"
+            (click)="handleNavigateUrl('profile')"
+            >Profile</a
+          >
+          <a
+            class="text-h7 text-700 cursor-pointer"
+            (click)="handleNavigateUrl('news')"
+            >Baca</a
+          >
+          <a
+            class="text-h7 text-700 cursor-pointer"
+            (click)="handleNavigateUrl('astra-hub')"
+            >Astra Hub</a
+          >
+          <a
+            class="text-h7 text-700 cursor-pointer"
+            (click)="handleNavigateUrl('investasi')"
+            >Laporan Investasi</a
+          >
+        </div>
+      </div>
+
+      <hr class="my-5 border-none hidden md:block" />
+
+      <div>
+        <div class="mb-6 text-h4 text-900">Pusat Bantuan DPA</div>
+        <div class="flex flex-col space-y-3">
+          <a
+            class="text-h7 text-700 cursor-pointer"
+            (click)="handleNavigateUrl('/profile/help')"
+            >Hubungi Kami</a
+          >
+          <a
+            class="text-h7 text-700 cursor-pointer"
+            (click)="handleNavigateUrl('/profile/settings')"
+            >Pengaturan</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="hidden md:block">
+      <div class="mb-6 text-h4 text-900">DPA TV</div>
+      <div class="grid grid-cols-2 md:grid-cols-1 gap-6">
+        <ng-container *ngIf="dpaTvLoading$ | async; else dpaTvTpl">
+          <ng-container *ngFor="let item of [].constructor(4)">
+            <app-dpa-tv-footer-web-item
+              class="cursor-pointer"
+              [loading]="true"
+            ></app-dpa-tv-footer-web-item>
+          </ng-container>
+        </ng-container>
+
+        <ng-template #dpaTvTpl>
+          <ng-container *ngFor="let item of dpaTv$ | async">
+            <!-- <app-dpa-tv-footer-web-item
+              class="cursor-pointer"
+              [loading]="true"
+            ></app-dpa-tv-footer-web-item> -->
+
+            <app-dpa-tv-footer-web-item
+              class="cursor-pointer"
+              [dpaTv]="item"
+              (click)="handleNavigateToYoutube(item)"
+            ></app-dpa-tv-footer-web-item>
+
+            <!-- <app-dpa-tv-footer-web-item
+              class="cursor-pointer"
+              [dpaTv]="item"
+              (click)="handleNavigateToYoutube(item)"
+            ></app-dpa-tv-footer-web-item> -->
+          </ng-container>
+        </ng-template>
+      </div>
+    </div>
+    <div class="hidden md:block">
+      <div class="mb-6 text-h4 text-900">Baca</div>
+      <div class="grid grid-cols-2 md:grid-cols-1 gap-6">
+        <ng-container *ngIf="newsLoading$ | async; else newsTpl">
+          <ng-container *ngFor="let item of [].constructor(4)">
+            <app-news-footer-web-item
+              class="cursor-pointer"
+              [loading]="true"
+            ></app-news-footer-web-item>
+          </ng-container>
+        </ng-container>
+
+        <ng-template #newsTpl>
+          <ng-container *ngFor="let item of news$ | async">
+            <app-news-footer-web-item
+              class="cursor-pointer"
+              [news]="item"
+              (click)="handleDetailNewsClicked(item)"
+            ></app-news-footer-web-item>
+          </ng-container>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="md:hidden">
+      <div>
+        <div class="text-body2 text-900 mb-3">
+          Download aplikasi myDPA sekarang!
+        </div>
+        <div class="flex items-center justify-center space-x-3">
+          <img
+            src="logos/download-google.png"
+            class="h-[32px] w-auto"
+            (click)="openAppUrl()"
+            alt=""
+          />
+          <img
+            src="logos/download-apple.png"
+            class="h-[32px] w-auto"
+            (click)="openAppUrl('appStore')"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="md:hidden">
+      <div class="flex justify-center space-x-3">
+        <div
+          class="cursor-pointer bg-bg-0 rounded-full border border-neutral-200 w-8 h-8 flex justify-center items-center mb-3"
+        >
+          <img src="logos/mail.png" class="w-5 h-5" alt="" />
+        </div>
+
+        <div
+          class="cursor-pointer bg-bg-0 rounded-full border border-neutral-200 w-8 h-8 flex justify-center items-center mb-3"
+        >
+          <img src="logos/cell-phone.png" class="w-5 h-5" alt="" />
+        </div>
+
+        <div
+          class="cursor-pointer bg-bg-0 rounded-full border border-neutral-200 w-8 h-8 flex justify-center items-center mb-3"
+        >
+          <img src="logos/whatsapp.png" class="w-5 h-5" alt="" />
+        </div>
+
+        <div
+          class="cursor-pointer bg-bg-0 rounded-full border border-neutral-200 w-8 h-8 flex justify-center items-center mb-3"
+        >
+          <img src="logos/pin-location.png" class="w-5 h-5" alt="" />
+        </div>
+
+        <div
+          class="cursor-pointer bg-bg-0 rounded-full border border-neutral-200 w-8 h-8 flex justify-center items-center mb-3"
+        >
+          <img src="logos/instagram.png" class="w-5 h-5" alt="" />
+        </div>
+
+        <div
+          class="cursor-pointer bg-bg-0 rounded-full border border-neutral-200 w-8 h-8 flex justify-center items-center mb-3"
+        >
+          <img src="logos/linkedin.png" class="w-5 h-5" alt="" />
+        </div>
+
+        <div
+          class="cursor-pointer bg-bg-0 rounded-full border border-neutral-200 w-8 h-8 flex justify-center items-center mb-3"
+        >
+          <img src="logos/youtube.png" class="w-5 h-5" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <div class="md:hidden text-center mb-10">
+      <div class="text-h6 font-bold text-900 mb-1">DANA PENSIUN ASTRA</div>
+      <div class="text-body2 text-700">
+        Copyright © 2023 Dana Pensiun Astra. Dana Pensiun Astra Berizin dan
+        Diawasi oleh Otoritas Jasa Keuangan
+      </div>
+    </div>
+
+    <div class="hidden md:grid md:grid-cols-2 md:grid-cols-1 md:gap-6 md:gap-0">
+      <div
+        class="cursor-pointer"
+        *ngIf="showQuiz"
+        (click)="handleNavigateUrl('quiz')"
+      >
+        <ion-img src="images/quiz.svg" class="iconQuiz h-[190px] w-[190px]" alt=""></ion-img>
+      </div>
+
+      <div>
+        <div class="text-h4 text-900 mt-1 mb-6">Download myDPA di:</div>
+        <div class="cursor-pointer">
+          <img
+            src="logos/download-google.png"
+            width="180"
+            height="52"
+            class="mb-6 cursor-pointer"
+            alt=""
+            (click)="openAppUrl()"
+          />
+        </div>
+        <div class="cursor-pointer">
+          <img
+            src="logos/download-apple.png"
+            width="180"
+            height="52"
+            class="cursor-pointer"
+            alt=""
+            (click)="openAppUrl('appStore')"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr
+    class="border-dashed border-b border-neutral-400 mb-10 mt-20 hidden md:block"
+  />
+  <div
+    class="flex justify-center items-center w-full mb-10 md:mx-auto hidden md:block"
+  >
+    <div
+      class="flex justify-center flex-col md:flex-row space-x-3 items-center w-full"
+    >
+      <img
+        class="self-center text-center mb-2 md:mb-0"
+        width="190"
+        height="32"
+        src="logos/logo.png"
+        alt=""
+      />
+      <span class="text-body2 text-700 text-center md:text-start">
+        Copyright © 2023 Dana Pensiun Astra. All rights reserved. | Dana Pensiun
+        Astra Berizin dan Diawasi oleh Otoritas Jasa Keuangan
+      </span>
+    </div>
+  </div>
+</div>

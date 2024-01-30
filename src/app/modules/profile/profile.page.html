@@ -1,0 +1,364 @@
+<!-- <ion-header
+  class="ion-background-white ion-no-border"
+  *ngIf="!getPageTitel().isHide"
+>
+  <common-header-component
+    *ngIf="isDesktop()"
+    [useSecondaryHeader]="!screenSizeService.isDesktopResolution()"
+    [pageTitle]="'Profil'"
+  ></common-header-component>
+  <profile-header-component
+    *ngIf="!isDesktop()"
+    [headerTitle]="getPageTitel().label"
+    [rightBtn]="getPageTitel().rightBtn"
+    [rightBtnText]="getPageTitel().rightBtnText"
+  ></profile-header-component>
+</ion-header> -->
+
+<!-- <ion-content class="ion-background-white"> -->
+
+<div
+  class="container mx-auto md-max:flex md-max:mt-0 md-max:w-full md-max:flex-wrap md-max:!p-0"
+>
+  <div
+    class="grid grid-cols-1 md:grid-cols-3 gap-y-7 md:gap-y-0 md:gap-7 w-full md-max:bg-[#f6f9ff] md-max:!p-0 md-max:gap-y-0"
+  >
+    <div
+      *ngIf="isDesktop()"
+      class="md:shadow-xl bg-bg-0 rounded-xl pt-10 px-5 md:p-10 md-max:bg-transparent md-max:!p-0"
+    >
+      <!-- Main Profile Section -->
+      <div *ngIf="screenSizeService.isDesktopResolution()">
+        <div class="h-20 w-20">
+          <ng-container
+            *ngIf="(detailProfile$ | async)?.photo as photo else noPhotoTpl"
+          >
+            <img
+              *ngIf="photo"
+              class="h-20 w-20 rounded-[1.5rem] object-cover"
+              [src]="photo"
+              alt=""
+            />
+          </ng-container>
+          <ng-template #noPhotoTpl>
+            <div
+              class="bg-havertz-400 rounded-[2rem] h-20 w-20 flex justify-center items-center mb-3"
+            >
+              <div class="text-h1 text-white">
+                {{(response$ | async)?.namaPeserta | nickName}}
+              </div>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="text-h3 xl:text-h2 text-800 mb-1">
+          {{(response$ | async)?.namaPeserta}}
+        </div>
+
+        <div class="mb-3">
+          <ion-badge
+            class="rounded-md"
+            [class]="(response$ | async)?.statusVerify === 'Y' ? 'bg-green-400' :  'bg-error-400'"
+          >
+            <span class="p-1 text-body3 text-white">
+              {{ (response$ | async)?.statusVerify === 'Y' ? 'Terverifikasi' :
+              'Belum Terverifikasi'}}
+            </span>
+          </ion-badge>
+        </div>
+
+        <div
+          class="text-700 text-body3 md:text-[16px] lg:text-[18px] xl:text-h7"
+        >
+          {{ (response$ | async)?.email }}
+        </div>
+      </div>
+
+      <div
+        class="flex py-6 md-max:px-5 bg-0 mb-3"
+        *ngIf="!screenSizeService.isDesktopResolution()"
+      >
+        <div class="h-16 w-16">
+          <ng-container
+            *ngIf="(detailProfile$ | async)?.photo as photo else noPhotoTpl"
+          >
+            <img
+              *ngIf="photo"
+              class="h-16 w-16 object-cover rounded-[1.5rem]"
+              [src]="photo"
+              alt=""
+            />
+          </ng-container>
+          <ng-template #noPhotoTpl>
+            <div
+              class="bg-havertz-400 rounded-[1.5rem] h-16 w-16 flex justify-center items-center mb-3"
+            >
+              <div class="text-h1 text-white">
+                {{(response$ | async)?.namaPeserta | nickName}}
+              </div>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="text-heading-6 text-800 mb-1 px-3 py-1">
+          <div class="font-semibold flex">
+            <!-- <span class="text-800 font-semibold">
+              {{(response$ | async)?.namaPeserta || "Nama Kamu"}}</span
+            > -->
+            <div>
+              <span
+                *ngFor="let name of renderName((response$ | async)?.namaPeserta)"
+                >{{name}}</span
+              >
+            </div>
+            <div class="ml-2 pt-1">
+              <ion-badge
+                class="rounded-md"
+                [class]="(response$ | async)?.statusVerify === 'Y' ? 'bg-green-400' :  'bg-error-400'"
+              >
+                <span class="p-1 text-body-3 !font-normal text-white">
+                  {{ (response$ | async)?.statusVerify === 'Y' ? 'Terverifikasi'
+                  : 'Belum Terverifikasi'}}
+                </span>
+              </ion-badge>
+            </div>
+          </div>
+          <div class="text-body1 !font-normal mt-[4px]">
+            {{ (response$ | async)?.email || "your@email.com"}}
+          </div>
+        </div>
+      </div>
+
+      <div class="mobile-wrapper md-max:bg-0 md-max:py-0 md-max:px-5">
+        <hr class="border-b border-neutral-200 my-8 hidden md:flex !mb-0" />
+
+        <div class="flex flex-col space-y-10 md-max:py-0">
+          <h3
+            class="my-4 block md:hidden text-800 font-bold mt-9 md-max:mt-0 md-max:text-heading-6 md-max:font-bold md-max:mb-0 md-max:pt-4"
+          >
+            Akun Saya
+          </h3>
+          <a
+            routerLink="/profile/bio"
+            routerLinkActive="text-lazuli-400"
+            class="flex space-x-3 items-center text-800 md-max:!my-0 md-max:py-4 md-max:pt-4"
+          >
+            <app-common-icon-component
+              name="user"
+              nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-neutral-800"
+            >
+            </app-common-icon-component>
+            <div
+              class="font-normal text-[16px] lg:text-[18px] flex flex-1 items-center justify-between"
+            >
+              Biodata Diri
+              <app-common-icon-component
+                *ngIf="!screenSizeService.isDesktopResolution()"
+                name="chevron-right-normal"
+                nativeClass="w-7 h-7 text-800 opacity-[.6]"
+              />
+            </div>
+          </a>
+
+          <a
+            routerLink="/profile/card"
+            routerLinkActive="text-lazuli-400"
+            class="flex space-x-3 items-center text-800 md-max:!my-0 md-max:py-4 md-max:border-t-2"
+          >
+            <app-common-icon-component
+              name="credit-card-1"
+              nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-neutral-800"
+            >
+            </app-common-icon-component>
+            <div
+              class="font-normal text-[16px] lg:text-[18px] flex flex-1 items-center justify-between"
+            >
+              Kartu Peserta DPA
+              <app-common-icon-component
+                *ngIf="!screenSizeService.isDesktopResolution()"
+                name="chevron-right-normal"
+                nativeClass="w-7 h-7 text-800 opacity-[.6]"
+              />
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <hr class="border-b border-neutral-200 my-8 hidden md:flex !mb-0" />
+
+      <div class="flex flex-col space-y-10 md-max:px-5 md-max:bg-0 md-max:mt-3">
+        <h3
+          class="my-4 block md:hidden text-800 font-bold mt-5 md-max:mt-0 md-max:mb-0 md-max:py-4 md-max:pb-0"
+        >
+          Pusat Bantuan DPA
+        </h3>
+        <a
+          routerLink="/profile/notification"
+          routerLinkActive="text-lazuli-400"
+          class="flex space-x-3 items-center text-800 md-max:!my-0 md-max:py-4"
+        >
+          <app-common-icon-component
+            name="bell-notification-on-2"
+            nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-neutral-800"
+          >
+          </app-common-icon-component>
+          <div
+            class="font-normal text-[16px] lg:text-[18px] flex flex-1 items-center justify-between"
+          >
+            Notifikasi
+            <app-common-icon-component
+              *ngIf="!screenSizeService.isDesktopResolution()"
+              name="chevron-right-normal"
+              nativeClass="w-7 h-7 text-800 opacity-[.6]"
+            />
+          </div>
+        </a>
+
+        <a
+          *ngIf="!screenSizeService.isDesktopResolution() && !isWebBase && (biometricResult$ | async)?.isAvailable"
+          class="flex space-x-3 items-center text-800 md-max:!my-0 md-max:py-4 md-max:border-t-2"
+        >
+          <app-common-icon-component
+            name="settings-1"
+            nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-neutral-800"
+          >
+          </app-common-icon-component>
+          <div
+            class="font-normal text-[16px] lg:text-[18px] flex flex-1 items-center justify-between"
+          >
+            Biometrik
+            <app-toggle
+              [isToggled]="isUseBiometric"
+              (onToggleChange)="onSetTogleBiometric($event)"
+            ></app-toggle>
+          </div>
+        </a>
+
+        <a
+          routerLink="/profile/settings"
+          routerLinkActive="text-lazuli-400"
+          class="flex space-x-3 items-center text-800 md-max:!my-0 md-max:py-4 md-max:border-t-2"
+        >
+          <app-common-icon-component
+            name="settings-1"
+            nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-neutral-800"
+          >
+          </app-common-icon-component>
+          <div
+            class="font-normal text-[16px] lg:text-[18px] flex flex-1 items-center justify-between"
+          >
+            Pengaturan
+            <app-common-icon-component
+              *ngIf="!screenSizeService.isDesktopResolution()"
+              name="chevron-right-normal"
+              nativeClass="w-7 h-7 text-800 opacity-[.6]"
+            />
+          </div>
+        </a>
+
+        <a
+          routerLink="/profile/help"
+          routerLinkActive="text-lazuli-400"
+          class="flex space-x-3 items-center text-800 md-max:!my-0 md-max:py-4 md-max:border-t-2"
+        >
+          <app-common-icon-component
+            name="chat-conversation"
+            nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-neutral-800"
+          >
+          </app-common-icon-component>
+          <div
+            class="font-normal text-[16px] lg:text-[18px] flex flex-1 items-center justify-between"
+          >
+            Pusat Bantuan DPA
+            <app-common-icon-component
+              *ngIf="!screenSizeService.isDesktopResolution()"
+              name="chevron-right-normal"
+              nativeClass="w-7 h-7 text-800 opacity-[.6]"
+            />
+          </div>
+        </a>
+
+        <a
+          routerLink="/profile/privacy"
+          routerLinkActive="text-lazuli-400"
+          class="flex space-x-3 items-center text-800 md-max:!my-0 md-max:py-4 md-max:border-t-2"
+        >
+          <app-common-icon-component
+            name="book-1"
+            nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-neutral-800"
+          >
+          </app-common-icon-component>
+          <div
+            class="font-normal text-[16px] lg:text-[18px] flex flex-1 items-center justify-between"
+          >
+            Kebijakan Privasi
+            <app-common-icon-component
+              *ngIf="!screenSizeService.isDesktopResolution()"
+              name="chevron-right-normal"
+              nativeClass="w-7 h-7 text-800 opacity-[.6]"
+            />
+          </div>
+        </a>
+
+        <a
+          routerLink="/profile/rate"
+          routerLinkActive="text-lazuli-400"
+          class="flex space-x-3 items-center text-800 md-max:!my-0 md-max:py-4 md-max:border-t-2"
+        >
+          <app-common-icon-component
+            name="star-outline"
+            nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-neutral-800"
+          >
+          </app-common-icon-component>
+          <div
+            class="font-normal text-[16px] lg:text-[18px] flex flex-1 items-center justify-between"
+          >
+            Nilai Kami
+            <app-common-icon-component
+              *ngIf="!screenSizeService.isDesktopResolution()"
+              name="chevron-right-normal"
+              nativeClass="w-7 h-7 text-800 opacity-[.6]"
+            />
+          </div>
+        </a>
+      </div>
+
+      <hr class="border-b border-neutral-200 my-8 hidden md:flex" />
+
+      <div class="flex flex-col space-y-10 md-max:px-5 md-max:bg-0 md-max:pb-8">
+        <a
+          (click)="logout()"
+          routerLinkActive="text-lazuli-400"
+          class="flex space-x-3 items-center text-800 md-max:!my-0 md-max:py-4 md-max:border-t-2 cursor-pointer"
+        >
+          <app-common-icon-component
+            name="log-out"
+            nativeClass="w-7 h-7 lg:w-9 lg:h-9 text-neutral-800"
+          >
+          </app-common-icon-component>
+          <div
+            class="font-normal text-[16px] lg:text-[18px] flex flex-1 items-center justify-between"
+          >
+            Keluar
+            <!-- <app-common-icon-component
+              *ngIf="!screenSizeService.isDesktopResolution()"
+              name="chevron-right-normal"
+              nativeClass="w-7 h-7 text-800 opacity-[.6]"
+            /> -->
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-span-2 bg-white">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <!-- <hr class="my-10" />
+    <common-footer-component
+      *ngIf="screenSizeService.isDesktopResolution()"
+    ></common-footer-component> -->
+</div>
+<!-- <wa-floating-button></wa-floating-button> -->
+<!-- </ion-content> -->

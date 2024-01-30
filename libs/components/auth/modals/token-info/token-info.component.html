@@ -1,0 +1,56 @@
+<app-bottom-sheet *ngIf="screenSizeService.isMobileResolution()">
+  <div
+    class="bg-white  w-full {{
+      screenSizeService.isDesktopResolution() ? 'rounded-2xl' : ''
+    }}"
+  >
+    <img
+      class="mx-auto mt-8 mb-4"
+      width="180"
+      src="images/error.png"
+      alt=""
+    />
+    <p class="text-lg text-center font-semibold text-neutral-800 mt-4 mb-2">
+      {{renderText}}
+    </p>
+    <p class="text-700 text-sm text-center w-10/12 mb-[30px] mx-auto" *ngIf="renderSubText">
+      {{renderSubText}}
+    </p>
+    <ion-button
+      (click)="onDismiss()"
+      mode="ios"
+      color="primary"
+      class="w-full md:w-auto text-h7 h-10 mb-12 rounded-xl text-neeutral-0"
+    >
+      <span class="px-4">Oke</span>
+    </ion-button>
+  </div>
+</app-bottom-sheet>
+
+<section *ngIf="!screenSizeService.isMobileResolution()" class="max-w-md w-full p-4">
+  <div class="bg-white  w-full rounded-2xl" >
+    <div class="flex justify-end">
+      <ion-button
+        mode="ios"
+        color="blank"
+        size="small"
+        class="shadow-none p-0 m-0"
+        (click)="onDismiss()"
+      >
+        <app-common-icon-component name="close" />
+      </ion-button>
+    </div>
+    <img
+      class="mx-auto mt-8 mb-4"
+      width="180"
+      src="images/error.png"
+      alt=""
+    />
+    <p class="text-lg text-center font-semibold text-neutral-800 mt-4 mb-5">
+      {{renderText}}
+    </p>
+    <p class="text-700 text-sm text-center w-10/12 mb-[30px] mx-auto" *ngIf="renderSubText">
+      {{renderSubText}}
+    </p>
+  </div>
+</section>

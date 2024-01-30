@@ -1,0 +1,437 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+@import "tailwindcss/base.css";
+@import "tailwindcss/components.css";
+@import "tailwindcss/utilities.css";
+
+@import "swiper/scss";
+@import "./theme/custom-color.scss";
+
+// Quill
+@import "~quill/dist/quill.core.css";
+@import "~quill/dist/quill.bubble.css";
+@import "~quill/dist/quill.snow.css";
+
+@font-face {
+  font-family: "SourceSansProCustom";
+  src: url("/fonts/source-sans-pro-cdnfonts/SourceSansPro-It.otf") format("otf");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  src: url("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf")
+    format("truetype");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BalooCustom";
+  src: url("/fonts/Baloo-Font/Baloo-Regular.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+:root {
+  ion-app {
+    top: 25px;
+    top: constant(safe-area-inset-top);
+    top: env(safe-area-inset-top);
+  }
+
+  * {
+    ::ng-deep {
+      font-family: "SourceSansProCustom";
+      --ion-font-family: "SourceSansProCustom";
+    }
+  }
+
+  // * {
+
+  // }
+
+  ::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ion-no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  //   font-family: sans-pro;
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .modal-web {
+    &.kerabat {
+      animation: fadein 1.5s;
+    }
+    --width: 100% !important;
+    --height: 100% !important;
+
+    .ion-page {
+      position: relative;
+      display: block;
+      contain: content;
+
+      // --width: auto !important;
+      // --height: auto !important;
+
+      height: 100% !important;
+
+      .modal-content {
+        max-height: 100vh;
+
+        @media (min-width: 992px) {
+          max-height: 100vh;
+        }
+      }
+    }
+
+    @media (min-width: 992px) {
+      --height: auto !important;
+      --border-radius: 1.5rem;
+      margin-top: auto;
+      margin-bottom: auto;
+      --width: auto !important;
+    }
+  }
+
+  --ion-font-family: "Source Sans Pro", sans-serif;
+
+  ::ng-deep {
+    .popover-arrow {
+      display: none;
+    }
+
+    // ion-searchbar &.searchbar-input {
+    //   &::-webkit-input-placeholder {
+    //     /* Chrome/Opera/Safari */
+    //     color: #c1c4d6 !important;
+    //   }
+    //   &::-moz-placeholder {
+    //     /* Firefox 19+ */
+    //     color: #c1c4d6 !important;
+    //   }
+    //   &:-ms-input-placeholder {
+    //     /* IE 10+ */
+    //     color: #c1c4d6 !important;
+    //   }
+    //   &:-moz-placeholder {
+    //     /* Firefox 18- */
+    //     color: #c1c4d6 !important;
+    //   }
+    // }
+  }
+
+  .ion-bottom-box-shadow {
+    --box-shadow: 0px 0px 10px 0px #edeff5;
+  }
+
+  .bottom-box-shadow {
+    box-shadow: 0px 0px 10px 0px #edeff5;
+  }
+
+  .ion-background-lazuli {
+    --ion-background-color: #e7f4ff;
+  }
+
+  .ion-background-white {
+    --ion-background-color: #fafbff;
+  }
+
+  .ion-background-white-blur {
+    --ion-background-color: #f5f5f5;
+  }
+
+  .ion-background-white-blur-50 {
+    --ion-background-color: #fafbff;
+  }
+
+  .ion-background-red {
+    --ion-background-color: red;
+  }
+
+  .ion-rounded-header {
+    --background: transparent !important;
+    --background-image: none !important;
+    ion-toolbar {
+      --background: transparent !important;
+      --background-image: none !important;
+      --border-radius: 0 0 16px 16px !important;
+      @media (min-width: 640px) {
+        --border-radius: 0 0 0 0 !important;
+      }
+      overflow: hidden;
+    }
+    overflow: hidden;
+  }
+
+  // ion-background-red
+
+  .ion-background-transparent {
+    --ion-background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .ion-no-keyboard-offset {
+    --keyboard-offset: 0 !important;
+  }
+
+  .ion-no-padding {
+    --padding-start: 0 !important;
+    --padding-end: 0 !important;
+    --padding-top: 0 !important;
+    --padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .ion-no-margin {
+    --margin-start: 0 !important;
+    --margin-end: 0 !important;
+    --margin-top: 0 !important;
+    --margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .ion-no-ripple {
+    --ripple-color: transparent;
+  }
+
+  .ion-no-box-shadow {
+    --box-shadow: none;
+  }
+
+  .rounded-input {
+    --border-radius: 0.75rem !important;
+  }
+
+  ion-button {
+    overflow: hidden;
+
+    --border-radius: 0 !important;
+    --border-width: 0 !important;
+  }
+
+  ion-button.custom {
+    --ripple-effect: none;
+    --padding-bottom: 0;
+    --padding-top: 0;
+    --padding-right: 0;
+    --padding-left: 0;
+    ::ng-deep {
+      .button-native {
+        --padding-inline-start: 0 !important;
+        --padding-inline-end: 0 !important;
+        --padding-left: 0 !important;
+        --padding-right: 0 !important;
+      }
+    }
+  }
+
+  ion-input {
+    height: 44px;
+  }
+
+  .form-group {
+    // --highlight-color-focused: none;
+    background-color: #fff !important;
+    border: none;
+    --padding-end: 0px !important;
+    --inner-padding-end: 0px !important;
+    --padding-start: 0px !important;
+    --inner-padding-start: 0px !important;
+    width: 100%;
+
+    .form-group-control {
+      background-color: white;
+      width: 100%;
+
+      .form-label {
+        margin-bottom: 4px;
+        color: #474d66;
+      }
+      .form-control {
+        background: white;
+        color: #474d66;
+        width: 100%;
+
+        ion-textarea,
+        ion-input {
+          border-radius: 8px;
+          border: #d8dae5 1px solid !important;
+          &.has-focus {
+            border-radius: 8px;
+            border: #54b3fb 1px solid !important;
+          }
+
+          &.ion-invalid.ion-dirty {
+            border-radius: 8px;
+            border: #d14343 1px solid !important;
+          }
+
+          input {
+            padding: 12px 0 12px 12px !important;
+          }
+        }
+      }
+    }
+  }
+  .pop-up-selet {
+    --width: 100% !important;
+    --height: auto !important;
+    --width: auto !important;
+    @media (max-width: 640px) {
+      --width: 80% !important;
+    }
+  }
+}
+
+.rounded-md {
+  @media (min-width: 768px) {
+    &.forget-pin {
+      --max-height: 500px;
+      --box-shadow: none;
+    }
+  }
+  --background: transparent !important;
+  @media (min-width: 992px) {
+    .ion-page {
+      border-radius: 24px;
+    }
+  }
+}
+
+.custom-popup {
+  --background: transparent !important;
+  --box-shadow: none !important;
+  &.height-auto {
+    @media (min-width: 992px) {
+      .ion-page {
+        height: auto;
+      }
+    }
+  }
+  .ion-page {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.modal-transparent {
+  --background: transparent !important;
+}
+
+ion-item.sc-ion-select-popover-md {
+  --background: #fefefe !important;
+  color: #474d66;
+  --color: #474d66;
+  --color-hover: #474d66;
+  &.item-radio-checked {
+    --background: #95ceff !important;
+    --color: #474d66;
+  }
+}
+
+.month-column.ion-color.ion-color-primary.md {
+  text-align: center !important;
+}
+
+ion-list {
+  background: #fefefe !important;
+}
+
+:host(.wheel-order-month-first) {
+  ion-picker-column-internal {
+    text-align: center;
+  }
+}
+
+.picker-col {
+  text-align: center !important;
+}
+
+.icon-share {
+  padding: 7px;
+  background-color: #fefefe;
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.primary-input.sc-ion-input-md-h {
+  --highlight-color-focused: #0b8dff !important;
+  --highlight-color-valid: #0b8dff !important;
+  --highlight-color-invalid: var(--ion-color-danger, #eb445a) !important;
+  --highlight-color: var(--highlight-color-focused);
+}
+.primary-input.input-fill-outline.sc-ion-input-md-h {
+  --border-radius: 8px !important;
+  --border-color: #c1c4d6;
+}
+.primary-input.sc-ion-input-md-h:not(.legacy-input) {
+  min-height: 44px;
+}
+
+.primary-input.legacy-input.sc-ion-input-md-h
+  .primary-inputnative-input[disabled].sc-ion-input-md,
+.input-disabled.sc-ion-input-md-h.primary-input {
+  opacity: 1 !important;
+}
+
+.banner-modal-x::part(content) {
+  opacity: 1 !important;
+  background-color: transparent;
+  border-radius: 0 !important;
+  box-shadow: none;
+}
+
+.animation-all {
+  transition: all 0.5s;
+  // * {
+  //   transition: all 0.5s;
+  // }
+}
+
+// @import url("http://fonts.googleapis.com/css?family=Source Sans Pro");
+// $font-family-base: "Source Sans Pro", sans-serif !default;

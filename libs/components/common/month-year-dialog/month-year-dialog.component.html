@@ -1,0 +1,4 @@
+<ion-label *ngIf="showLabel">Periode Bulan</ion-label>
+<ion-item fill="outline" (click)="openMonthYearModal()">
+  {{monthDate ? monthDate : 'Pilih periode bulan manfaat pensiun'}}
+</ion-item>

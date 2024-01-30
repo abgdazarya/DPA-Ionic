@@ -1,0 +1,91 @@
+<div
+  class="p-8 sm-max:px-4 md:shadow-xl bg-bg-0 rounded-xl md-max:h-full md-max:flex md-max:justify-between md-max:flex-col"
+>
+  <div class="w-full">
+    <div class="text-[24px] font-bold text-800 mb-1.5 md-max:hidden">
+      Nilai Kami
+    </div>
+    <div class="text-h5 font-normal text-700 mb-8 md-max:hidden">
+      Bantu kami menjadi lebih baik dengan berikan penilaian.
+    </div>
+
+    <div class="flex flex-col justify-center items-center">
+      <div
+        class="text-[16px] md:text-[18px] font-bold mb-1 text-800"
+        *ngIf="screenSizeService.isDesktopResolution()"
+      >
+        Berikan Rating Kami
+      </div>
+      <div
+        class="text-[16px] md:text-[18px] font-bold mb-1 text-800"
+        *ngIf="!screenSizeService.isDesktopResolution()"
+      >
+        Berikan Rating Pelayanan
+      </div>
+
+      <div class="text-h7 mb-8 text-800">(1 mengecewakan, 5 bagus)</div>
+      <div class="flex space-x-3 items-center">
+        <ng-container *ngFor="let i of (rate$ | async); let index = index">
+          <img
+            [src]="i ? 'logos/star-yellow.png' :'logos/star-grey.png'"
+            class="w-12 h-12 sm-max:w-8 sm-max:h-8 cursor-pointer"
+            (click)="handleSelectedStar(index)"
+            alt=""
+          />
+        </ng-container>
+
+        <!-- <img src="logos/star-yellow.png" class="w-12 h-12" alt="" />
+        <img src="logos/star-yellow.png" class="w-12 h-12" alt="" />
+        <img src="logos/star-yellow.png" class="w-12 h-12" alt="" />
+        <img src="logos/star-yellow.png" class="w-12 h-12" alt="" /> -->
+      </div>
+    </div>
+
+    <hr class="my-4 border-none" />
+
+    <div class="">
+      <div class="text-body2 font-normal text-neutral-800 mb-1 hidden md:block">
+        Saran
+      </div>
+      <div class="text-body2 font-normal text-neutral-800 mb-1 block md:hidden">
+        Berikan alasan kamu
+      </div>
+      <ion-textarea
+        mode="md"
+        [autoGrow]="true"
+        [placeholder]="screenSizeService.isDesktopResolution() ? 'Berikan alasan rating pelatihan':'Alasan kamu'"
+        class="custom-area rounded-xl text-body2 min-h-24 text-neutral-800 resize"
+        [(ngModel)]="review"
+        fill="outline"
+      ></ion-textarea>
+    </div>
+
+    <hr class="my-2.5 border-none" />
+  </div>
+
+  <div class="flex justify-end md-max:w-full">
+    <ion-button
+      (click)="handleOpenRateSucceedModal()"
+      mode="ios"
+      [disabled]="isErrorSubmit()"
+      class="text-h7 text-neutral-0 h-11 rounded-lg sm-max:w-full"
+    >
+      <span
+        class="px-20"
+        *ngIf="screenSizeService.isDesktopResolution() && (interactionResponse$ | async)?.type !== interactionType.PROCESS"
+      >
+        Lanjut
+      </span>
+      <span
+        class="px-20"
+        *ngIf="!screenSizeService.isDesktopResolution() && (interactionResponse$ | async)?.type !== interactionType.PROCESS"
+      >
+        Simpan
+      </span>
+      <ion-spinner
+        *ngIf="(interactionResponse$ | async)?.type === interactionType.PROCESS"
+        name="circular"
+      ></ion-spinner>
+    </ion-button>
+  </div>
+</div>

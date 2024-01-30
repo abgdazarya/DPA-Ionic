@@ -1,0 +1,51 @@
+ion-footer {
+  background: #fefefe;
+}
+.card-simulasi {
+  background: linear-gradient(180deg, #0074d9 0%, #54afff 100%);
+}
+
+ion-label {
+  color: #474d66;
+  font-size: 14px;
+}
+ion-item {
+  input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  --color: #474d66;
+  --background: #fefefe;
+  margin-top: 4px;
+  --border-color: transparent;
+  border: 1px solid #d8dae5;
+  border-radius: 8px;
+  --higlight-color-focused: #0b8dff;
+  :focus {
+    box-shadow: 0px 0px 0px 2px #d1edf7;
+    --border-width: 1px;
+  }
+  --border-width: 1px;
+
+  // ion-input:before {
+  //   content: "$";
+  // }
+}
+
+ion-item::part(native) {
+  border-bottom: none !important;
+}
+
+ion-button.hitung {
+  --background: #005BAA;
+}
+
+ion-content {
+  // overwrite inline styles
+  --offset-bottom: auto!important;
+  --overflow: hidden;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

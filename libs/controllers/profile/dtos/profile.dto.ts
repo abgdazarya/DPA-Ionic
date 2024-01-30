@@ -1,0 +1,34 @@
+export class ProfileDto {
+  namaPeserta?: string | null | undefined;
+  noHp?: string | null | undefined;
+  email?: string | null | undefined;
+  statusVerify?: string | null | undefined;
+  idProfilDpa: string | null | undefined;
+  tanggalLahir?: string | null | undefined;
+  jenisKelamin?: string | null | undefined;
+  nik?: string | null | undefined;
+  statusPerkawinan?: string | null | undefined;
+  rt?: string | null | undefined;
+  rw?: string | null | undefined;
+  alamat?: string | null | undefined;
+  namaKerabat?: string | null | undefined;
+  hubunganKerabat?: string | null | undefined;
+  noHpKerabat?: string | null | undefined;
+  photo?: string | null | undefined;
+  kelurahanDesa?: string | null | undefined;
+  kecamatan?: string | null | undefined;
+  kotaKabupaten?: string | null | undefined;
+  provinsi?: string | null | undefined;
+  googleAccount?: string | null | undefined;
+  appleId?: string | null | undefined;
+  biometricToggle?: string | null | undefined;
+  notificationToggle?: string | null | undefined;
+  tempatLahir?: string | null | undefined;
+  idKelurahanDesa?: string | null | undefined;
+  idKecamatan?: string | null | undefined;
+  idKotaKabupaten?: string | null | undefined;
+  idProvinsi?: string | null | undefined;
+  ktp?: string | null | undefined;
+  fotoKtp?: string | null | undefined;
+  username?: string | null | undefined;
+}

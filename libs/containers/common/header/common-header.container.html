@@ -1,0 +1,373 @@
+<div
+  class="h-[{{
+    !(profile$ | async) ? '78px' : '108px'
+  }}] bg-gradient-to-t from-lazuli-400 to-lazuli-200 w-full rounded-bl-4xl rounded-br-4xl md:rounded-none"
+  [class]="headerContainerClass"
+>
+  <div class="md:container mx-4 md:mx-auto">
+    <ng-container
+      *ngIf="screenSizeService.isDesktopNativeResolution() || !useSecondaryHeader"
+    >
+      <div class="flex items-center justify-between py-[14px] md:py-[18px]">
+        <app-common-button-component
+          (onClick)="navigateToHome()"
+          color="blank"
+          class="ion-no-padding ion-no-margin h-10 md:hidden"
+        >
+          <img
+            src="logos/mobile-logo-white-v2.png"
+            class="h-10 w-auto"
+            alt=""
+          />
+        </app-common-button-component>
+
+        <app-common-button-component
+          (onClick)="navigateToHome()"
+          color="blank"
+          class="ion-no-padding ion-no-margin h-10 hidden md:block"
+        >
+          <img src="logos/logo-white.png" height="238" width="40" class="h-10 w-auto" alt="" />
+        </app-common-button-component>
+
+        <div class="flex items-center space-x-3">
+          <ng-container *ngIf="loadingProfile$ | async else profileTpl">
+            <ion-skeleton-text
+              [animated]="true"
+              class="w-8 h-8 rounded-2xl"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              [animated]="true"
+              class="w-24 h-8 rounded-2xl"
+            ></ion-skeleton-text>
+          </ng-container>
+          <ng-template #profileTpl>
+            <ng-container *ngIf="profile$ | async as profile else noProfileTpl">
+              <!-- <div>
+                <app-common-button-component
+                  color="blank" (click)="openNotif()"
+                  class="ion-no-padding ion-no-margin p-0 m-0 h-8"
+                >
+                  <img src="logos/notification.png" class="h-8 w-8" alt="" />
+                </app-common-button-component>
+              </div> -->
+
+              <ion-button fill="clear" (click)="openNotif()" id="bottom-start">
+                <img
+                  *ngIf="!screenSizeService.isMobileResolution()"
+                  src="logos/notification.png"
+                  id="notification-trigger"
+                  class="h-8 w-8"
+                  alt=""
+                />
+                <div class="" *ngIf="screenSizeService.isMobileResolution()">
+                  <a
+                    href="/profile/notification"
+                    class="flex items-center space-x-1"
+                  >
+                    <img
+                      href="/profile/notification"
+                      src="logos/notification.png"
+                      class="h-8 w-8"
+                      alt=""
+                    />
+                  </a>
+                </div>
+              </ion-button>
+
+              <div>
+                <app-common-button-component
+                  (onClick)="navigateToProfile()"
+                  color="blank"
+                  class="ion-no-padding ion-no-margin p-0 m-0 h-8"
+                >
+                  <span class="flex items-center">
+                    <img
+                      [src]="
+                    profile.statusVerify === 'Y'
+                  ? 'images/user-verified.png'
+                  : 'images/user-unverified.png'"
+                      class="h-8 w-8"
+                      alt=""
+                    />
+                    <div
+                      class="text-h7 text-neutral-0 font-semibold hidden md:block"
+                    >
+                      Hi, {{ profile.namaPeserta}}
+                    </div>
+                  </span>
+                </app-common-button-component>
+              </div>
+            </ng-container>
+            <ng-template #noProfileTpl>
+              <div class="hidden md:block">
+                <app-common-button-component
+                  (onClick)="navigateToLogin()"
+                  color="lazuli-50"
+                  class="text-h7 font-bold ion-no-margin rounded-2xl h-8"
+                >
+                  <span class="text-lazuli-500 px-4"> Login </span>
+                </app-common-button-component>
+              </div>
+              <div class="md:hidden">
+                <app-common-button-component
+                  (onClick)="navigateToLogin()"
+                  color="blank"
+                  class="ion-no-padding ion-no-margin p-0 m-0 h-8"
+                >
+                  <span class="flex items-center">
+                    <img src="images/user.png" class="h-8 w-8" alt="" />
+                    <div class="text-h7 text-neutral-0 font-semibold">
+                      Login
+                    </div>
+                  </span>
+                </app-common-button-component>
+              </div>
+            </ng-template>
+          </ng-template>
+        </div>
+      </div>
+      <div class="md:hidden text-h4 text-neutral-0 font-bold text-center pb-2">
+        <ng-container *ngIf="loadingProfile$ | async else profileNameTpl">
+          <ion-skeleton-text
+            [animated]="true"
+            class="w-full h-8"
+          ></ion-skeleton-text>
+        </ng-container>
+        <ng-template #profileNameTpl>
+          <ng-container *ngIf="profile$ | async as profile">
+            Hi, {{ profile.namaPeserta }}
+          </ng-container>
+        </ng-template>
+      </div>
+    </ng-container>
+    <ng-container
+      *ngIf="useSecondaryHeader && screenSizeService.isMobileNativeResolution()"
+    >
+      <div class="flex items-center justify-between py-5">
+        <app-common-button-component
+          (onClick)="onClickBack()"
+          color="blank"
+          class="ion-no-padding ion-no-margin h-10 md:hidden {{secondaryHeaderClass}}"
+        >
+          <div class="flex items-center space-x-2">
+            <app-common-icon-component
+              name="arrow-left-normal"
+              nativeClass="w-8 h-8"
+            />
+            <span class="text-h5 font-semibold">{{pageTitle}}</span>
+          </div>
+        </app-common-button-component>
+
+        <div *ngIf="rightBtnClick" class="flex items-center justify-end">
+          <ion-button
+            mode="ios"
+            fill="clear"
+            (click)="rightBtnClick()"
+            class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+          >
+            <app-common-icon-component
+              *ngIf="!rightLabel"
+              [name]="rightIcon ? rightIcon : 'share-filled'"
+              class="w-6 h-6 text-neutral-700"
+            />
+            <span class="font-semibold" *ngIf="rightLabel"
+              >{{rightLabel || "read all"}}</span
+            >
+          </ion-button>
+        </div>
+
+        <!-- <ng-container *ngTemplateOutlet="secondaryBtnTpl"></ng-container> -->
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Popup Notif ini -->
+<ion-popover
+  mode="ios"
+  side="bottom"
+  *ngIf="screenSizeService.isDesktopResolution()"
+  alignment="end"
+  class="rounded-xl ion-background-white"
+  arrow="false"
+  style="
+    position: absolute;
+    --width: 350px;
+    --max-width: 350px;
+    --min-width: 350px;
+    --border-radius: 20px;
+    --backdrop-opacity: var(--ion-backdrop-opacity, 0.5);
+  "
+  trigger="bottom-start"
+  triggerAction="click"
+  [isOpen]="isOpenNotif"
+>
+  <ng-template>
+    <div class="flex justify-between py-4 px-8">
+      <div class="text-h3 text-900">Notifikasi</div>
+      <ion-button
+        mode="ios"
+        fill="clear"
+        (click)="goToNotif()"
+        class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+      >
+        <span class="p-0 font-semibold">Lihat Semua</span>
+      </ion-button>
+    </div>
+    <ion-content class="ion-no-padding rounded-xl">
+      <ng-container *ngIf="(response$ | async)">
+        <div
+          class="cursor-pointer"
+          *ngFor="let notif of response$ | async"
+          [class]="notif?.flagRead === 0 ? 'bg-lazuli-100' : ''"
+          (click)="readNotif(notif)"
+        >
+          <div class="p-6">
+            <div class="flex items-center space-x-2 mb-2">
+              <img src="images/voucher.png" class="h-5 w-5" alt="" />
+              <div class="flex items-center space-x-1">
+                <span class="text-body3 font-semibold text-900">
+                  {{ notif.kategori }}
+                </span>
+                <span class="text-body3 text-600">
+                  • {{ notif.dtNotif | date : "d MMMM yyyy" }}</span
+                >
+              </div>
+            </div>
+            <div class="text-body1 text-900 font-semibold mb-0.5">
+              {{ notif.judulNotif }}
+            </div>
+            <div class="text-body3 text-700">{{ notif.contentNotif }}</div>
+          </div>
+        </div>
+      </ng-container>
+      <div class="w-full" *ngIf="!(response$ | async)">
+        <div class="w-full flex flex-col items-center justify-center p-10">
+          <img
+            src="images/null-notification.png"
+            alt=""
+            class="w-full max-w-[180px]"
+          />
+          <span class="text-800 text-lg font-semibold mt-4"
+            >Tidak Ada Notifikasi</span
+          >
+          <span class="text-800 text-sm font-normal mt-4"
+            >Kamu saat ini tidak memiliki notifikasi</span
+          >
+        </div>
+      </div>
+    </ion-content>
+    <div class="flex justify-center py-4 px-8">
+      <ion-button
+        (click)="readNotifAll()"
+        mode="ios"
+        fill="clear"
+        class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+      >
+        <span class="p-0 font-semibold">Tandai semua dibaca</span>
+      </ion-button>
+    </div>
+  </ng-template>
+</ion-popover>
+<!-- End Popup -->
+
+<!-- OLD VERSION -->
+<div
+  *ngIf="false"
+  class="hidden h-[{{
+    !(profile$ | async) ? '78px' : '108px'
+  }}] md:h-[76px] bg-gradient-to-t from-lazuli-400 to-lazuli-200 w-full flex justify-center rounded-bl-2xl rounded-br-2xl md:rounded-none"
+>
+  <!-- <div
+    *ngIf="!useSecondaryHeader"
+    class="container mx-4 md:mx-0 mt-5 md:my-auto"
+  >
+    <div class="flex items-center justify-between">
+      <a href="/home" class="flex justify-end md:hidden">
+        <img src="logos/mobile-logo-white-v2.png" class="h-10 w-auto" alt="" />
+      </a>
+      <a href="/home" class="flex justify-end hidden md:block">
+        <img src="logos/logo-white.png" class="h-10 w-auto" alt="" />
+      </a>
+
+      <div class="flex items-center space-x-6" *ngIf="profile$ | async">
+        <ion-button fill="clear" (click)="openNotif()" id="bottom-start">
+          <img
+            *ngIf="!screenSizeService.isMobileResolution()"
+            src="logos/notification.png"
+            id="notification-trigger"
+            class="h-8 w-8"
+            alt=""
+          />
+          <div class="" *ngIf="screenSizeService.isMobileResolution()">
+            <a href="/profile/notification" class="flex items-center space-x-1">
+              <img
+                href="/profile/notification"
+                src="logos/notification.png"
+                class="h-8 w-8"
+                alt=""
+              />
+            </a>
+          </div>
+        </ion-button>
+
+        <div class="">
+          <a
+            (click)="handleNavigateProfile()"
+            class="flex items-center space-x-1"
+          >
+            <img
+              href="/profile"
+              [src]="
+                (profile$ | async)?.statusVerify === 'Y'
+                  ? 'images/user-verified.png'
+                  : 'images/user-unverified.png'
+              "
+              class="h-8 w-8"
+              alt=""
+            />
+
+            <div
+              *ngIf="profile$ | async as profile"
+              class="text-h7 text-neutral-0 hidden md:block"
+            >
+              Hi, {{ profile.namaPeserta }}
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="flex items-center space-x-6" *ngIf="!(profile$ | async)">
+        <a
+          (click)="handleNavigateProfile()"
+          class="flex items-center space-x-1"
+        >
+          <img href="/login" src="logos/user-idle.png" class="h-8 w-8" alt="" />
+
+          <div class="text-h7 text-neutral-0 block">Masuk</div>
+        </a>
+      </div>
+    </div>
+    <div
+      *ngIf="profile$ | async as profile"
+      class="text-center text-h7 text-neutral-0 md:hidden"
+    >
+      Hi, {{ profile.namaPeserta }}
+    </div>
+  </div>
+
+  <div
+    *ngIf="useSecondaryHeader"
+    class="container px-0 mx-0 md:mx-0 mb-2 md:my-auto"
+    [ngClass]="!(profile$ | async) ? 'mt-2' : 'mt-9'"
+  >
+    <ion-button
+      mode="ios"
+      color="blank"
+      class="ion-no-ripple ion-no-box-shadow !px-0"
+      (click)="onClickBack()"
+    >
+      <img src="images/arrow-left.png" class="w- h-7 mr-3" alt="" />
+      <span class="text-h5 text-100">{{ pageTitle }}</span>
+    </ion-button>
+  </div> -->
+</div>

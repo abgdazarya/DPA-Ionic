@@ -1,0 +1,38 @@
+.birthday {
+  // background-image: url("/images/birthday-bg.svg");
+  background-repeat: no-repeat;
+  background-position-x: center;
+}
+
+:host {
+  ::ng-deep {
+    .swiper-slide {
+      .promo-slide {
+        // transition: all 0.7s;
+        transform: scale(0.8) translateY(50px);
+      }
+
+      .button-close {
+        display: none;
+      }
+
+      &.swiper-slide-active {
+        .promo-slide {
+          transition: all 0.7s;
+          transform: scale(1);
+        }
+
+        .button-close {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  //   .swiper-slide {
+  //     .promo-slide {
+  //       transition: all 1s;
+  //       transform: ;
+  //     }
+  //   }
+}

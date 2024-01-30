@@ -1,0 +1,44 @@
+<section>
+  <div class="md:container px-6 md:px-auto z-10 relative pt-4 md:pt-16">
+    <div>
+      <ng-container *ngIf="laporanInvestasi$ | async as laporanInvestasi">
+        <div
+          class="text-800 md:text-900 text-h5 md:text-[32px] font-bold leading-[44px] mb-4 md:mb-8"
+        >
+          {{laporanInvestasi.judulLaporan}}
+        </div>
+
+        <ng-container *ngIf="laporanInvestasi.image else normalTpl">
+          <img
+            [src]="laporanInvestasi.image"
+            class="object-center object-cover w-full mb-4 md:mb-[68px]"
+            alt="Investasi Image"
+          />
+        </ng-container>
+
+        <ng-template #normalTpl>
+          <ng-container *ngIf="laporanInvestasi.imageThumbnail">
+            <img
+              [src]="laporanInvestasi.imageThumbnail"
+              class="object-center object-cover w-full min-h-[149px] md:min-h-[428px] max-h-[149px] md:max-h-[428px] mb-4 md:mb-[68px]"
+              alt="Investasi Image"
+            />
+          </ng-container>
+
+          <!-- <ng-container *ngIf="!laporanInvestasi.imageThumbnail">
+            <div
+              class="rounded-4xl w-full min-h-[149px] md:min-h-[428px] max-h-[149px] md:max-h-[428px] mb-4 md:mb-[68px] bg-neutral-600 flex items-center justify-center text-h5"
+            >
+              No Thumbnail
+            </div>
+          </ng-container> -->
+
+          <div
+            class="text-800 text-justify text-body2 md:text-[32]px leading-[36px]"
+            [innerHTML]="laporanInvestasi?.text"
+          ></div>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+</section>

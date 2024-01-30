@@ -1,0 +1,68 @@
+<section>
+  <div class="flex justify-center items-center space-x-5">
+    <div
+      class="form-wrapper-input border-b-4 w-12"
+      [class.border-lazuli-500]="!!firstInput.value && !isError"
+      [class.border-error-400]="firstInput.value && isError"
+    >
+      <ion-input
+        [brmasker]="{len: 1, mask: '0', type:'num'}"
+        #firstInput
+        (keydown)="isValidNumber(0, $event, firstInput.value)"
+        type="tel"
+        [pattern]="[0-9]"
+        maxlength="1"
+        class="text-800 text-h1 text-center w-12 h-12"
+        style="--padding-start: 12px; --padding-end: 12px"
+      ></ion-input>
+    </div>
+    <div
+      class="form-wrapper-input border-b-4 w-12"
+      [class.border-lazuli-500]="!!secondInput.value && !isError"
+      [class.border-error-400]="secondInput.value && isError"
+    >
+      <ion-input
+        [brmasker]="{len: 1, mask: '0', type:'num'}"
+        #secondInput
+        (keydown)="isValidNumber(1, $event, secondInput.value)"
+        type="tel"
+        [pattern]="[0-9]"
+        maxlength="1"
+        class="text-800 text-h1 text-center w-12 h-12"
+        style="--padding-start: 12px; --padding-end: 12px"
+      ></ion-input>
+    </div>
+    <div
+      class="form-wrapper-input border-b-4 w-12"
+      [class.border-lazuli-500]="!!thirdInput.value && !isError"
+      [class.border-error-400]="thirdInput.value && isError"
+    >
+      <ion-input
+        [brmasker]="{len: 1, mask: '0', type:'num'}"
+        #thirdInput
+        (keydown)="isValidNumber(2, $event, thirdInput.value)"
+        type="tel"
+        [pattern]="[0-9]"
+        maxlength="1"
+        class="text-800 text-h1 text-center w-12 h-12"
+        style="--padding-start: 12px; --padding-end: 12px"
+      ></ion-input>
+    </div>
+    <div
+      class="form-wrapper-input border-b-4 w-12"
+      [class.border-lazuli-500]="!!fourthInput.value && !isError"
+      [class.border-error-400]="fourthInput.value && isError"
+    >
+      <ion-input
+        [brmasker]="{len: 1, mask: '0', type:'num'}"
+        #fourthInput
+        (keydown)="isValidNumber(3, $event,fourthInput.value)"
+        type="tel"
+        [pattern]="[0-9]"
+        maxlength="1"
+        class="text-800 text-h1 text-center w-12 h-12"
+        style="--padding-start: 12px; --padding-end: 12px"
+      ></ion-input>
+    </div>
+  </div>
+</section>

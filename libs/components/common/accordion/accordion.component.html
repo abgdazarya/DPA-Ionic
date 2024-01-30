@@ -1,0 +1,15 @@
+<ion-accordion-group type="ios" #accordionGroup>
+  <ion-accordion [value]="i" *ngFor="let acc of accordions; let i = index">
+    <ion-item slot="header" color="light">
+      <span
+        class="md:!text-xl xs:font-bold hover:!text-800"
+        [ngClass]="accordionClass"
+        >{{ acc }}</span
+      >
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      <ng-container *ngTemplateOutlet="templateRef; context: { index: i }">
+      </ng-container>
+    </div>
+  </ion-accordion>
+</ion-accordion-group>

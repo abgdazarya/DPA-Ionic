@@ -1,0 +1,193 @@
+<!-- <ion-header
+  class="ion-background-white ion-no-border"
+  *ngIf="!screenSizeService.isDesktopResolution()"
+>
+  <profile-header-component
+    *ngIf="!isDesktop()"
+    [headerTitle]="'Notifikasi'"
+    [rightBtn]="readAllNotif"
+    [rightBtnText]="(response$ | async) ? 'Tandai semua dibaca': ''"
+  ></profile-header-component>
+</ion-header> -->
+
+<div class="md:shadow-xl bg-bg-0 rounded-xl md-max:h-full mb-10">
+  <div
+    *ngIf="screenSizeService.isDesktopResolution()"
+    class="flex justify-between p-8"
+  >
+    <div class="text-h3 text-800 mb-1.5">Notifikasi Update</div>
+    <ion-button
+      (click)="readNotifAll()"
+      mode="ios"
+      fill="clear"
+      *ngIf="(response$ | async)"
+      class="no-ripple ion-no-padding ion-no-box-shadow text-body1 text-lazuli-500 h-5"
+    >
+      <span class="p-0 font-semibold"> Tandai semua dibaca</span>
+    </ion-button>
+  </div>
+  <div class="w-full">
+    <div
+      *ngFor="let notif of (response$ | async)"
+      [class]="notif?.flagRead === 0 ? 'bg-lazuli-100' : ''"
+      (click)="readNotif(notif)"
+    >
+      <div class="p-6">
+        <div class="flex items-center space-x-2 mb-2">
+          <img src="images/voucher.png" class="h-5 w-5" alt="" />
+          <div class="flex items-center space-x-1">
+            <span class="text-body3 font-semibold text-900">
+              {{notif.kategori}}
+            </span>
+            <span class="text-body3 text-600">
+              • {{notif.dtNotif | date:'d MMMM yyyy'}}</span
+            >
+          </div>
+        </div>
+        <div class="text-body1 text-900 font-semibold mb-0.5">
+          {{notif.judulNotif}}
+        </div>
+        <div class="text-body3 text-700">{{notif.contentNotif}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="(interactionResponse$ | async) || lodaingDataStatus.isLoading"
+    class="w-full"
+  >
+    <ion-skeleton-text
+      *ngFor="let item of [].constructor(9)"
+      [animated]="true"
+      class="h-28 w-full mb-1 bg-50"
+    ></ion-skeleton-text>
+  </div>
+
+  <div
+    class="w-full"
+    *ngIf="!(response$ | async) && !lodaingDataStatus.isLoading"
+  >
+    <div
+      class="w-full flex flex-col items-center justify-center p-10 min-h-[500px]"
+    >
+      <img
+        src="images/null-notification.png"
+        alt=""
+        class="w-full max-w-[180px]"
+      />
+      <span class="text-800 text-lg font-semibold mt-4"
+        >Tidak Ada Notifikasi</span
+      >
+      <span class="text-800 text-sm font-normal mt-4"
+        >Kamu saat ini tidak memiliki notifikasi</span
+      >
+    </div>
+  </div>
+  <div
+    class="items-center justify-center flex py-5"
+    *ngIf="(pagination$ | async) as pagination"
+  >
+    <app-common-pagination-component
+      [pagination]="pagination"
+      [showMiddlePage]="4"
+      type="mobile"
+      (onClick)="handlePageChange($event)"
+      *ngIf="!screenSizeService.isMobileNativeResolution()"
+    ></app-common-pagination-component>
+  </div>
+
+  <!-- <div>
+    <div class="p-6">
+      <div class="flex items-center space-x-2 mb-2">
+        <img src="images/graph.png" class="h-5 w-5" alt="" />
+        <div class="flex items-center space-x-1">
+          <span class="text-body3 font-semibold text-900"> Investasi </span>
+          <span class="text-body3 text-600"> • 12 Maret 2023</span>
+        </div>
+      </div>
+      <div class="text-body1 text-900 font-semibold mb-0.5">
+        Laporan Pertanggungjawaban 2021
+      </div>
+      <div class="text-body3 text-700">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-lazuli-100">
+    <div class="p-6">
+      <div class="flex items-center space-x-2 mb-2">
+        <img src="images/information-circle.png" class="h-5 w-5" alt="" />
+        <div class="flex items-center space-x-1">
+          <span class="text-body3 font-semibold text-900"> Informasi </span>
+          <span class="text-body3 text-600"> • 12 Maret 2023</span>
+        </div>
+      </div>
+      <div class="text-body1 text-900 font-semibold mb-0.5">
+        Akunmu sudah terverfikiasi
+      </div>
+      <div class="text-body3 text-700">
+        Akunmu sudah kami tinjau dan sekarang kamu menjadi pengguna setia kami.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="p-6">
+      <div class="flex items-center space-x-2 mb-2">
+        <img src="images/information-circle.png" class="h-5 w-5" alt="" />
+        <div class="flex items-center space-x-1">
+          <span class="text-body3 font-semibold text-900"> Informasi </span>
+          <span class="text-body3 text-600"> • 12 Maret 2023</span>
+        </div>
+      </div>
+      <div class="text-body1 text-900 font-semibold mb-0.5">
+        Akunmu sudah terverfikiasi
+      </div>
+      <div class="text-body3 text-700">
+        Akunmu sudah kami tinjau dan sekarang kamu menjadi pengguna setia kami.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="p-6">
+      <div class="flex items-center space-x-2 mb-2">
+        <img src="images/information-circle.png" class="h-5 w-5" alt="" />
+        <div class="flex items-center space-x-1">
+          <span class="text-body3 font-semibold text-900"> Informasi </span>
+          <span class="text-body3 text-600"> • 12 Maret 2023</span>
+        </div>
+      </div>
+      <div class="text-body1 text-900 font-semibold mb-0.5">
+        Akunmu sudah terverfikiasi
+      </div>
+      <div class="text-body3 text-700">
+        Akunmu sudah kami tinjau dan sekarang kamu menjadi pengguna setia kami.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="p-6">
+      <div class="flex items-center space-x-2 mb-2">
+        <img src="images/information-circle.png" class="h-5 w-5" alt="" />
+        <div class="flex items-center space-x-1">
+          <span class="text-body3 font-semibold text-900"> Informasi </span>
+          <span class="text-body3 text-600"> • 12 Maret 2023</span>
+        </div>
+      </div>
+      <div class="text-body1 text-900 font-semibold mb-0.5">
+        Akunmu sudah terverfikiasi
+      </div>
+      <div class="text-body3 text-700">
+        Akunmu sudah kami tinjau dan sekarang kamu menjadi pengguna setia kami.
+      </div>
+    </div>
+  </div> -->
+  <div
+    class="target children-scroll"
+    [id]="targetScrollPos"
+    #targetScrollPos
+  ></div>
+</div>

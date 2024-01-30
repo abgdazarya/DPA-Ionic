@@ -1,0 +1,230 @@
+<section>
+  <div
+    class="flex md:hidden items-center text-center pt-5 px-4 border-b-2 border-neutral-400"
+  >
+    <div
+      (click)="handleNavigateUrl('/news/index')"
+      class="text-body1 font-semibold flex-1 -mb-0.5 py-3 border-b-2 border-neutral-400 text-800"
+    >
+      Berita
+    </div>
+    <div
+      (click)="handleNavigateUrl('/astramagazine/index')"
+      class="text-body1 font-semibold flex-1 -mb-0.5 py-3 border-b-2 border-lazuli-400 text-lazuli-400"
+    >
+      AstraMagz
+    </div>
+  </div>
+  <div class="md:container md:px-auto z-10 relative md:pt-16 growing">
+    <div>
+      <div class="hidden md:flex justify-between items-center mb-8">
+        <div>
+          <div class="text-h2 text-800 mb-1.5">Bacaan buat kamu</div>
+          <div class="text-[24px] text-700">
+            Temukan inspirasi dan informasi terbaru dari kami.
+          </div>
+        </div>
+
+        <div
+          class="cursor-pointer box-shadow-button flex items-center rounded-4xl overflow-hidden bg-white"
+        >
+          <div
+            routerLinkActive="border-b-4 border-lazuli-400"
+            class="text-h3 font-normal text-700 py-[26px] px-[50px]"
+            (click)="handleNavigateUrl('/news/index')"
+          >
+            Berita
+          </div>
+          <hr class="border-r border-neutral-400 h-[80px]" />
+          <div
+            routerLinkActive="border-b-4 border-lazuli-400"
+            class="text-h3 font-semibold text-900 py-[26px] px-[50px] border-b-4 border-lazuli-400"
+            (click)="handleNavigateUrl('/astramagazine/index')"
+          >
+            AstraMagz
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col md:flex-row {{keyword ? 'md:justify-end' : 'md:justify-between'}} md:items-center mb-1 md:mb-8 mt-4 md:mt-0 px-4 md:px-0"
+      >
+        <div
+          *ngIf="!keyword && screenSizeService.isDesktopResolution()"
+          class="text-h3 text-800 flex"
+        >
+          <form
+            class="flex space-x-6 items-center mb-2"
+            [formGroup]="astraMagazineForm"
+            *ngIf="(astramagazineOption$ | async) as astramagazineOption"
+          >
+            <ion-item class="w-full" fill="outline">
+              <ion-select
+                class="w-full"
+                placeholder="Pilih Periode Bulan"
+                formControlName="month"
+                interface="popover"
+                mode="md"
+                justify="space-between"
+              >
+                <ion-select-option
+                  *ngFor="let month of monthOptions"
+                  [value]="month.id"
+                  >{{ month.label }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+
+            <ion-item class="w-full" fill="outline">
+              <ion-select
+                class="w-full"
+                placeholder="Pilih Periode Bulan"
+                formControlName="year"
+                interface="popover"
+                mode="md"
+                justify="space-between"
+              >
+                <ion-select-option
+                  *ngFor="let year of astramagazineOption.year"
+                  [value]="year"
+                  >{{ year }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+
+            <ion-item class="w-full" fill="outline">
+              <ion-select
+                class="w-full"
+                placeholder="Pilih Kategori"
+                formControlName="kategori"
+                interface="popover"
+                mode="md"
+                justify="space-between"
+              >
+                <ion-select-option
+                  *ngFor="let ct of astramagazineOption.kategori"
+                  [value]="ct.idKategoriAstramagz"
+                  >{{ ct.namaKategoriAstramagazine }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+
+            <div class="filterBtn">
+              <ion-button
+                mode="ios"
+                (click)="filter()"
+                class="text-h7 h-11 rounded-lg w-full md:!w-auto"
+              >
+                <span class="px-16"> Filter </span>
+              </ion-button>
+            </div>
+          </form>
+        </div>
+
+        <div>
+          <ion-searchbar
+            [(ngModel)]="keyword"
+            [debounce]="500"
+            mode="md"
+            class="searchbar-input text-700 ion-background-white w-full md:w-96 rounded-input ion-no-box-shadow border border-neutral-400 p-0 rounded-xl"
+            placeholder="Cari baca yang kamu inginkan"
+          ></ion-searchbar>
+        </div>
+
+        <div
+          class="flex items-center mt-2"
+          *ngIf="!screenSizeService.isDesktopResolution()"
+        >
+          <!-- <div class="mr-3">
+            <select-popup
+              [onChange]="bulanDropdownChange"
+              [options]="monthOptions"
+              [title]="'Bulan'"
+              [placeholder]="'Pilih Bulan'"
+              [desc]="'Pilih Bulan yang ingin dilihat'"
+              [className]="'md:hidden border border-neutral-500 p-3 flex space-x-3 items-center rounded-xl w-full mb-3 h-[44px]'"
+            ></select-popup>
+          </div>
+          <div class="mr-1">
+            <select-popup
+              [onChange]="tahunDropdownChange"
+              [options]="yearOptions"
+              [title]="'Tahun'"
+              [placeholder]="'Pilih Tahun'"
+              [desc]="'Pilih Tahun yang ingin dilihat'"
+              [className]="'md:hidden border border-neutral-500 p-3 flex space-x-3 items-center rounded-xl w-full mb-3 h-[44px]'"
+            ></select-popup>
+          </div> -->
+
+          <div class="mr-3 w-60">
+            <!-- <app-month-year-dialog
+              controlName="periode"
+              [showLabel]="false"
+              (dateChange)="dateChange($event)"
+            ></app-month-year-dialog> -->
+            <!-- <ion-item fill="outline"
+            [className]="'md:hidden border border-neutral-500 p-3 flex space-x-3 items-center rounded-xl w-full mb-3 h-[44px]'" (click)="openMonthYearModal()">
+              Pilih periode bulan
+            </ion-item> -->
+            <div class="w-full flex flex-col">
+              <div class="w-full border border-neutral-500 p-3 flex space-x-3 items-center rounded-xl w-full h-[44px]" (click)="openMonthYearModal()">
+                <div class="w-full flex justify-between items-center">
+                  <span class="text-800 text-body-1">{{monthDate ? monthDate : 'Pilih periode'}}</span>
+                  <app-common-icon-component
+                    name="chevron-bottom-normal"
+                    nativeClass="w-5 h-5 text-neutral-800 bg-neutral-100"
+                  >
+                  </app-common-icon-component>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div
+            class="mr-3 w-60"
+            style="height: 45px;"
+            *ngIf="(astramagazineOption$ | async) as astramagazineOption"
+          >
+            <select-popup
+              [onChange]="categoryDropdownChange"
+              [options]="kategoriOptions"
+              [title]="'Kategori'"
+              [placeholder]="'Pilih Kategori'"
+              [desc]="'Pilih Kategori yang ingin dilihat'"
+            ></select-popup>
+          </div>
+
+          <div class="mb-2" *ngIf="screenSizeService.isDesktopResolution()">
+            <ion-button fill="clear" (click)="filter()">
+              <ion-icon name="search-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="hidden md:block text-h3 text-800 mb-7">Artikel Buat Kamu</div> -->
+
+      <div *ngIf="keyword" class="hidden md:block text-h3 text-800 mb-7">
+        Hasil Pencarian "{{keyword}}"
+      </div>
+
+      <div class="mb-6 px-4 md:px-0">
+        <app-astramagazine-list-container
+          [keyword]="keyword"
+          [filterData]="filterData"
+          (errorPdf)="handleErrorPdf($event)"
+          class="transition-all duration-300"
+        ></app-astramagazine-list-container>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-common-alert-component
+  style="z-index: 999;"
+  *ngIf="errorMsg"
+  type="danger"
+  [desc]="errorMsg"
+  [duration]="2000"
+>
+</app-common-alert-component>

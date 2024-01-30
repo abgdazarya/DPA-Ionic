@@ -1,0 +1,7 @@
+ion-page {
+    width: 100%;
+}
+::ng-deep .modal-web.option {
+    --width: 384px !important;
+    --height: 312px !important;
+}

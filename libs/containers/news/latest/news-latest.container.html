@@ -1,0 +1,79 @@
+<section>
+  <ng-container *ngIf="loading$ | async else dataTpl">
+    <div class="overflow-hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
+        <ng-container *ngFor="let item of [].constructor(3); let index = index">
+          <!-- <div class="overflow-hidden rounded-xl p-3 bg-lazuli-50">
+            <app-news-list-web-card [loading]="true"></app-news-list-web-card>
+          </div> -->
+          <div class="overflow-hidden rounded-xl">
+            <app-news-list-web-card [loading]="true"></app-news-list-web-card>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #dataTpl>
+    <ng-container *ngIf="(news$ | async) as news else noDataTpl">
+      <div class="overflow-hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
+          <ng-container *ngFor="let item of news; let index = index">
+            <!-- [class.bg-lazuli-50]="index % 2 == 0" -->
+
+            <!-- <div class="overflow-hidden rounded-xl p-3 bg-lazuli-50">
+              <app-news-list-web-card
+                nativeClass="min-h-full"
+                [news]="item"
+                (click)="handleNavigateToNewsDetail(item)"
+              ></app-news-list-web-card>
+            </div> -->
+            <div class="overflow-hidden rounded-xl">
+              <app-news-list-web-card
+                nativeClass="min-h-full cursor-pointer"
+                [news]="item"
+                (click)="handleNavigateToNewsDetail(item)"
+              ></app-news-list-web-card>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noDataTpl>
+      <div class="md:hidden">
+        <div class="mb-5">
+          <div class="text-center">
+            <img
+              src="images/news-not-found.png"
+              class="mb-8 w-[180px] h-[152px] mx-auto"
+              alt=""
+            />
+            <div class="text-h5 text-800 font-semibold mb-1.5">
+              Tidak ada berita terbaru
+            </div>
+            <div class="text-body2 text-700">
+              Silakan coba lagi atau kembali lagi nanti.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center items-center overflow-hidden">
+        <div class="text-center">
+          <img
+            src="images/news-not-found.png"
+            class="mb-8 w-[180px] h-[152px] mx-auto"
+            alt=""
+          />
+          <div class="text-h3 text-800 font-semibold mb-1.5">
+            Tidak ada berita terbaru
+          </div>
+          <div class="text-h4 text-700 font-normal">
+            Silakan coba lagi atau kembali lagi nanti.
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
+</section>

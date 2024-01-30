@@ -1,0 +1,580 @@
+<ion-header
+  *ngIf="screenSizeService.isMobileResolution()"
+  class="ion-background-white ion-no-border"
+>
+  <profile-header-component
+    [headerTitle]="'Data Diri'"
+    [onBack]="handleClose"
+  ></profile-header-component>
+</ion-header>
+
+<div
+  class="p-7 sm-max:px-4 sm-max:py-0 overflow-y-auto mx-auto md:mx-0 w-full max-h-sm-modal h-full md:max-h-vh md:max-w-[1024px] md-max:w-full"
+>
+  <div
+    class="flex justify-between"
+    *ngIf="screenSizeService.isDesktopResolution()"
+  >
+    <div class="text-h3 text-900 mb-1.5">
+      {{ isVerified() ? 'Biodata Diri' : 'Unggah KTP'}}
+    </div>
+    <app-common-icon-component
+      *ngIf="!screenSizeService.isMobileResolution()"
+      name="close"
+      nativeClass="h-8 w-8 text-neutral-800 cursor-pointer"
+      (click)="handleClose()"
+    ></app-common-icon-component>
+  </div>
+
+  <div
+    class="text-[18px] text-700 mb-8"
+    *ngIf="screenSizeService.isDesktopResolution()"
+  >
+    <!-- Unggah KTP kamu untuk verifikasi biodata diri kamu sesuai dengan kartu
+    pensiun. -->
+    Yuk unggah KTP kamu untuk verifikasi data kepesertaan DPA dan mengakses
+    beragam menu kepesertaan pada aplikasi
+  </div>
+
+  <form novalidate *ngIf="formGroup" [formGroup]="formGroup">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-y-6 md:gap-y-0 md:gap-x-6">
+      <div class="md:border md:border-neutral-300 rounded-xl md:px-3 md:py-4">
+        <div
+          class="flex space-x-3 bg-neutral-100 p-4 mb-6"
+          *ngIf="!screenSizeService.isMobileResolution()"
+        >
+          <img src="images/id-card-small.png" class="h-7 w-auto" alt="" />
+          <div class="text-body3 text-700">
+            Pastikan posisi dapat terlihat secara keseluruhan dan jelas, bukan
+            fotocopy.
+          </div>
+        </div>
+        <div
+          *ngIf="screenSizeService.isMobileResolution() && isVerified()"
+          class="border border-[#0074D9] rounded-xl p-2 bg-lazuli-50 mb-4 mt-8"
+        >
+          <div class="flex">
+            <app-common-icon-component
+              name="info"
+              nativeClass="h-4 w-4 text-lazuli-600 mr-2 mt-1"
+            />
+            <div class="">
+              <div class="text-heading-6 text-lazuli-600">
+                Info Pengubahan Data Diri
+              </div>
+              <div class="text-body3 text-800">
+                <!-- Pengubahan nama lengkap dan tempat lahir tidak bisa lakukan,
+                silakan kunjungi link berikut
+                <a
+                  class="text-lazuli-600 font-semibold"
+                  (click)="downloadDoc()"
+                  download
+                  >disini</a
+                > -->
+                Mohon maaf perubahan data nama dan tanggal lahir serta NIK tidak
+                dapat dilakukan melalui menu ini, harap mencetak dan
+                menandatangani
+                <a
+                  class="text-lazuli-600 font-semibold"
+                  (click)="downloadDoc()"
+                  download
+                >
+                  form perubahan data
+                </a>
+                berikut dan dikirim ke hrd untuk kemudian diserahkan kepada kami
+                untuk proses lebih lanjut.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="framed-image"
+          id="image-frame"
+          *ngIf="!screenSizeService.isMobileResolution()"
+        >
+          <img class="frame" id="frame" src="" />
+          <img
+            [src]="tempFileKtpWatermarkRender || fotoKtpExist || tempFileKtp.src || 'images/id-card-large.png'"
+            class="h-64- w-full w-auto mb-4"
+            style="border: none"
+            alt=""
+          />
+        </div>
+
+        <div
+          class="render-ktp-image flex justify-between p-2 mb-2"
+          *ngIf="(fotoKtpExist || tempFileKtp?.src)  && screenSizeService.isMobileResolution()"
+        >
+          <div class="img-ktp flex items-center">
+            <div class="framed-image" id="image-frame">
+              <img class="frame" id="frame" src="" />
+              <img
+                [src]="tempFileKtpWatermarkRender || fotoKtpExist || tempFileKtp.src || 'images/id-card-large.png'"
+                class="h-10 mb-0"
+                style="border: none"
+                alt=""
+              />
+            </div>
+            <span class="text-800 ml-2"
+              >{{detailData?.idCardInfo?.name || tempFileKtp.name ||
+              'ktp.jpg'}}</span
+            >
+          </div>
+          <app-common-icon-component
+            name="more-1"
+            nativeClass="h-6 w-6 text-neutral-500"
+          />
+        </div>
+        <div
+          (click)="handleOpenUploadFotoModal()"
+          class="p-3 bg-lazuli-50 flex items-center justify-between md:mb-4 mb-2 rounded-xl"
+        >
+          <div class="text-lazuli-600 text-body2 cursor-pointer">
+            {{getRenderTextUploudKtp()}}
+          </div>
+          <app-common-icon-component
+            name="radio-checked-filled"
+            nativeClass="h-6 w-6 !text-neutral-500"
+            *ngIf="isVerified() && !(isLoadingToken$ | async)"
+          ></app-common-icon-component>
+          <app-common-icon-component
+            name="upload"
+            nativeClass="h-6 w-6 text-neutral-500"
+            *ngIf="!isVerified() && !(isLoadingToken$ | async)"
+          ></app-common-icon-component>
+          <ion-spinner
+            *ngIf="(isLoadingToken$ | async)"
+            name="circular"
+          ></ion-spinner>
+        </div>
+
+        <div
+          class="text-body2 text-700"
+          *ngIf="!screenSizeService.isMobileResolution()"
+        >
+          Besar file: maksimum 10.000.000 bytes (10 Megabytes). Ekstensi file
+          yang diperbolehkan: .JPG .JPEG .PNG
+        </div>
+        <div
+          class="text-body2 text-700"
+          *ngIf="screenSizeService.isMobileResolution()"
+        >
+          Ukuran maks. 5 MB dengan format JPG, atau PNG.
+        </div>
+      </div>
+
+      <div class="col-span-2">
+        <div
+          *ngIf="!screenSizeService.isMobileResolution() && isVerified()"
+          class="border border-[#0074D9] rounded-xl p-2 bg-lazuli-50 mb-4"
+        >
+          <div class="flex">
+            <app-common-icon-component
+              name="info"
+              nativeClass="h-4 w-4 text-lazuli-600 mr-2 mt-1"
+            />
+            <div class="">
+              <div class="text-heading-6 text-lazuli-600">
+                Info Pengubahan Data Diri
+              </div>
+              <div class="text-body3 text-800">
+                <!-- Pengubahan nama lengkap dan tempat lahir tidak bisa lakukan,
+                silakan kunjungi link berikut -->
+                <!-- <a
+                  class="text-lazuli-600 font-semibold"
+                  href="images/form-data-diri.pdf"
+                  download
+                  >disini</a
+                > -->
+                Mohon maaf perubahan data nama dan tanggal lahir serta NIK tidak
+                dapat dilakukan melalui menu ini, harap mencetak dan
+                menandatangani
+                <a
+                  class="text-lazuli-600 font-semibold"
+                  (click)="downloadDoc()"
+                  download
+                >
+                  form perubahan data
+                </a>
+                berikut dan dikirim ke hrd untuk kemudian diserahkan kepada kami
+                untuk proses lebih lanjut.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          *ngIf="tempOcrData"
+          class="w-full border-2 flex items-center p-2 rounded-lg my-2 cursor-pointer"
+          (click)="generateBiodataFromOcr()"
+        >
+          <app-common-icon-component
+            [name]="isUseOcrData ? 'checkbox-checked-outline':'checkbox-empty-outline'"
+            nativeClass="h-6 w-6 text-neutral-500 mr-2 {{isUseOcrData && 'text-800'}}"
+          ></app-common-icon-component>
+          <span class="text-heading-7 font-semibold text-800">
+            Gunakan Data Hasil Upload KTP Untuk Melengkapi Biodata diri
+          </span>
+        </div>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-y-0 md:gap-x-6"
+        >
+          <div class="grid grid-cols-1 gap-y-4">
+            <div *ngIf="formGroup.controls['nik']; let formControl">
+              <div class="text-body2 text-neutral-800 mb-1">NIK</div>
+              <ion-input
+                [readonly]="isVerified()"
+                [disabled]="isVerified()"
+                formControlName="nik"
+                placeholder="Nomor Induk Kependudukan"
+                [class]="isVerified() ?'primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700 bg-100' : 'primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700'"
+                style="--padding-start: 12px; --padding-end: 12px"
+                appNumberInput
+                [type]="isVerified()? 'password': 'tel'"
+                fill="outline"
+                maxLength="16"
+                (ionInput)="onInputChange($event,'nik')"
+              ></ion-input>
+              <p *ngIf="isVerified()" class="text-neutral-600 text-[10px] mt-1">
+                Untuk melakukan perubahan NIK, silakan dapat menghubungi
+                Customer Service DPA.
+              </p>
+              <small class="text-error-400">
+                <ng-container
+                  *ngIf="formControl.errors?.['required'] && formControl.touched"
+                >
+                  NIK wajib diisi.
+                </ng-container>
+
+                <ng-container
+                  *ngIf="formControl.errors?.['minlength'] && formControl.touched"
+                >
+                  NIK kurang dari 16 digit.
+                </ng-container>
+
+                <ng-container
+                  *ngIf="formControl.errors?.['maxlength'] && formControl.touched"
+                >
+                  NIK melebihi batas.
+                </ng-container>
+              </small>
+            </div>
+            <div *ngIf="formGroup.controls['namaLengkap']; let formControl">
+              <div class="text-body2 text-neutral-800 mb-1">Nama Lengkap</div>
+              <ion-input
+                [readonly]="isVerified()"
+                formControlName="namaLengkap"
+                placeholder="Nama Lengkap"
+                class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+                [class]="isVerified() ?'border border-neutral-400 p-3 rounded-xl text-body2 text-700 bg-100' : 'border border-neutral-400 p-3 rounded-xl text-body2 text-700'"
+                style="--padding-start: 12px; --padding-end: 12px"
+                fill="outline"
+              ></ion-input>
+              <small class="text-error-400">
+                <ng-container
+                  *ngIf="formControl.errors?.['required'] && formControl.touched"
+                >
+                  Nama lengkap wajib diisi.
+                </ng-container>
+                <ng-container
+                  *ngIf="formControl.errors?.['pattern'] && formControl.touched"
+                >
+                  Format Nama lengkap salah.
+                </ng-container>
+              </small>
+            </div>
+            <div *ngIf="formGroup.controls['tanggalLahir']; let formControl">
+              <div class="text-body2 text-neutral-800 mb-1">Tanggal Lahir</div>
+              <ion-input
+                [readonly]="true"
+                formControlName="tanggalLahir"
+                placeholder="DD-MM-YYYY"
+                class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+                [class]="isVerified() ?'border border-neutral-400 p-3 rounded-xl text-body2 text-700 bg-100' : 'border border-neutral-400 p-3 rounded-xl text-body2 text-700'"
+                style="--padding-start: 12px; --padding-end: 12px"
+                type="tel"
+                fill="outline"
+                (ionChange)="onInputChangeDate($event,'tanggalLahir')"
+                id="tanggalLahir"
+              ></ion-input>
+              <ion-popover
+                *ngIf="!isVerified()"
+                trigger="tanggalLahir"
+                size="cover"
+                alignment="top"
+                style="--background: 'transparent'; --box-shadow: 'none'"
+                class="custom-date-picker"
+              >
+                <ng-template>
+                  <ion-datetime
+                    showDefaultButtons="true"
+                    size="cover"
+                    mode="md"
+                    class="bg-white text-800 custom-date-picker"
+                    presentation="date"
+                    displayFormat="DD-MM-YYYY"
+                    [preferWheel]="true"
+                    id="tanggalLahirPicker"
+                    (ionChange)="onInputChangeDate($event,'tanggalLahir')"
+                    color="customs"
+                    value="{{getDateBirthValue()}}"
+                    max="{{getMaxYear()}}"
+                  ></ion-datetime>
+                </ng-template>
+              </ion-popover>
+
+              <small class="text-error-400">
+                <ng-container
+                  *ngIf="formControl.errors?.['required'] && formControl.touched"
+                >
+                  Tanggal lahir wajib diisi.
+                </ng-container>
+              </small>
+            </div>
+            <div *ngIf="formGroup.controls['tempatLahir']; let formControl">
+              <div class="text-body2 text-neutral-800 mb-1">Tempat Lahir</div>
+              <ion-input
+                formControlName="tempatLahir"
+                placeholder="Tempat Lahir"
+                class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+                style="--padding-start: 12px; --padding-end: 12px"
+                fill="outline"
+              ></ion-input>
+              <small class="text-error-400">
+                <ng-container
+                  *ngIf="formControl.errors?.['required'] && formControl.touched"
+                >
+                  Tempat lahir wajib diisi.
+                </ng-container>
+              </small>
+            </div>
+
+            <div *ngIf="formGroup.controls['status']; let formControl">
+              <div class="text-body2 text-neutral-800 mb-1">Status</div>
+              <app-select
+                controlName="status"
+                placeholder="Status Perkawinan"
+                class="border-neutral-400 rounded-xl text-body2 text-700"
+                style="--padding-start: 12px; --padding-end: 12px"
+                [options]="optionStatus"
+              />
+              <small class="text-error-400">
+                <ng-container
+                  *ngIf="formControl.errors?.['required'] && formControl.touched"
+                >
+                  Status Perkawinan wajib diisi.
+                </ng-container>
+              </small>
+            </div>
+
+            <div *ngIf="formGroup.controls['jenisKelamin']; let formControl">
+              <div class="text-body2 text-neutral-800 mb-1">Jenis Kelamin</div>
+              <app-select
+                disabled="isVerified()"
+                controlName="jenisKelamin"
+                placeholder="Jenis Kelamin"
+                class="border-neutral-400 rounded-xl text-body2 text-700"
+                style="--padding-start: 12px; --padding-end: 12px"
+                [options]="optionJenisKelamin"
+              />
+              <small class="text-error-400">
+                <ng-container
+                  *ngIf="formControl.errors?.['required'] && formControl.touched"
+                >
+                  Jenis Kelamin wajib diisi.
+                </ng-container>
+              </small>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 gap-y-4">
+            <div *ngIf="formGroup.controls['alamat']; let formControl">
+              <div class="text-body2 text-neutral-800 mb-1">Alamat</div>
+              <ion-input
+                formControlName="alamat"
+                placeholder="Alamat"
+                class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+                style="--padding-start: 12px; --padding-end: 12px"
+                fill="outline"
+              ></ion-input>
+
+              <small class="text-error-400">
+                <ng-container
+                  *ngIf="formControl.errors?.['required'] && formControl.touched"
+                >
+                  Alamat wajib diisi.
+                </ng-container>
+              </small>
+            </div>
+
+            <div class="grid grid-cols-2 gap-x-6">
+              <div *ngIf="formGroup.controls['rt']; let formControl">
+                <div class="text-body2 text-neutral-800 mb-1">RT</div>
+                <ion-input
+                  formControlName="rt"
+                  placeholder="00"
+                  class="primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+                  style="--padding-start: 12px; --padding-end: 12px"
+                  type="number"
+                  appNumberInput
+                  fill="outline"
+                  (ionInput)="onRtRwChanges($event,'rt')"
+                ></ion-input>
+                <small class="text-error-400">
+                  <ng-container
+                    *ngIf="formControl.errors?.['required'] && formControl.touched"
+                  >
+                    RT wajib diisi.
+                  </ng-container>
+                </small>
+              </div>
+              <div *ngIf="formGroup.controls['rw']; let formControl">
+                <div class="text-body2 text-neutral-800 mb-1">RW</div>
+                <ion-input
+                  formControlName="rw"
+                  placeholder="00"
+                  class="primary-input primary-input border border-neutral-400 p-3 rounded-xl text-body2 text-700"
+                  style="--padding-start: 12px; --padding-end: 12px"
+                  type="number"
+                  appNumberInput
+                  fill="outline"
+                  (ionInput)="onRtRwChanges($event,'rw')"
+                ></ion-input>
+                <small class="text-error-400">
+                  <ng-container
+                    *ngIf="formControl.errors?.['required'] && formControl.touched"
+                  >
+                    RW wajib diisi.
+                  </ng-container>
+                </small>
+              </div>
+            </div>
+
+            <div *ngIf="formGroup.controls['idProvinsi']; let formControl;">
+              <div class="text-body2 text-neutral-800 mb-1">Provinsi</div>
+              <app-select
+                [formGroup]="formGroup"
+                controlName="idProvinsi"
+                placeholder="Provinsi"
+                class="border-neutral-400 rounded-xl text-body2 text-700"
+                style="--padding-start: 12px; --padding-end: 12px"
+                [options]="generateOptionArea(responseProvinsi$ | async ) || []"
+                [isLoading]="isLoadingLov.provinsi"
+                [disable]="isLoadingLov.provinsi"
+              />
+              <small class="text-error-400">
+                <ng-container
+                  *ngIf="formControl.errors?.['required'] && formControl.touched"
+                >
+                  Provinsi wajib diisi.
+                </ng-container>
+              </small>
+            </div>
+
+            <div *ngIf="formGroup.controls['idKotaKabupaten']; let formControl">
+              <div class="text-body2 text-neutral-800 mb-1">Kota</div>
+              <app-select
+                [formGroup]="formGroup"
+                controlName="idKotaKabupaten"
+                placeholder="Kota"
+                class="border-neutral-400 rounded-xl text-body2 text-700"
+                style="--padding-start: 12px; --padding-end: 12px"
+                [options]="generateOptionArea(responseKabupaten$ | async ) || []"
+                [isLoading]="isLoadingLov.kabupaten"
+                [disable]="isLoadingLov.kabupaten"
+              />
+              <small class="text-error-400">
+                <ng-container
+                  *ngIf="formControl.errors?.['required'] && formControl.touched"
+                >
+                  Kota wajib diisi.
+                </ng-container>
+              </small>
+            </div>
+
+            <div *ngIf="formGroup.controls['idKecamatan']; let formControl">
+              <div class="text-body2 text-neutral-800 mb-1">Kecamatan</div>
+              <app-select
+                [formGroup]="formGroup"
+                controlName="idKecamatan"
+                placeholder="Kecamatan"
+                class="border-neutral-400 rounded-xl text-body2 text-700"
+                style="--padding-start: 12px; --padding-end: 12px"
+                [options]="generateOptionArea(responseKecamatan$ | async ) || []"
+                [isLoading]="isLoadingLov.kecamatan"
+                [disable]="isLoadingLov.kecamatan"
+              />
+              <small class="text-error-400">
+                <ng-container
+                  *ngIf="formControl.errors?.['required'] && formControl.touched"
+                >
+                  Kecamatan wajib diisi.
+                </ng-container>
+              </small>
+            </div>
+
+            <div *ngIf="formGroup.controls['idKelurahanDesa']; let formControl">
+              <div class="text-body2 text-neutral-800 mb-1">Kelurahan</div>
+              <app-select
+                [formGroup]="formGroup"
+                controlName="idKelurahanDesa"
+                placeholder="Kelurahan"
+                class="border-neutral-400 rounded-xl text-body2 text-700"
+                style="--padding-start: 12px; --padding-end: 12px"
+                [options]="generateOptionArea(responseDesa$ | async ) || []"
+                [isLoading]="isLoadingLov.kelurahan"
+                [disable]="isLoadingLov.kelurahan"
+              />
+              <small class="text-error-400">
+                <ng-container
+                  *ngIf="formControl.errors?.['required'] && formControl.touched"
+                >
+                  Kecamatan wajib diisi.
+                </ng-container>
+              </small>
+            </div>
+
+            <div class="place-self-end w-full md:!w-auto">
+              <ion-button
+                [disabled]="!formGroup.valid || (isLoading$ | async)"
+                mode="ios"
+                class="text-h7 h-11 rounded-lg w-full md:!w-auto"
+                (click)="submit()"
+              >
+                <span *ngIf="!(isLoading$ | async)" class="px-16">
+                  Simpan
+                </span>
+                <ion-spinner
+                  *ngIf="(isLoading$ | async)"
+                  name="circular"
+                ></ion-spinner>
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<app-common-alert-component
+  *ngIf="errorSavedData"
+  [duration]="3000"
+  type="danger"
+  [desc]="errorSavedData"
+  [isMobile]="isMobile"
+>
+</app-common-alert-component>
+
+<!-- <app-common-alert-component
+  type="danger"
+  [desc]="errorResponse$ | async"
+  [duration]="5000"
+></app-common-alert-component> -->
+
+<!-- <app-common-alert-component
+  type="danger"
+  [desc]="errorResponseOcr$ | async"
+  [duration]="5000"
+></app-common-alert-component> -->

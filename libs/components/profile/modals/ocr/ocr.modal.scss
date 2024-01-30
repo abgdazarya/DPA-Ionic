@@ -1,0 +1,45 @@
+.custom-date-picker::part(content) {
+  height: 100% !important;
+  bottom: 0px !important;
+  position: inherit !important;
+  ion-datetime {
+    opacity: 0.2;
+    // background-color: blue;
+    // ::ng-deep {
+    //   .wheel-order-month-first {
+    //     background-color: red;
+    //   }
+    // }
+    // .picker-after {
+    //   background: red;
+    // }
+  }
+}
+
+.custom-date-picker {
+  --wheel-highlight-background: rgb(230, 232, 240);
+  --wheel-fade-background-rgb: 255, 255, 255;
+  // &::part(wheel-item) {
+  //   color: rgb(255, 66, 97);
+  // }
+  // &::part(wheel-item active) {
+  //   color: rgb(128, 30, 171);
+  // }
+}
+
+.framed-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: none;
+}
+
+.frame {
+  align-items: center;
+  position: absolute;
+  border: none;
+  z-index: 2;
+  justify-content: center;
+}
